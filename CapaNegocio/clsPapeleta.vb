@@ -2,7 +2,7 @@
 Public Class clsPapeleta
     Implements IDisposable
 
-    Public Function Mantenimiento(Tipo As String, Data As DataTable) As DataRow
+    Public Function MantenimientoXML(Tipo As String, Data As DataTable) As DataRow
         Dim objConexion As New clsConexion
         Dim objParametros As New ParametroCollection
         Dim objData As DataTable = Nothing
@@ -10,7 +10,7 @@ Public Class clsPapeleta
             objParametros.Add(New Parametro("@Tipo", Tipo))
             objParametros.Add(New Parametro("@InfoXML", GetXMLPrincipal(Data)))
 
-            objData = objConexion.ConsultaAccion("pa_Papeleta", objParametros)
+            objData = objConexion.ConsultaAccion("pa_MantenimientoPapeleta", objParametros)
 
             Return objData.Rows(0)
         Catch ex As Exception
@@ -31,15 +31,15 @@ Public Class clsPapeleta
     End Function
 
 
-    Public Function Listado(ByVal Tipo As String) As DataTable
+    Public Function MantenimientoSimple(ByVal Tipo As String, Data As String) As DataTable
 
         Dim obj As New clsConexion
         Dim objDtt As DataTable = Nothing
         Dim objPrm As New ParametroCollection
         Try
             objPrm.Add(New Parametro("@Tipo", Tipo))
-            objPrm.Add(New Parametro("@InfoXML", ""))
-            objDtt = obj.ConsultaAccion("pa_ListaPapeletas", objPrm)
+            objPrm.Add(New Parametro("@InfoXML", Data))
+            objDtt = obj.ConsultaAccion("pa_MantenimientoPapeleta", objPrm)
             Return objDtt
         Catch ex As Exception
             Throw ex
@@ -54,6 +54,7 @@ Public Class clsPapeleta
             End If
         End Try
     End Function
+
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean

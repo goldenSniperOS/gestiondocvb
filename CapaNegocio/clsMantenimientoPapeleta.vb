@@ -29,6 +29,29 @@ Public Class clsMantenimientoPapeleta
         End Try
 
     End Function
+    Public Function Inicializar(ByVal Tipo As String) As DataRow
+
+        Dim obj As New clsConexion
+        Dim objDtt As DataTable = Nothing
+        Dim objPrm As New ParametroCollection
+        Try
+            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@InfoXML", ""))
+            objDtt = obj.ConsultaAccion("pa_MantenimientoPapeleta", objPrm)
+            Return objDtt.Rows(0)
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+        End Try
+    End Function
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean
