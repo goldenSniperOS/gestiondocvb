@@ -38,15 +38,16 @@ Public Class Login
     Private Sub btnEntrar_Click(sender As Object, e As EventArgs) Handles btnEntrar.Click
         Dim objCargo As New clsUsuario
         Dim dtData As DataTable = Nothing
-        Dim drRpta As DataRow = Nothing
+        Dim drRpta As DataTable = Nothing
 
         dtData = LlenarDatos()
 
-        drRpta = objCargo.Busca("I", dtData)
+        drRpta = objCargo.Login(dtData)
         If Not IsNothing(drRpta) Then
-            MsgBox("Bienvenid@ " + drRpta("per_Nombres").ToString + " " + drRpta("per_Apellidos").ToString)
+            MsgBox("Bienvenid@ " + drRpta.Rows(0)("per_Nombres").ToString + " " + drRpta.Rows(0)("per_Apellidos").ToString)
             Dim objfrom As New frmPrincipal
-            objfrom.DatosU(drRpta)
+            objfrom.permissions = drRpta
+            objfrom.userQuery = dtData
             objfrom.Show()
             Me.Hide()
         Else

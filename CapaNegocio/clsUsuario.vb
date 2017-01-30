@@ -1,13 +1,13 @@
 ﻿Imports CapaDatos
 Public Class clsUsuario
     Implements IDisposable
-    Public Function Mantenimiento(ByVal Tipo As String, ByVal Data As DataTable) As DataRow
+    Public Function Registrar(ByVal Data As DataTable, ByVal Usuario As DataRow) As DataRow
         Dim obj As New clsConexion
         Dim objPrm As New ParametroCollection
         Dim objDtt As DataTable = Nothing
-        Dim CadenaDatos As String = GetXMLPrincipal(Data)
+        Dim CadenaDatos As String = GetXMLExtra(Data, "Dato", "Principal", Usuario, "Usuario")
         Try
-            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@Tipo", "R"))
             objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
 
             objDtt = obj.ConsultaAccion("pa_usuario", objPrm)
@@ -30,14 +30,44 @@ Public Class clsUsuario
 
     End Function
 
-    Public Function Listado(ByVal Tipo As String) As DataTable
+    Public Function Actualizar(ByVal Data As DataTable, ByVal Usuario As DataRow) As DataRow
+        Dim obj As New clsConexion
+        Dim objPrm As New ParametroCollection
+        Dim objDtt As DataTable = Nothing
+        Dim CadenaDatos As String = GetXMLExtra(Data, "Dato", "Principal", Usuario, "Usuario")
+        Try
+            objPrm.Add(New Parametro("@Tipo", "A"))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
+
+            objDtt = obj.ConsultaAccion("pa_Usuario", objPrm)
+            Return objDtt.Rows(0)
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+            If objPrm IsNot Nothing Then
+                objPrm = Nothing
+            End If
+        End Try
+
+    End Function
+
+    Public Function Consultar(ByVal Data As DataTable) As DataTable
 
         Dim obj As New clsConexion
         Dim objDtt As DataTable = Nothing
         Dim objPrm As New ParametroCollection
+        Dim CadenaDatos As String = GetXMLPrincipal(Data)
         Try
-            objPrm.Add(New Parametro("@Tipo", Tipo))
-            objPrm.Add(New Parametro("@InfoXML", ""))
+            objPrm.Add(New Parametro("@Tipo", "C"))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
             objDtt = obj.ConsultaAccion("pa_usuario", objPrm)
             Return objDtt
         Catch ex As Exception
@@ -54,16 +84,40 @@ Public Class clsUsuario
         End Try
     End Function
 
-    Public Function Busca(ByVal Tipo As String, ByVal Data As DataTable) As DataRow
+    Public Function Login(ByVal Data As DataTable) As DataTable
         Dim obj As New clsConexion
         Dim objDtt As DataTable = Nothing
         Dim objPrm As New ParametroCollection
+        Dim CadenaDatos As String = GetXMLPrincipal(Data)
         Try
-            objPrm.Add(New Parametro("@Tipo", Tipo))
-            Dim cadena As String = GetXMLPrincipal(Data)
-            objPrm.Add(New Parametro("@InfoXML", cadena))
+            objPrm.Add(New Parametro("@Tipo", "L"))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
             objDtt = obj.ConsultaAccion("pa_usuario", objPrm)
-            Return objDtt(0)
+            Return objDtt
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+        End Try
+    End Function
+
+    Public Function PermisosXUsuario(ByVal Data As DataTable) As DataTable
+        Dim obj As New clsConexion
+        Dim objDtt As DataTable = Nothing
+        Dim objPrm As New ParametroCollection
+        Dim CadenaDatos As String = GetXMLPrincipal(Data)
+        Try
+            objPrm.Add(New Parametro("@Tipo", "P"))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
+            objDtt = obj.ConsultaAccion("pa_Usuario", objPrm)
+            Return objDtt
         Catch ex As Exception
             Throw ex
         Finally
