@@ -97,6 +97,12 @@
     <Compile Include="frmGastoMovilidad.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmListadoDocumentoVacacion.Designer.vb">
+      <DependentUpon>frmListadoDocumentoVacacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListadoDocumentoVacacion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmListadoGastos.Designer.vb">
       <DependentUpon>frmListadoGastos.vb</DependentUpon>
     </Compile>
@@ -162,6 +168,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmListadoDocumentoVacacion.resx">
+      <DependentUpon>frmListadoDocumentoVacacion.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.vb</DependentUpon>
     </EmbeddedResource>
