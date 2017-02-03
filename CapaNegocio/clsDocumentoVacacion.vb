@@ -32,6 +32,36 @@ Public Class clsDocumentoVacacion
 
     End Function
 
+    Public Function Listar(ByVal Tipo As String, ByVal Data As DataTable) As DataTable
+        Dim obj As New clsConexion
+        Dim objPrm As New ParametroCollection
+        Dim objDtt As DataTable = Nothing
+        Dim CadenaDatos As String = GetXMLPrincipal(Data)
+        Try
+            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
+
+            objDtt = obj.ConsultaAccion("pa_MantenimientoVacacion", objPrm)
+            Return objDtt
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+            If objPrm IsNot Nothing Then
+                objPrm = Nothing
+            End If
+        End Try
+
+    End Function
+
 #Region "Seccion:Dispose"
     Private disposedValue As Boolean = False
     Protected Overridable Sub Dispose(ByVal disposing As Boolean)
