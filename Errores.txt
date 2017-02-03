@@ -1,0 +1,6 @@
+Control de Usuario
+	-Usuarios deberian buscarse por nombres y apellidos
+	-Deberia decirte si esta en uso el usuario o no
+	-Limpieza de controles al darle nuevo 
+	-Agregar boton Cancelar
+Papeleta no funca pa nada da error al abrir el formulario
