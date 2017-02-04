@@ -23,14 +23,16 @@ Partial Class frmListadoGastos
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.datosGasto = New System.Windows.Forms.DataGridView()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.btnSeleccionar = New System.Windows.Forms.Button()
         Me.Gas_Serie_Cod = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.doc_Numero = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Apellidos = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Nombres = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Area = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.doc_Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Aprobado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Denegado = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnSeleccionar = New System.Windows.Forms.Button()
         CType(Me.datosGasto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -38,32 +40,18 @@ Partial Class frmListadoGastos
         '
         Me.datosGasto.AllowUserToAddRows = False
         Me.datosGasto.AllowUserToDeleteRows = False
+        Me.datosGasto.AllowUserToResizeColumns = False
+        Me.datosGasto.AllowUserToResizeRows = False
         Me.datosGasto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.datosGasto.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Gas_Serie_Cod, Me.doc_Numero, Me.Apellidos, Me.Nombres, Me.Area, Me.doc_Codigo})
+        Me.datosGasto.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Gas_Serie_Cod, Me.doc_Numero, Me.Apellidos, Me.Nombres, Me.Area, Me.doc_Codigo, Me.Aprobado, Me.Denegado})
         Me.datosGasto.Location = New System.Drawing.Point(12, 12)
+        Me.datosGasto.MultiSelect = False
         Me.datosGasto.Name = "datosGasto"
         Me.datosGasto.ReadOnly = True
+        Me.datosGasto.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
         Me.datosGasto.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.datosGasto.Size = New System.Drawing.Size(916, 321)
+        Me.datosGasto.Size = New System.Drawing.Size(911, 321)
         Me.datosGasto.TabIndex = 0
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(853, 355)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 1
-        Me.Button1.Text = "Cancelar"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'btnSeleccionar
-        '
-        Me.btnSeleccionar.Location = New System.Drawing.Point(757, 355)
-        Me.btnSeleccionar.Name = "btnSeleccionar"
-        Me.btnSeleccionar.Size = New System.Drawing.Size(90, 23)
-        Me.btnSeleccionar.TabIndex = 1
-        Me.btnSeleccionar.Text = "Seleccionar"
-        Me.btnSeleccionar.UseVisualStyleBackColor = True
         '
         'Gas_Serie_Cod
         '
@@ -118,15 +106,49 @@ Partial Class frmListadoGastos
         Me.doc_Codigo.ReadOnly = True
         Me.doc_Codigo.Visible = False
         '
+        'Aprobado
+        '
+        Me.Aprobado.DataPropertyName = "doc_ApruebaViat"
+        Me.Aprobado.HeaderText = "Aprobado"
+        Me.Aprobado.Name = "Aprobado"
+        Me.Aprobado.ReadOnly = True
+        '
+        'Denegado
+        '
+        Me.Denegado.DataPropertyName = "Gas_Denegar"
+        Me.Denegado.HeaderText = "Denegado"
+        Me.Denegado.Name = "Denegado"
+        Me.Denegado.ReadOnly = True
+        Me.Denegado.Visible = False
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(849, 339)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 1
+        Me.Button1.Text = "Cancelar"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'btnSeleccionar
+        '
+        Me.btnSeleccionar.Location = New System.Drawing.Point(753, 339)
+        Me.btnSeleccionar.Name = "btnSeleccionar"
+        Me.btnSeleccionar.Size = New System.Drawing.Size(90, 23)
+        Me.btnSeleccionar.TabIndex = 1
+        Me.btnSeleccionar.Text = "Seleccionar"
+        Me.btnSeleccionar.UseVisualStyleBackColor = True
+        '
         'frmListadoGastos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(940, 437)
+        Me.ClientSize = New System.Drawing.Size(935, 379)
         Me.Controls.Add(Me.btnSeleccionar)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.datosGasto)
         Me.Name = "frmListadoGastos"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "frmListadoGastos"
         CType(Me.datosGasto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -142,4 +164,6 @@ Partial Class frmListadoGastos
     Friend WithEvents Nombres As DataGridViewTextBoxColumn
     Friend WithEvents Area As DataGridViewTextBoxColumn
     Friend WithEvents doc_Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents Aprobado As DataGridViewTextBoxColumn
+    Friend WithEvents Denegado As DataGridViewTextBoxColumn
 End Class

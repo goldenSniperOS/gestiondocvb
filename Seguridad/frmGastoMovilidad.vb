@@ -2,6 +2,7 @@
 
 Public Class frmGastoMovilidad
     Dim modificando As Boolean = False
+    Dim documento As DataRow
 
     Property usuarioLogueado As DataRow
     Property usuarioLogueadoQuery As DataTable
@@ -22,6 +23,13 @@ Public Class frmGastoMovilidad
         End With
         dataControl.Rows.Clear()
         dtpNuevoGasto.MaxDate = DateTime.Today
+
+        If usuarioLogueado("usu_Beneficio") = "SI" Then
+            btnAprobar.Visible = True
+        Else
+            btnAprobar.Visible = False
+        End If
+
         Nuevo()
     End Sub
 
@@ -29,7 +37,9 @@ Public Class frmGastoMovilidad
         Dim frmDialogo As New frmListadoGastos
         If frmDialogo.ShowDialog() = DialogResult.OK Then
             dgvDetalle.DataSource = frmDialogo.listadoRetornar
-
+            txtNumero.Text = frmDialogo.documento("doc_Numero")
+            txtSerie.Text = frmDialogo.documento("doc_Gas_SerieCod")
+            documento = frmDialogo.documento
             btnRegistrar.Enabled = False
             modificando = True
             btnAprobar.Enabled = True
@@ -167,32 +177,23 @@ Public Class frmGastoMovilidad
         Me.Dispose()
     End Sub
 
-    Private Sub btnAprobar_Click(sender As Object, e As EventArgs)
+    Private Sub btnAprobar_Click(sender As Object, e As EventArgs) Handles btnAprobar.Click
         Dim dtCargo As New DataTable
+        dtCargo = documento.Table.Clone()
 
+        Dim drCargo As DataRow
         Dim cargoGasto As New clsGasto
 
-        With dtCargo.Columns
-            .Add("Gas_doc_Cod", GetType(String))
-            .Add("Gas_Denegar", GetType(String))
-        End With
-
-        Dim drCargo As DataRow = Nothing
-        drCargo = dtCargo.NewRow
-
-        drCargo("Gas_doc_Cod") = dgvDetalle.Rows(0).Cells(4).Value
+        drCargo = documento
         drCargo("Gas_Denegar") = "NO"
-        dtCargo.Rows.Add(drCargo)
+
+        dtCargo.ImportRow(drCargo)
 
         Dim drRpta As DataRow = Nothing
         drRpta = cargoGasto.Mantenimiento("AP", dtCargo)
         MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
                     "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-
-    End Sub
-
-    Private Sub btnAprobar_Click_1(sender As Object, e As EventArgs) Handles btnAprobar.Click
 
     End Sub
 End Class

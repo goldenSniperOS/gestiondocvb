@@ -43,7 +43,7 @@ Public Class Login
         dtData = LlenarDatos()
 
         drRpta = objCargo.Login(dtData)
-        If Not IsNothing(drRpta) Then
+        If drRpta.Rows.Count <> 0 Then
             MsgBox("Bienvenid@ " + drRpta.Rows(0)("per_Nombres").ToString + " " + drRpta.Rows(0)("per_Apellidos").ToString)
             Dim objfrom As New frmPrincipal
             objfrom.permissions = drRpta
@@ -51,7 +51,7 @@ Public Class Login
             objfrom.Show()
             Me.Hide()
         Else
-            MsgBox("DATOS INCORRECTOS", MsgBoxStyle.Exclamation)
+            MsgBox("DATOS INCORRECTOS O AUN NO TIENE PERMISOS PARA EL SISTEMA. POR FAVOR CONTACTAR CON EL ADMINISTRADOR", MsgBoxStyle.Exclamation)
         End If
     End Sub
 End Class

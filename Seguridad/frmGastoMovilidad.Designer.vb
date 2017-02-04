@@ -323,6 +323,7 @@ Partial Class frmGastoMovilidad
         '
         'btnAprobar
         '
+        Me.btnAprobar.Enabled = False
         Me.btnAprobar.Location = New System.Drawing.Point(679, 100)
         Me.btnAprobar.Name = "btnAprobar"
         Me.btnAprobar.Size = New System.Drawing.Size(75, 23)
@@ -349,7 +350,11 @@ Partial Class frmGastoMovilidad
         Me.Controls.Add(Me.txtNumero)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label3)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmGastoMovilidad"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmGastoMovilidad"
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbGasto.ResumeLayout(False)
