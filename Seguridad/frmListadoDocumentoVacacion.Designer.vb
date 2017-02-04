@@ -36,8 +36,8 @@ Partial Class frmListadoDocumentoVacacion
         Me.DIAS = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.JEFE = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RRHH = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnVer = New System.Windows.Forms.Button()
+        Me.btnAprobar = New System.Windows.Forms.Button()
         CType(Me.dgvListado, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -171,31 +171,31 @@ Partial Class frmListadoDocumentoVacacion
         Me.RRHH.ReadOnly = True
         Me.RRHH.Width = 64
         '
-        'Button1
+        'btnVer
         '
-        Me.Button1.Location = New System.Drawing.Point(689, 4)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 5
-        Me.Button1.Text = "VER"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnVer.Location = New System.Drawing.Point(689, 4)
+        Me.btnVer.Name = "btnVer"
+        Me.btnVer.Size = New System.Drawing.Size(75, 23)
+        Me.btnVer.TabIndex = 5
+        Me.btnVer.Text = "VER"
+        Me.btnVer.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnAprobar
         '
-        Me.Button2.Location = New System.Drawing.Point(770, 4)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 6
-        Me.Button2.Text = "APROBAR"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnAprobar.Location = New System.Drawing.Point(770, 4)
+        Me.btnAprobar.Name = "btnAprobar"
+        Me.btnAprobar.Size = New System.Drawing.Size(75, 23)
+        Me.btnAprobar.TabIndex = 6
+        Me.btnAprobar.Text = "APROBAR"
+        Me.btnAprobar.UseVisualStyleBackColor = True
         '
         'frmListadoDocumentoVacacion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(957, 606)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnAprobar)
+        Me.Controls.Add(Me.btnVer)
         Me.Controls.Add(Me.dgvListado)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.btnBuscar)
@@ -222,6 +222,6 @@ Partial Class frmListadoDocumentoVacacion
     Friend WithEvents DIAS As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents JEFE As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents RRHH As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents Button2 As System.Windows.Forms.Button
+    Friend WithEvents btnVer As System.Windows.Forms.Button
+    Friend WithEvents btnAprobar As System.Windows.Forms.Button
 End Class
