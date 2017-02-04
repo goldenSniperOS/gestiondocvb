@@ -1,7 +1,7 @@
 -- =============================================
 -- Author:		<Author,Grupo2>
 -- Create date: <Create Date,07-10-2016>
--- Description:	<Description,Papeletas por Mes>
+-- Description:	<Description,Funciones>
 -- =============================================
 
 USE BDGestionDocumentaria
@@ -13,7 +13,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnGastosMovilidadXAreaXPeriodo
 	END
 go
 
-CREATE FUNCTION fnGastosMovilidadXAreaXPeriodo (@area VARCHAR(10),@diaInicio DATE,@diaFin DATE)
+CREATE FUNCTION [dbo].[fnGastosMovilidadXAreaXPeriodo] (@area VARCHAR(10),@diaInicio DATE,@diaFin DATE)
 RETURNS TABLE 
 AS
 RETURN 
@@ -31,6 +31,7 @@ RETURN
 	GROUP BY dbo.tbarea.are_Nombre, dbo.tbpersona.per_Nombres, dbo.tbpersona.per_Apellidos, dbo.tbpersona.per_DNI, dbo.tbdocumento_gastomovilidad.Gas_Subtotal, dbo.tbdocumento_gastomovilidad.Gas_Motivo, 
                   dbo.tbdocumento_gastomovilidad.Gas_Fecha, dbo.tbdocumento_gastomovilidad.Gas_Ruta, dbo.tbdocumento.doc_Fecha, dbo.tbusuario.usu_Nombre
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnGastosMovilidadXPeriodo')
@@ -39,7 +40,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnGastosMovilidadXPeriodo')
 	END
 go
 
-CREATE FUNCTION fnGastosMovilidadXPeriodo (@diaInicio DATE,@diaFin DATE)
+CREATE FUNCTION [dbo].[fnGastosMovilidadXPeriodo] (@diaInicio DATE,@diaFin DATE)
 RETURNS TABLE 
 AS
 RETURN 
@@ -54,6 +55,7 @@ RETURN
 	WHERE CONVERT(DATE,dbo.tbdocumento.doc_Fecha) >@diaInicio AND CONVERT(DATE,dbo.tbdocumento.doc_Fecha) < @diaFin AND dbo.tbdocumento_gastomovilidad.Gas_Subtotal IS NOT NULL 
 	GROUP BY ROLLUP(dbo.tbarea.are_Nombre)
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasContablesXFilialXMesXAnio')
@@ -62,7 +64,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasContablesXFilialXMesXAn
 	END
 go
 
-CREATE FUNCTION fnNotasContablesXFilialXMesXAnio(@anio int)
+CREATE FUNCTION [dbo].[fnNotasContablesXFilialXMesXAnio](@anio int)
 RETURNS TABLE 
 AS
 RETURN 
@@ -85,6 +87,7 @@ FROM            dbo.tbdocumento_notadecontabilidad
 where datepart(YYYY,dbo.tbdocumento_notadecontabilidad.Ndcon_Fecha) = @anio and tbdocumento_notadecontabilidad.Ndcon_Denegar = 'NO'
 GROUP BY ROLLUP(dbo.tbdocumento_notadecontabilidad.Ndcon_Filialdos)
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasXFilialesXPeriodo')
@@ -93,7 +96,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasXFilialesXPeriodo')
 	END
 go
 
-CREATE FUNCTION fnNotasXFilialesXPeriodo (@diaInicio DATE,@diaFin DATE)
+CREATE FUNCTION [dbo].[fnNotasXFilialesXPeriodo] (@diaInicio DATE,@diaFin DATE)
 RETURNS TABLE 
 AS
 RETURN 
@@ -107,6 +110,7 @@ RETURN
                          dbo.tbpersona ON dbo.tbusuario.usu_per_Codigo = dbo.tbpersona.per_Codigo
 	WHERE CONVERT(DATE,dbo.tbdocumento.doc_Fecha) >@diaInicio AND CONVERT(DATE,dbo.tbdocumento.doc_Fecha) < @diaFin AND dbo.tbdocumento_notadecontabilidad.Ndcon_Filialdos IS NOT NULL
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnPapeletasXAreaXMesXAnio')
@@ -115,7 +119,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnPapeletasXAreaXMesXAnio')
 	END
 go
 
-CREATE FUNCTION fnPapeletasXAreaXMesXAnio(@anio int)
+CREATE FUNCTION [dbo].[fnPapeletasXAreaXMesXAnio](@anio int)
 RETURNS TABLE 
 AS
 RETURN 
@@ -143,6 +147,7 @@ FROM            dbo.tbdocumento INNER JOIN
 where datepart(YYYY,dbo.tbdocumento.doc_Fecha) = @anio
 GROUP BY ROLLUP(dbo.tbarea.are_Nombre)
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnPapeletasXMes')
@@ -151,7 +156,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnPapeletasXMes')
 	END
 go
 
-CREATE FUNCTION fnPapeletasXMes (@mes INT,@anio INT)
+CREATE FUNCTION [dbo].[fnPapeletasXMes] (@mes INT,@anio INT)
 RETURNS TABLE 
 AS
 RETURN 
@@ -165,6 +170,7 @@ RETURN
                          dbo.tbpersona ON dbo.tbusuario.usu_per_Codigo = dbo.tbpersona.per_Codigo
 	WHERE datepart(mm,dbo.tbdocumento.doc_Fecha) = @mes AND datepart(YYYY,dbo.tbdocumento.doc_Fecha) = @anio
 )
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnVacacionesXArea')
@@ -173,7 +179,7 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnVacacionesXArea')
 	END
 go
 
-CREATE FUNCTION fnVacacionesXArea (@area VARCHAR(10),@diaInicio DATE,@diaFin DATE)
+CREATE FUNCTION [dbo].[fnVacacionesXArea] (@area VARCHAR(10),@diaInicio DATE,@diaFin DATE)
 RETURNS TABLE 
 AS
 RETURN 
@@ -190,4 +196,145 @@ RETURN
 								 dbo.tbdocumento_vacaciones ON dbo.tbdocumento.doc_Codigo = dbo.tbdocumento_vacaciones.Vaca_doc_Cod
 	WHERE CONVERT(DATE,dbo.tbdocumento.doc_Fecha) >@diaInicio AND CONVERT(DATE,dbo.tbdocumento.doc_Fecha) < @diaFin AND dbo.tbarea.are_Codigo = @area
 )
+
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnSplitString')
+	BEGIN
+		drop function fnSplitString
+	END
+go
+
+CREATE FUNCTION [dbo].[fnSplitString] 
+( 
+    @string NVARCHAR(MAX), 
+    @delimiter CHAR(1) 
+) 
+RETURNS @output TABLE(splitdata NVARCHAR(MAX) 
+) 
+BEGIN 
+    DECLARE @start INT, @end INT 
+    SELECT @start = 1, @end = CHARINDEX(@delimiter, @string) 
+    WHILE @start < LEN(@string) + 1 BEGIN 
+        IF @end = 0  
+            SET @end = LEN(@string) + 1
+       
+        INSERT INTO @output (splitdata)  
+        VALUES(SUBSTRING(@string, @start, @end - @start)) 
+        SET @start = @end + 1 
+        SET @end = CHARINDEX(@delimiter, @string, @start)
+        
+    END 
+    RETURN 
+END
+Go
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevaSerie')
+	BEGIN
+		drop function nuevaSerie
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevaSerie]()
+RETURNS VARCHAR(10)
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	DECLARE @lastNumber VARCHAR(10)
+
+	SELECT TOP 1 @lastCode = doc_Gas_SerieCod  FROM tbdocumento 
+	WHERE doc_Titulo = 'DTI0000006'
+	ORDER BY doc_Codigo DESC
+
+	SELECT TOP 1 @lastNumber = splitdata FROM(SELECT ROW_NUMBER() OVER (ORDER BY splitdata ASC) AS rownumber,* 
+	FROM fnSplitString(@lastCode, '-')) AS foo 
+	WHERE rownumber = 2
+
+	RETURN '006-'+REPLACE(STR(CONVERT(INT,@lastNumber)+1, 5), SPACE(1), '0')
+END
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigo')
+	BEGIN
+		drop function nuevoCodigo
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigo](@tableName VARCHAR(20))
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @tablePrefix CHAR(3)
+	DECLARE @query nvarchar(max)
+	DECLARE @lastCode VARCHAR(10)
+
+	SET @tablePrefix = SUBSTRING(@tableName,3,3)
+	SET @query = 'SELECT TOP 1 @lastCode='+@tablePrefix+'_Codigo FROM [' + @tablename + '] ORDER BY '+@tablePrefix+'_Codigo DESC'
+	EXEC sp_executesql @query, N'@lastCode VARCHAR(10) out', @lastCode out
+	RETURN UPPER(@tablePrefix)+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END
+Go
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigoDocumento')
+	BEGIN
+		drop function nuevoCodigoDocumento
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigoDocumento]()
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	SELECT TOP 1 @lastCode = doc_Codigo from tbdocumento ORDER BY doc_Codigo DESC
+	RETURN 'DOC'+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END
+
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoNumeroGasto')
+	BEGIN
+		drop function nuevoNumeroGasto
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoNumeroGasto]
+( 
+    @titulo NVARCHAR(100),
+	@area VARCHAR(20)
+) 
+RETURNS VARCHAR(100)
+BEGIN
+	DECLARE @lastCode VARCHAR(100)
+	DECLARE @lastNumber VARCHAR(10)
+
+	SELECT TOP 1 @lastCode = doc_Numero  FROM tbdocumento 
+	WHERE doc_Titulo = 'DTI0000006'
+	ORDER BY doc_Codigo DESC
+
+	SELECT TOP 1 @lastNumber = splitdata FROM(SELECT ROW_NUMBER() OVER (ORDER BY splitdata ASC) AS rownumber,* 
+	FROM fnSplitString(@lastCode, '-')) AS foo 
+	WHERE rownumber = 1
+	RETURN @titulo+'-'+REPLACE(STR(CONVERT(INT,@lastNumber)+1, 4), SPACE(1), '0')+'-'+@area+'/UCV-CH-'+ LTRIM(STR( YEAR( GETDATE() ) % 100 ))
+END
+GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'ultimoCodigo')
+	BEGIN
+		drop function ultimoCodigo
+	END
+go
+
+CREATE FUNCTION [dbo].[ultimoCodigo](@tableName VARCHAR(20))
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @tablePrefix CHAR(3)
+	DECLARE @query nvarchar(max)
+	DECLARE @lastCode VARCHAR(10)
+
+	SET @tablePrefix = SUBSTRING(@tableName,3,3)
+	SET @query = 'SELECT TOP 1 @lastCode='+@tablePrefix+'_Codigo FROM [' + @tablename + '] ORDER BY '+@tablePrefix+'_Codigo DESC'
+	EXEC sp_executesql @query, N'@lastCode VARCHAR(10) out', @lastCode out
+	RETURN @lastCode
+END
 GO
