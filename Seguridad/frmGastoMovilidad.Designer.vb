@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmGastoMovilidad
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmGastoMovilidad
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtNumero = New System.Windows.Forms.TextBox()
@@ -59,7 +59,7 @@ Partial Class frmGastoMovilidad
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(336, 9)
+        Me.Label3.Location = New System.Drawing.Point(282, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(55, 13)
         Me.Label3.TabIndex = 0
@@ -68,17 +68,18 @@ Partial Class frmGastoMovilidad
         'txtNumero
         '
         Me.txtNumero.Enabled = False
-        Me.txtNumero.Location = New System.Drawing.Point(397, 6)
+        Me.txtNumero.Location = New System.Drawing.Point(343, 6)
         Me.txtNumero.Name = "txtNumero"
         Me.txtNumero.Size = New System.Drawing.Size(230, 20)
         Me.txtNumero.TabIndex = 1
         '
         'dtpFechaDocumento
         '
+        Me.dtpFechaDocumento.Enabled = False
         Me.dtpFechaDocumento.Location = New System.Drawing.Point(61, 6)
         Me.dtpFechaDocumento.Name = "dtpFechaDocumento"
         Me.dtpFechaDocumento.Size = New System.Drawing.Size(200, 20)
-        Me.dtpFechaDocumento.TabIndex = 2
+        Me.dtpFechaDocumento.TabIndex = 0
         '
         'Label2
         '
@@ -98,7 +99,7 @@ Partial Class frmGastoMovilidad
         Me.dgvDetalle.Name = "dgvDetalle"
         Me.dgvDetalle.ReadOnly = True
         Me.dgvDetalle.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvDetalle.Size = New System.Drawing.Size(893, 181)
+        Me.dgvDetalle.Size = New System.Drawing.Size(767, 181)
         Me.dgvDetalle.TabIndex = 4
         '
         'Gas_Fecha
@@ -177,7 +178,7 @@ Partial Class frmGastoMovilidad
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(707, 9)
+        Me.Label5.Location = New System.Drawing.Point(579, 9)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(39, 13)
         Me.Label5.TabIndex = 0
@@ -186,7 +187,7 @@ Partial Class frmGastoMovilidad
         'txtSerie
         '
         Me.txtSerie.Enabled = False
-        Me.txtSerie.Location = New System.Drawing.Point(757, 6)
+        Me.txtSerie.Location = New System.Drawing.Point(629, 6)
         Me.txtSerie.Name = "txtSerie"
         Me.txtSerie.Size = New System.Drawing.Size(154, 20)
         Me.txtSerie.TabIndex = 1
@@ -202,7 +203,7 @@ Partial Class frmGastoMovilidad
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(834, 409)
+        Me.Button2.Location = New System.Drawing.Point(710, 412)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 7
@@ -211,10 +212,10 @@ Partial Class frmGastoMovilidad
         '
         'btnRegistrar
         '
-        Me.btnRegistrar.Location = New System.Drawing.Point(753, 409)
+        Me.btnRegistrar.Location = New System.Drawing.Point(629, 412)
         Me.btnRegistrar.Name = "btnRegistrar"
         Me.btnRegistrar.Size = New System.Drawing.Size(75, 23)
-        Me.btnRegistrar.TabIndex = 8
+        Me.btnRegistrar.TabIndex = 2
         Me.btnRegistrar.Text = "Registrar"
         Me.btnRegistrar.UseVisualStyleBackColor = True
         '
@@ -229,10 +230,10 @@ Partial Class frmGastoMovilidad
         Me.gbGasto.Controls.Add(Me.txtRuta)
         Me.gbGasto.Controls.Add(Me.Label7)
         Me.gbGasto.Controls.Add(Me.txtMotivo)
-        Me.gbGasto.Location = New System.Drawing.Point(18, 59)
+        Me.gbGasto.Location = New System.Drawing.Point(18, 49)
         Me.gbGasto.Name = "gbGasto"
         Me.gbGasto.Size = New System.Drawing.Size(614, 135)
-        Me.gbGasto.TabIndex = 9
+        Me.gbGasto.TabIndex = 1
         Me.gbGasto.TabStop = False
         Me.gbGasto.Text = "Nuevo Gasto"
         '
@@ -241,7 +242,7 @@ Partial Class frmGastoMovilidad
         Me.btnAddGasto.Location = New System.Drawing.Point(467, 98)
         Me.btnAddGasto.Name = "btnAddGasto"
         Me.btnAddGasto.Size = New System.Drawing.Size(121, 23)
-        Me.btnAddGasto.TabIndex = 6
+        Me.btnAddGasto.TabIndex = 4
         Me.btnAddGasto.Text = "Agregar Gasto"
         Me.btnAddGasto.UseVisualStyleBackColor = True
         '
@@ -257,9 +258,11 @@ Partial Class frmGastoMovilidad
         'dtpNuevoGasto
         '
         Me.dtpNuevoGasto.Location = New System.Drawing.Point(100, 22)
+        Me.dtpNuevoGasto.MaxDate = New Date(2017, 2, 3, 0, 0, 0, 0)
         Me.dtpNuevoGasto.Name = "dtpNuevoGasto"
         Me.dtpNuevoGasto.Size = New System.Drawing.Size(208, 20)
-        Me.dtpNuevoGasto.TabIndex = 4
+        Me.dtpNuevoGasto.TabIndex = 0
+        Me.dtpNuevoGasto.Value = New Date(2017, 2, 3, 0, 0, 0, 0)
         '
         'Label9
         '
@@ -275,7 +278,7 @@ Partial Class frmGastoMovilidad
         Me.txtSubtotal.Location = New System.Drawing.Point(100, 100)
         Me.txtSubtotal.Name = "txtSubtotal"
         Me.txtSubtotal.Size = New System.Drawing.Size(62, 20)
-        Me.txtSubtotal.TabIndex = 1
+        Me.txtSubtotal.TabIndex = 3
         '
         'Label8
         '
@@ -291,7 +294,7 @@ Partial Class frmGastoMovilidad
         Me.txtRuta.Location = New System.Drawing.Point(100, 74)
         Me.txtRuta.Name = "txtRuta"
         Me.txtRuta.Size = New System.Drawing.Size(488, 20)
-        Me.txtRuta.TabIndex = 1
+        Me.txtRuta.TabIndex = 2
         '
         'Label7
         '
@@ -311,7 +314,7 @@ Partial Class frmGastoMovilidad
         '
         'btnNuevo
         '
-        Me.btnNuevo.Location = New System.Drawing.Point(671, 409)
+        Me.btnNuevo.Location = New System.Drawing.Point(547, 412)
         Me.btnNuevo.Name = "btnNuevo"
         Me.btnNuevo.Size = New System.Drawing.Size(75, 23)
         Me.btnNuevo.TabIndex = 10
@@ -320,8 +323,7 @@ Partial Class frmGastoMovilidad
         '
         'btnAprobar
         '
-        Me.btnAprobar.Enabled = False
-        Me.btnAprobar.Location = New System.Drawing.Point(753, 105)
+        Me.btnAprobar.Location = New System.Drawing.Point(679, 100)
         Me.btnAprobar.Name = "btnAprobar"
         Me.btnAprobar.Size = New System.Drawing.Size(75, 23)
         Me.btnAprobar.TabIndex = 11
@@ -332,7 +334,7 @@ Partial Class frmGastoMovilidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(923, 447)
+        Me.ClientSize = New System.Drawing.Size(800, 447)
         Me.Controls.Add(Me.btnAprobar)
         Me.Controls.Add(Me.btnNuevo)
         Me.Controls.Add(Me.gbGasto)

@@ -143,9 +143,13 @@ Public Class frmUsuarios
             dataTableGuardar.ImportRow(row)
         Next
         Dim drRpta As DataRow
+        If (userSelected("usu_Codigo") = usuarioLogueado("usu_Codigo")) Then
+            'El Usuario Esta Logueado
+        Else
+            userSelected("usu_Nombre") = txtUsuario.Text
+            userSelected("usu_Contrasena") = txtPassword.Text
+        End If
 
-        userSelected("usu_Nombre") = txtUsuario.Text
-        userSelected("usu_Contrasena") = txtPassword.Text
 
         If (inNew) Then
             drRpta = clsUsuariosBD.Registrar(dataTableGuardar, userSelected)

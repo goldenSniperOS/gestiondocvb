@@ -3,28 +3,27 @@ Public Class clsCliente
     Implements IDisposable
 
     Public Function Mantenimiento(Tipo As String, Data As DataTable) As DataRow
-        Dim objConexion As New clsConexion
-        Dim objParametros As New ParametroCollection
-        Dim objData As DataTable = Nothing
+        Dim obj As New clsConexion
+        Dim objPrm As New ParametroCollection
+        Dim objDtt As DataTable = Nothing
         Try
-            objParametros.Add(New Parametro("@Tipo", Tipo))
-            objParametros.Add(New Parametro("@InfoXML", GetXMLPrincipal(Data)))
-
-            objData = objConexion.ConsultaAccion("pa_Cliente", objParametros)
-
-            Return objData.Rows(0)
+            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@InfoXML", GetXMLPrincipal(Data)))
+            objDtt = obj.ConsultaAccion("pa_Cliente", objPrm)
+            Return objDtt.Rows(0)
         Catch ex As Exception
-            If Not objConexion Is Nothing Then
-                objConexion.Dispose()
-                objConexion = Nothing
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
             End If
-
-            If objData IsNot Nothing Then
-                objData.Dispose()
-                objData = Nothing
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
             End If
-            If objParametros IsNot Nothing Then
-                objParametros = Nothing
+            If objPrm IsNot Nothing Then
+                objPrm = Nothing
             End If
         End Try
 

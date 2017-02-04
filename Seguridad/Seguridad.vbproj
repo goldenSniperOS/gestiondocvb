@@ -168,6 +168,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmGastoMovilidad.resx">
+      <DependentUpon>frmGastoMovilidad.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmListadoDocumentoVacacion.resx">
       <DependentUpon>frmListadoDocumentoVacacion.vb</DependentUpon>
     </EmbeddedResource>

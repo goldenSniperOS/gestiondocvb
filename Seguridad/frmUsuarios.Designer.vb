@@ -27,6 +27,10 @@ Partial Class frmUsuarios
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnModificar = New System.Windows.Forms.Button()
         Me.dgvUsuarios = New System.Windows.Forms.DataGridView()
+        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Usuario = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Password = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtFiltro = New System.Windows.Forms.TextBox()
         Me.btnBuscar = New System.Windows.Forms.Button()
@@ -40,10 +44,6 @@ Partial Class frmUsuarios
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.trvPermisos = New System.Windows.Forms.TreeView()
-        Me.ID = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Usuario = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Password = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.gbListado.SuspendLayout()
         CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbUsuario.SuspendLayout()
@@ -105,6 +105,37 @@ Partial Class frmUsuarios
         Me.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvUsuarios.Size = New System.Drawing.Size(347, 150)
         Me.dgvUsuarios.TabIndex = 6
+        '
+        'ID
+        '
+        Me.ID.DataPropertyName = "usu_Codigo"
+        Me.ID.HeaderText = "ID"
+        Me.ID.Name = "ID"
+        Me.ID.ReadOnly = True
+        Me.ID.Visible = False
+        '
+        'Usuario
+        '
+        Me.Usuario.DataPropertyName = "usu_Nombre"
+        Me.Usuario.HeaderText = "Usuario"
+        Me.Usuario.Name = "Usuario"
+        Me.Usuario.ReadOnly = True
+        '
+        'Password
+        '
+        Me.Password.DataPropertyName = "usu_Contrasena"
+        Me.Password.HeaderText = "Password"
+        Me.Password.Name = "Password"
+        Me.Password.ReadOnly = True
+        Me.Password.Visible = False
+        '
+        'Estado
+        '
+        Me.Estado.DataPropertyName = "usu_Estado"
+        Me.Estado.HeaderText = "Estado"
+        Me.Estado.Name = "Estado"
+        Me.Estado.ReadOnly = True
+        Me.Estado.Visible = False
         '
         'Label2
         '
@@ -223,37 +254,6 @@ Partial Class frmUsuarios
         Me.trvPermisos.Size = New System.Drawing.Size(364, 350)
         Me.trvPermisos.TabIndex = 9
         '
-        'ID
-        '
-        Me.ID.DataPropertyName = "usu_Codigo"
-        Me.ID.HeaderText = "ID"
-        Me.ID.Name = "ID"
-        Me.ID.ReadOnly = True
-        Me.ID.Visible = False
-        '
-        'Usuario
-        '
-        Me.Usuario.DataPropertyName = "usu_Nombre"
-        Me.Usuario.HeaderText = "Usuario"
-        Me.Usuario.Name = "Usuario"
-        Me.Usuario.ReadOnly = True
-        '
-        'Password
-        '
-        Me.Password.DataPropertyName = "usu_Contrasena"
-        Me.Password.HeaderText = "Password"
-        Me.Password.Name = "Password"
-        Me.Password.ReadOnly = True
-        Me.Password.Visible = False
-        '
-        'Estado
-        '
-        Me.Estado.DataPropertyName = "usu_Estado"
-        Me.Estado.HeaderText = "Estado"
-        Me.Estado.Name = "Estado"
-        Me.Estado.ReadOnly = True
-        Me.Estado.Visible = False
-        '
         'frmUsuarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -265,7 +265,7 @@ Partial Class frmUsuarios
         Me.Controls.Add(Me.btnGuardar)
         Me.Controls.Add(Me.trvPermisos)
         Me.Name = "frmUsuarios"
-        Me.Text = "frmUsuarios"
+        Me.Text = "Control de Usuarios"
         Me.gbListado.ResumeLayout(False)
         Me.gbListado.PerformLayout()
         CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).EndInit()

@@ -1,12 +1,11 @@
 ﻿Imports CapaNegocio
 
 Public Class frmGastoMovilidad
-    Dim usuario As DataRow
     Dim modificando As Boolean = False
 
-    Public Sub DatosU(u As DataRow)
-        usuario = u
-    End Sub
+    Property usuarioLogueado As DataRow
+    Property usuarioLogueadoQuery As DataTable
+
     Private dataControl As DataTable
     Private Sub frmGastoMovilidad_Load(sender As Object, e As EventArgs) Handles Me.Load
         dataControl = New DataTable
@@ -22,7 +21,7 @@ Public Class frmGastoMovilidad
             .Add("Gas_Denegar", GetType(String))
         End With
         dataControl.Rows.Clear()
-
+        dtpNuevoGasto.MaxDate = DateTime.Today
         Nuevo()
     End Sub
 
@@ -42,24 +41,6 @@ Public Class frmGastoMovilidad
         Dim dataResult As DataRow = Nothing
         Dim objNegocio As New clsGasto
 
-        dataResult = objNegocio.Inicializar("I")
-        txtNumero.Text = dataResult("doc_Numero")
-
-        Dim ultimoNumero As String = dataResult("doc_Numero")
-        Dim numero As String = Integer.Parse(ultimoNumero.Split(New Char() {"-"c})(1))
-        Dim nuevoNumero As String = (numero + 1) & ""
-        nuevoNumero = nuevoNumero.PadLeft(4, "0")
-        Dim area As String = usuario("are_Abreviatura")
-
-        txtNumero.Text = "GASTO-" & nuevoNumero & "-" & area & "/UCV-CH-17"
-
-        Dim ultimaSerie As String = dataResult("doc_Gas_SerieCod")
-        Dim serie As String = Integer.Parse(ultimaSerie.Split(New Char() {"-"c})(1))
-        Dim nuevaSerie As String = (serie + 1) & ""
-        nuevaSerie = nuevaSerie.PadLeft(5, "0")
-
-        txtSerie.Text = "005-" & nuevaSerie
-
         While (dgvDetalle.Rows.Count > 0)
             dgvDetalle.Rows.RemoveAt(0)
         End While
@@ -72,7 +53,7 @@ Public Class frmGastoMovilidad
 
         Dim drCargo As DataRow = Nothing
         drCargo = dataControl.NewRow
-        drCargo("Gas_Usuario") = usuario("usu_Codigo")
+        drCargo("Gas_Usuario") = usuarioLogueado("usu_Codigo")
         drCargo("Gas_Motivo") = txtMotivo.Text
         drCargo("Gas_Ruta") = txtRuta.Text
         drCargo("Gas_Fecha") = dtpNuevoGasto.Value.Date
@@ -88,21 +69,6 @@ Public Class frmGastoMovilidad
 
         Dim dataResult As DataRow = Nothing
         Dim objNegocio As New clsGasto
-
-        dataResult = objNegocio.Inicializar("I")
-
-        Dim ultimoCodigo As String = dataResult("doc_Codigo")
-        Dim codigo As Integer = Integer.Parse(ultimoCodigo.Substring(3))
-        Dim nuevoCodigo As String = (codigo + 1) & ""
-        nuevoCodigo = nuevoCodigo.PadLeft(7, "0")
-
-
-        Dim ultimaSerie As String = dataResult("doc_Gas_SerieCod")
-        Dim serie As String = Integer.Parse(ultimaSerie.Split(New Char() {"-"c})(1))
-        Dim nuevaSerie As String = (serie + 1) & ""
-        nuevaSerie = nuevaSerie.PadLeft(5, "0")
-
-        txtSerie.Text = "005-" & nuevaSerie
 
         Try
             Dim dtCargo As New DataTable
@@ -139,15 +105,14 @@ Public Class frmGastoMovilidad
             Dim drCargo As DataRow = Nothing
             drCargo = dtCargo.NewRow
 
-            drCargo("doc_Codigo") = "DOC" & nuevoCodigo
             drCargo("doc_dpl_Codigo") = "DPL0000007"
-            drCargo("doc_usu_Codigo") = usuario("usu_Codigo")
+            drCargo("doc_usu_Codigo") = usuarioLogueado("usu_Codigo")
             drCargo("doc_Fecha") = dtpFechaDocumento.Value.Date
             drCargo("doc_Hora") = CType(dtpFechaDocumento.Value.Hour.ToString + ":" + dtpFechaDocumento.Value.Minute.ToString + ":" + dtpFechaDocumento.Value.Second.ToString, DateTime)
-            drCargo("doc_Numero") = txtNumero.Text
+            drCargo("doc_Numero") = usuarioLogueado("are_Abreviatura")
             drCargo("doc_dan_Codigo") = "DAN010"
             drCargo("doc_Titulo") = "DTI0000006"
-            drCargo("doc_Remitente") = usuario("per_Codigo")
+            drCargo("doc_Remitente") = usuarioLogueado("per_Codigo")
             drCargo("doc_Destinatario") = "PER0000126"
             drCargo("doc_Asunto") = ""
             drCargo("doc_Contenido") = ""
@@ -159,17 +124,23 @@ Public Class frmGastoMovilidad
             drCargo("doc_DescargaDocumento") = ""
             drCargo("doc_ConfirmaFirma") = ""
             drCargo("doc_Firma") = ""
-            drCargo("doc_Gas_SerieCod") = txtSerie.Text
             drCargo("doc_ApruebaMov") = "NO"
             drCargo("doc_ApruebaPape") = "NO"
             drCargo("doc_ApruebaViat") = "NO"
             dtCargo.Rows.Add(drCargo)
 
+            Dim drRptaDocumento As DataRow = Nothing
             Dim drRpta As DataRow = Nothing
+
+            drRptaDocumento = cargoDocumento.Mantenimiento("RG", dtCargo)
+
+            txtNumero.Text = drRptaDocumento("doc_Numero")
+            txtSerie.Text = drRptaDocumento("doc_Gas_SerieCod")
+
             For Each row As DataRow In dataControl.Rows
-                row("Gas_doc_Cod") = "DOC" & nuevoCodigo
+                row("Gas_doc_Cod") = drRptaDocumento("doc_Codigo")
             Next row
-            cargoDocumento.Mantenimiento("R", dtCargo)
+
             drRpta = cargoGasto.Mantenimiento("R", dataControl)
 
             MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
@@ -177,7 +148,7 @@ Public Class frmGastoMovilidad
             Nuevo()
 
         Catch ex As Exception
-            Throw
+            Throw ex
         End Try
     End Sub
 
@@ -196,7 +167,7 @@ Public Class frmGastoMovilidad
         Me.Dispose()
     End Sub
 
-    Private Sub btnAprobar_Click(sender As Object, e As EventArgs) Handles btnAprobar.Click
+    Private Sub btnAprobar_Click(sender As Object, e As EventArgs)
         Dim dtCargo As New DataTable
 
         Dim cargoGasto As New clsGasto
@@ -218,6 +189,10 @@ Public Class frmGastoMovilidad
         MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
                     "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+
+    End Sub
+
+    Private Sub btnAprobar_Click_1(sender As Object, e As EventArgs) Handles btnAprobar.Click
 
     End Sub
 End Class

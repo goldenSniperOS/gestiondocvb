@@ -83,6 +83,31 @@ Public Class clsGasto
             End If
         End Try
     End Function
+    Public Function Aprobar(Optional ByVal Datos As DataTable = Nothing) As DataTable
+
+        Dim obj As New clsConexion
+        Dim objDtt As DataTable = Nothing
+        Dim objPrm As New ParametroCollection
+        Dim CadenaDatos As String = GetXMLPrincipal(Datos)
+        Try
+            objPrm.Add(New Parametro("@Tipo", "AP"))
+            objPrm.Add(New Parametro("@InfoXML", CadenaDatos))
+            objDtt = obj.ConsultaAccion("pa_GastoMovilidad", objPrm)
+            Return objDtt
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+        End Try
+    End Function
+
 #Region "Seccion:Dispose"
     Private disposedValue As Boolean
     Protected Overridable Sub Dispose(disposing As Boolean)
