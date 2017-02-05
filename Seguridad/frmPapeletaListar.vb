@@ -2,16 +2,17 @@
 
 Public Class frmPapeletaListar
 
-    Dim usuario As DataRow
+
+
+    Property usuarioLogueado As DataRow
+    Property usuarioLogueadoQuery As DataTable
     Public dataRetornar As DataGridViewRow
-    Public Sub DatosU(u As DataRow)
-        usuario = u
-    End Sub
+    
 
     Private Sub CargarDatos()
         Dim drRpta As DataTable = Nothing
         Dim objCargo As New clsPapeleta
-        drRpta = objCargo.MantenimientoSimple("LP", usuario("par_are_Codigo"))
+        drRpta = objCargo.MantenimientoSimple("LP", usuarioLogueado("par_are_Codigo"))
         dgLista.DataSource = drRpta
         dgLista.ClearSelection()
     End Sub
@@ -22,7 +23,7 @@ Public Class frmPapeletaListar
     End Sub
     Private Sub dgLista_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgLista.CellContentClick
         dataRetornar = dgLista.Rows(e.RowIndex)
-        If dataRetornar.Cells(5).Value = "NO" Then
+        If dataRetornar.Cells(4).Value = "NO" Then
             btnAprobar.Enabled = True
             btnEliminar.Enabled = True
         Else
@@ -34,7 +35,7 @@ Public Class frmPapeletaListar
 
     Private Sub Agregar_Click(sender As Object, e As EventArgs) Handles Agregar.Click
         Dim frmNuevo As New frmPapeletas
-        frmNuevo.DatosU(usuario)
+        frmNuevo.DatosU(usuarioLogueado)
         If frmNuevo.ShowDialog() = DialogResult.OK Then
             CargarDatos()
         End If
