@@ -109,6 +109,12 @@
     <Compile Include="frmListadoGastos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmListadoPersona.Designer.vb">
+      <DependentUpon>frmListadoPersona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmListadoPersona.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPapeletaListar.Designer.vb">
       <DependentUpon>frmPapeletaListar.vb</DependentUpon>
     </Compile>
@@ -119,6 +125,12 @@
       <DependentUpon>frmPapeletas.vb</DependentUpon>
     </Compile>
     <Compile Include="frmPapeletas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPersona.Designer.vb">
+      <DependentUpon>frmPersona.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPersona.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPrincipal.Designer.vb">
@@ -176,6 +188,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoGastos.resx">
       <DependentUpon>frmListadoGastos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmListadoPersona.resx">
+      <DependentUpon>frmListadoPersona.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPersona.resx">
+      <DependentUpon>frmPersona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.vb</DependentUpon>

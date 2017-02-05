@@ -68,6 +68,7 @@
     <Compile Include="clsDocumento.vb" />
     <Compile Include="clsDocumentoVacacion.vb" />
     <Compile Include="clsGasto.vb" />
+    <Compile Include="clsListados.vb" />
     <Compile Include="clsMantenimiento.vb" />
     <Compile Include="clsMantenimientoPapeleta.vb" />
     <Compile Include="clsNotaContable.vb" />

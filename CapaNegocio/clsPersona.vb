@@ -30,14 +30,38 @@ Public Class clsPersona
 
     End Function
 
-    Public Function Listado(ByVal Tipo As String) As DataTable
+    Public Function Listado() As DataTable
 
         Dim obj As New clsConexion
         Dim objDtt As DataTable = Nothing
         Dim objPrm As New ParametroCollection
         Try
-            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@Tipo", "L"))
             objPrm.Add(New Parametro("@InfoXML", ""))
+            objDtt = obj.ConsultaAccion("pa_persona", objPrm)
+            Return objDtt
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+        End Try
+    End Function
+
+    Public Function Filtro(ByVal FiltroCadena As String) As DataTable
+
+        Dim obj As New clsConexion
+        Dim objDtt As DataTable = Nothing
+        Dim objPrm As New ParametroCollection
+        Try
+            objPrm.Add(New Parametro("@Tipo", "F"))
+            objPrm.Add(New Parametro("@InfoXML", FiltroCadena))
             objDtt = obj.ConsultaAccion("pa_persona", objPrm)
             Return objDtt
         Catch ex As Exception
