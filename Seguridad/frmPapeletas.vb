@@ -140,7 +140,7 @@ Public Class frmPapeletas
     End Function
     Private Sub Nuevo()
         Dim dataResult As DataRow = Nothing
-        Dim objNegocio As New clsMantenimientoPapeleta
+        Dim objNegocio As New clsPapeleta
 
         dataResult = objNegocio.Inicializar("I")
 
@@ -155,13 +155,13 @@ Public Class frmPapeletas
         Dim objCargo As New clsMantenimiento
         Dim dtData As DataTable = Nothing
         Dim drRpta As DataRow = Nothing
-        Dim objPapeleta As New clsMantenimientoPapeleta
+        Dim objPapeleta As New clsPapeleta
         Dim dtDataPapeleta As DataTable = Nothing
         Dim drRptaPapeleta As DataRow = Nothing
         dtData = LlenarDatos()
         drRpta = objCargo.MantenimientoDocumento("R", dtData)
         dtDataPapeleta = LlenarDatosPapeleta()
-        drRptaPapeleta = objPapeleta.Mantenimiento("R", dtDataPapeleta)
+        drRptaPapeleta = objPapeleta.MantenimientoXML("R", dtDataPapeleta).Rows(0)
         MessageBox.Show(drRptaPapeleta.Item("MensajeTitulo").ToString & vbCrLf & drRptaPapeleta.Item("MensajeProcedure").ToString, _
                             "Sistema Banco", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.DialogResult = Windows.Forms.DialogResult.OK

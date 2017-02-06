@@ -39,11 +39,11 @@ Public Class frmBuscarTrabajadorArea
     End Function
     Private Sub frmBuscarTrabajadorArea_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim drRpta As DataTable = Nothing
-        Dim objCargo As New clsCliente
+        Dim objCargo As New clsPapeleta
 
         Dim dtData As DataTable = Nothing
         dtData = LlenarDatos()
-        drRpta = objCargo.Listado("L", dtData)
+        drRpta = objCargo.MantenimientoXML("L", dtData)
         dgvLista.DataSource = drRpta
         dataRetornar = dgvLista.Rows(0)
     End Sub

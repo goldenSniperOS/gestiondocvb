@@ -2,7 +2,7 @@
 Public Class clsPapeleta
     Implements IDisposable
 
-    Public Function MantenimientoXML(Tipo As String, Data As DataTable) As DataRow
+    Public Function MantenimientoXML(Tipo As String, Data As DataTable) As DataTable
         Dim obj As New clsConexion
         Dim objPrm As New ParametroCollection
         Dim objDtt As DataTable = Nothing
@@ -10,7 +10,7 @@ Public Class clsPapeleta
             objPrm.Add(New Parametro("@Tipo", Tipo))
             objPrm.Add(New Parametro("@InfoXML", GetXMLPrincipal(Data)))
             objDtt = obj.ConsultaAccion("pa_MantenimientoPapeleta", objPrm)
-            Return objDtt.Rows(0)
+            Return objDtt
         Catch ex As Exception
             Throw ex
         Finally
@@ -28,7 +28,29 @@ Public Class clsPapeleta
         End Try
 
     End Function
+    Public Function Inicializar(ByVal Tipo As String) As DataRow
 
+        Dim obj As New clsConexion
+        Dim objDtt As DataTable = Nothing
+        Dim objPrm As New ParametroCollection
+        Try
+            objPrm.Add(New Parametro("@Tipo", Tipo))
+            objPrm.Add(New Parametro("@InfoXML", ""))
+            objDtt = obj.ConsultaAccion("pa_MantenimientoPapeleta", objPrm)
+            Return objDtt.Rows(0)
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If Not obj Is Nothing Then
+                obj.Dispose()
+                objDtt = Nothing
+            End If
+            If objDtt IsNot Nothing Then
+                objDtt.Dispose()
+                objDtt = Nothing
+            End If
+        End Try
+    End Function
 
     Public Function MantenimientoSimple(ByVal Tipo As String, Data As String) As DataTable
 
