@@ -77,6 +77,8 @@ Partial Class frmPersona
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.txtTelefono = New System.Windows.Forms.TextBox()
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
@@ -96,7 +98,9 @@ Partial Class frmPersona
         Me.gbPersona.Controls.Add(Me.Label18)
         Me.gbPersona.Controls.Add(Me.txtDNI)
         Me.gbPersona.Controls.Add(Me.Label3)
+        Me.gbPersona.Controls.Add(Me.txtTelefono)
         Me.gbPersona.Controls.Add(Me.txtEmail)
+        Me.gbPersona.Controls.Add(Me.Label21)
         Me.gbPersona.Controls.Add(Me.txtApellidos)
         Me.gbPersona.Controls.Add(Me.Label8)
         Me.gbPersona.Controls.Add(Me.txtNombres)
@@ -220,7 +224,7 @@ Partial Class frmPersona
         '
         Me.txtEmail.Location = New System.Drawing.Point(6, 347)
         Me.txtEmail.Name = "txtEmail"
-        Me.txtEmail.Size = New System.Drawing.Size(314, 20)
+        Me.txtEmail.Size = New System.Drawing.Size(208, 20)
         Me.txtEmail.TabIndex = 3
         '
         'txtApellidos
@@ -618,6 +622,22 @@ Partial Class frmPersona
         Me.btnBuscar.Text = "Buscar"
         Me.btnBuscar.UseVisualStyleBackColor = True
         '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(217, 330)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(52, 13)
+        Me.Label21.TabIndex = 2
+        Me.Label21.Text = "Telefono:"
+        '
+        'txtTelefono
+        '
+        Me.txtTelefono.Location = New System.Drawing.Point(220, 347)
+        Me.txtTelefono.Name = "txtTelefono"
+        Me.txtTelefono.Size = New System.Drawing.Size(100, 20)
+        Me.txtTelefono.TabIndex = 3
+        '
         'frmPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -701,4 +721,6 @@ Partial Class frmPersona
     Friend WithEvents btnNuevo As Button
     Friend WithEvents btnCancelar As Button
     Friend WithEvents btnBuscar As Button
+    Friend WithEvents txtTelefono As System.Windows.Forms.TextBox
+    Friend WithEvents Label21 As System.Windows.Forms.Label
 End Class

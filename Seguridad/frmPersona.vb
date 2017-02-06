@@ -14,6 +14,7 @@ Public Class frmPersona
             With dtCargo.Columns
                 .Add("per_Codigo", GetType(String))
                 .Add("per_Nombres", GetType(String))
+                .Add("per_Apellidos", GetType(String))
                 .Add("per_ppr_Codigo", GetType(String))
                 .Add("per_Sexo", GetType(String))
                 .Add("per_DNI", GetType(String))
@@ -21,6 +22,7 @@ Public Class frmPersona
                 .Add("per_Nacimiento", GetType(Date))
                 .Add("per_pca_Codigo", GetType(String))
                 .Add("per_Email", GetType(String))
+                .Add("per_Telefono", GetType(Integer))
                 .Add("per_pdi_Codigo", GetType(String))
                 .Add("per_CodPeople", GetType(String))
                 .Add("per_EstadoCivil", GetType(String))
@@ -175,6 +177,7 @@ Public Class frmPersona
             txtCodigoPeople.Text = personaSeleccionada("per_CodPeople")
             txtDNI.Text = personaSeleccionada("per_DNI")
             txtEmail.Text = personaSeleccionada("per_Email")
+            txtTelefono.Text = personaSeleccionada("per_Telefono")
             txtNombreVia.Text = personaSeleccionada("pdi_NombreVia")
             txtNombreZona.Text = personaSeleccionada("pdi_NombreZona")
             txtNumero.Text = personaSeleccionada("pdi_Numero")
@@ -259,13 +262,10 @@ Public Class frmPersona
         Dim rowGuardar As DataRow = tablaGuardar.NewRow
 
         Dim clsBD As New clsPersona
-
         Dim drRpta As DataRow
 
-
-
-
         rowGuardar("per_Nombres") = txtNombres.Text
+        rowGuardar("per_Apellidos") = txtApellidos.Text
         rowGuardar("per_ppr_Codigo") = cmbGrado.SelectedValue
         rowGuardar("per_Sexo") = cmbGrado.SelectedItem.ToString.Chars(0)
         rowGuardar("per_DNI") = txtDNI.Text
@@ -273,7 +273,8 @@ Public Class frmPersona
         rowGuardar("per_Nacimiento") = dtpFechaNacimiento.Value.Date
         rowGuardar("per_pca_Codigo") = cmbCargo.SelectedValue
         rowGuardar("per_Email") = txtEmail.Text
-        rowGuardar("per_pdi_Codigo") = cmbDistrito.SelectedValue
+        rowGuardar("per_Telefono") = CType(txtTelefono.Text, Integer)
+
         rowGuardar("per_CodPeople") = txtCodigoPeople.Text
         rowGuardar("per_EstadoCivil") = cmbEstadoCivil.SelectedItem
 
@@ -284,11 +285,10 @@ Public Class frmPersona
         rowGuardar("pdi_NombreVia") = txtNombreVia.Text
         rowGuardar("pdi_Numero") = txtNumero.Text
 
-
-
         If (modificando) Then
             rowGuardar("per_Codigo") = personaSeleccionada("per_Codigo")
             rowGuardar("pdi_Codigo") = personaSeleccionada("pdi_Codigo")
+            rowGuardar("per_pdi_Codigo") = personaSeleccionada("pdi_Codigo")
             tablaGuardar.Rows.Add(rowGuardar)
             drRpta = clsBD.Mantenimiento("A", tablaGuardar)
         Else
@@ -300,6 +300,7 @@ Public Class frmPersona
 
         MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
                         "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        btnCancelar.PerformClick()
 
     End Sub
 End Class

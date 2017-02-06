@@ -24,9 +24,6 @@ Partial Class frmListadoPersona
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dgvPersonas = New System.Windows.Forms.DataGridView()
-        Me.btnSeleccionar = New System.Windows.Forms.Button()
-        Me.txtFiltro = New System.Windows.Forms.TextBox()
-        Me.btnBuscar = New System.Windows.Forms.Button()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EstadoCivil = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Estudios = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -62,6 +59,9 @@ Partial Class frmListadoPersona
         Me.Sexo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProvinciaCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DepartamentoCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnSeleccionar = New System.Windows.Forms.Button()
+        Me.txtFiltro = New System.Windows.Forms.TextBox()
+        Me.btnBuscar = New System.Windows.Forms.Button()
         CType(Me.dgvPersonas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -87,31 +87,6 @@ Partial Class frmListadoPersona
         Me.dgvPersonas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvPersonas.Size = New System.Drawing.Size(1057, 383)
         Me.dgvPersonas.TabIndex = 1
-        '
-        'btnSeleccionar
-        '
-        Me.btnSeleccionar.Location = New System.Drawing.Point(997, 432)
-        Me.btnSeleccionar.Name = "btnSeleccionar"
-        Me.btnSeleccionar.Size = New System.Drawing.Size(75, 23)
-        Me.btnSeleccionar.TabIndex = 2
-        Me.btnSeleccionar.Text = "Seleccionar"
-        Me.btnSeleccionar.UseVisualStyleBackColor = True
-        '
-        'txtFiltro
-        '
-        Me.txtFiltro.Location = New System.Drawing.Point(50, 17)
-        Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Size = New System.Drawing.Size(941, 20)
-        Me.txtFiltro.TabIndex = 3
-        '
-        'btnBuscar
-        '
-        Me.btnBuscar.Location = New System.Drawing.Point(997, 15)
-        Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
-        Me.btnBuscar.TabIndex = 4
-        Me.btnBuscar.Text = "Buscar"
-        Me.btnBuscar.UseVisualStyleBackColor = True
         '
         'Codigo
         '
@@ -395,6 +370,31 @@ Partial Class frmListadoPersona
         Me.DepartamentoCodigo.ReadOnly = True
         Me.DepartamentoCodigo.Visible = False
         '
+        'btnSeleccionar
+        '
+        Me.btnSeleccionar.Location = New System.Drawing.Point(997, 432)
+        Me.btnSeleccionar.Name = "btnSeleccionar"
+        Me.btnSeleccionar.Size = New System.Drawing.Size(75, 23)
+        Me.btnSeleccionar.TabIndex = 2
+        Me.btnSeleccionar.Text = "Seleccionar"
+        Me.btnSeleccionar.UseVisualStyleBackColor = True
+        '
+        'txtFiltro
+        '
+        Me.txtFiltro.Location = New System.Drawing.Point(50, 17)
+        Me.txtFiltro.Name = "txtFiltro"
+        Me.txtFiltro.Size = New System.Drawing.Size(941, 20)
+        Me.txtFiltro.TabIndex = 3
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.Location = New System.Drawing.Point(997, 15)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
+        Me.btnBuscar.TabIndex = 4
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.UseVisualStyleBackColor = True
+        '
         'frmListadoPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -406,6 +406,7 @@ Partial Class frmListadoPersona
         Me.Controls.Add(Me.dgvPersonas)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmListadoPersona"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmListadoPersona"
         CType(Me.dgvPersonas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
