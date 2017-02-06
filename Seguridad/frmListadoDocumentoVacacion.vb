@@ -5,7 +5,6 @@ Public Class frmListadoDocumentoVacacion
 
     Private objVacacion As New clsDocumentoVacacion
     Private dtData As DataTable
-    Public dgvrSeleccion As DataGridViewRow
 
     Private Sub LlenarData()
         Dim dtParam As New DataTable

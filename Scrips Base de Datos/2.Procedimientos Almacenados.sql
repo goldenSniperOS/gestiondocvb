@@ -53,6 +53,56 @@ BEGIN
 		WHERE doc_Titulo = 'DTI0000008'
 		ORDER BY doc_Codigo DESC
 	 END 
+	 IF (@Tipo = '1') --LISTAR LAS ULTIMAS 20 PAPELETAS REGSITRADAS QUE TIENEN RETORNO
+	 BEGIN
+		select top 20 TBP.Pape_Codigo, TBP.Pape_Fecha, TP.per_Apellidos, TP.per_Nombres, TBP.Pape_Motivo, TBP.Pape_ApruebaPapeRRHH,
+		TBP.Pape_HoraSalida, TBP.Pape_HoraEntrada from tbdocumento_papeleta as TBP 
+		inner join tbdocumento as TD on TD.doc_Codigo = TBP.Pape_doc_Cod
+		inner join tbpersona as TP on TP.per_Codigo = TD.doc_Remitente
+
+		where TBP.Pape_Retorno = 'SI' order by TBP.Pape_Codigo Desc
+	 END 
+
+	 IF (@Tipo = '2') -- LISTAR POR DNI BUSCADO
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+		select TBP.Pape_Codigo, TBP.Pape_Fecha, TP.per_Apellidos, TP.per_Nombres, TBP.Pape_Motivo, TBP.Pape_ApruebaPapeRRHH,
+		TBP.Pape_HoraSalida, TBP.Pape_HoraEntrada
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(per_DNI VARCHAR(8))
+		AS TablaLoca
+		INNER JOIN tbpersona as TP ON TablaLoca.per_DNI = TP.per_DNI
+		INNER JOIN tbdocumento as TD on TP.per_Codigo = TD.doc_Remitente
+		Inner Join tbdocumento_papeleta as TBP on TD.doc_Codigo = TBP.Pape_doc_Cod
+		where TBP.Pape_Retorno = 'SI' order by TBP.Pape_Codigo Desc
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
+	 IF (@Tipo = '3') -- Marcacion Salida
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+		UPDATE tbdocumento_papeleta SET Pape_HoraSalida = (select convert(time, SYSDATETIME()))
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(Pape_Codigo int)
+		AS TablaLoca
+		WHERE tbdocumento_papeleta.Pape_Codigo = TablaLoca.Pape_Codigo
+
+		select 'Modulo Marcaciones' as MensajeTitulo, 'Marcado Salida Con Exito' as MensajeProcedure
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
+	 IF (@Tipo = '4') -- Marcacion Salida
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+		UPDATE tbdocumento_papeleta SET Pape_HoraEntrada = (select convert(time, SYSDATETIME()))
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(Pape_Codigo int)
+		AS TablaLoca
+		WHERE tbdocumento_papeleta.Pape_Codigo = TablaLoca.Pape_Codigo
+
+		select 'Modulo Marcaciones' as MensajeTitulo, 'Marcado Entrada Con Exito' as MensajeProcedure
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
 END
 
 GO

@@ -202,7 +202,7 @@ Partial Class frmListadoDocumentoVacacion
         Me.Controls.Add(Me.txtDNI)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmListadoDocumentoVacacion"
-        Me.Text = "frmListadoDocumentoVacacion"
+        Me.Text = "LISTADO DE DOCUMENTOS DE VACACIONES"
         CType(Me.dgvListado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
