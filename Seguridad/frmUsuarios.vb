@@ -62,21 +62,27 @@ Public Class frmUsuarios
         Dim clsBD As New clsUsuario
         Dim clsRolesBD As New clsRol
 
+        
+
         cmbRol.DisplayMember = "rol_Descripcion"
         cmbRol.ValueMember = "rol_Id"
         cmbRol.DataSource = clsRolesBD.Listado
 
+        lblLogueado.Text = usuarioLogueado("per_Nombres") & " " & usuarioLogueado("per_Apellidos")
 
-        Dim tablaUsuario As DataTable = GetEstructuraFiltrado()
-        Dim usuarioFilter As DataRow = tablaUsuario.NewRow
-        usuarioFilter("usu_Nombre") = txtFiltro.Text
-        tablaUsuario.Rows.Add(usuarioFilter)
-
-        dgvUsuarios.DataSource = clsBD.Consultar(tablaUsuario)
+        Dim clsBDPersona As New clsPersona
+        dgvUsuarios.DataSource = clsBDPersona.Filtro(txtFiltro.Text)
 
         userSelected = usuarioLogueado
         usuarioLogueadoQuery.Rows(0)("usu_Nombre") = usuarioLogueado("usu_Nombre")
         usuarioLogueadoQuery.Rows(0)("usu_Contrasena") = usuarioLogueado("usu_Contrasena")
+
+        chkVacaciones.Checked = (userSelected("usu_Vacaciones") = "SI")
+        chkPersona.Checked = (userSelected("usu_Persona") = "SI")
+        chkPapeleta.Checked = (userSelected("usu_Papeleta") = "SI")
+        chkMarcacion.Checked = (userSelected("usu_Marcacion") = "SI")
+        chkGasto.Checked = (userSelected("usu_Beneficio") = "SI")
+        chkNotaContable.Checked = (userSelected("usu_NotaContable") = "SI")
 
         permisosFinales = GetEstructuraPermisos()
         permisosTotales = clsBD.PermisosXUsuario(usuarioLogueadoQuery)
@@ -173,15 +179,11 @@ Public Class frmUsuarios
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
-        Dim clsUsuariosBD As New clsUsuario
-        Dim tablaUsuario As DataTable = GetEstructuraFiltrado()
-        Dim usuarioFilter As DataRow = tablaUsuario.NewRow
-        usuarioFilter("usu_Nombre") = txtFiltro.Text
-        tablaUsuario.Rows.Add(usuarioFilter)
-        dgvUsuarios.DataSource = clsUsuariosBD.Consultar(tablaUsuario)
+        Dim clsBD As New clsPersona
+        dgvUsuarios.DataSource = clsBD.Filtro(txtFiltro.Text)
     End Sub
 
-    Private Sub dgvUsuarios_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs) Handles dgvUsuarios.RowStateChanged
+    Private Sub dgvUsuarios_RowStateChanged(sender As Object, e As DataGridViewRowStateChangedEventArgs)
         If (dgvUsuarios.SelectedRows.Count > 0) Then
             btnModificar.Enabled = True
             btnEliminar.Enabled = True
@@ -203,8 +205,17 @@ Public Class frmUsuarios
             gbUsuario.Enabled = True
         End If
 
+        chkVacaciones.Checked = (userSelected("usu_Vacaciones") = "SI")
+        chkPersona.Checked = (userSelected("usu_Persona") = "SI")
+        chkPapeleta.Checked = (userSelected("usu_Papeleta") = "SI")
+        chkMarcacion.Checked = (userSelected("usu_Marcacion") = "SI")
+        chkGasto.Checked = (userSelected("usu_Beneficio") = "SI")
+        chkNotaContable.Checked = (userSelected("usu_NotaContable") = "SI")
+
         txtUsuario.Text = userSelected("usu_Nombre")
         txtPassword.Text = userSelected("usu_Contrasena")
+
+        lblLogueado.Text = userSelected("per_Nombres") & " " & userSelected("per_Apellidos")
 
         permisosFinales = GetEstructuraPermisos()
         usuarioLogueadoQuery.Rows(0)("usu_Nombre") = userSelected("usu_Nombre")
@@ -271,5 +282,21 @@ Public Class frmUsuarios
         'If initLoad Then
         ' TreePermisos(permisosFinales, 0, trvPermisos, Nothing)
         'End If
+    End Sub
+
+    Private Sub gbListado_Enter(sender As Object, e As EventArgs) Handles gbListado.Enter
+
+    End Sub
+
+    Private Sub dgvUsuarios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
+
+    End Sub
+
+    Private Sub dgvPersonas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellContentClick
+
+    End Sub
+
+    Private Sub chkPapeleta_CheckedChanged(sender As Object, e As EventArgs) Handles chkPapeleta.CheckedChanged
+
     End Sub
 End Class
