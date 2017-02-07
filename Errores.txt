@@ -4,3 +4,14 @@ Control de Usuario
 	-Limpieza de controles al darle nuevo 
 	-Agregar boton Cancelar
 Papeleta no funca pa nada da error al abrir el formulario
+
+
+
+v2
+
+
+	-Boton de  Cerrar Cesion regresa al formulario login
+	-Modulo PAPELETA 
+		-Error al momento de darle en aprobar papeleta dale en que si quuieres aprobar despues del mensajeito
+		Sale este error: "El índice estaba fuera del intervalo.
+		 Debe ser un valor no negativo e inferior al tamaño de la colección."	
