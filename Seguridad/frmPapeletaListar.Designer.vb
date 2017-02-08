@@ -26,6 +26,7 @@ Partial Class frmPapeletaListar
         Me.Agregar = New System.Windows.Forms.Button()
         Me.btnAprobar = New System.Windows.Forms.Button()
         Me.btnEliminar = New System.Windows.Forms.Button()
+        Me.filtroFecha = New System.Windows.Forms.DateTimePicker()
         CType(Me.dgLista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -37,7 +38,7 @@ Partial Class frmPapeletaListar
         Me.dgLista.AllowUserToResizeRows = False
         Me.dgLista.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgLista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgLista.Location = New System.Drawing.Point(12, 12)
+        Me.dgLista.Location = New System.Drawing.Point(12, 38)
         Me.dgLista.MultiSelect = False
         Me.dgLista.Name = "dgLista"
         Me.dgLista.ReadOnly = True
@@ -47,7 +48,7 @@ Partial Class frmPapeletaListar
         '
         'Agregar
         '
-        Me.Agregar.Location = New System.Drawing.Point(561, 285)
+        Me.Agregar.Location = New System.Drawing.Point(561, 297)
         Me.Agregar.Name = "Agregar"
         Me.Agregar.Size = New System.Drawing.Size(90, 23)
         Me.Agregar.TabIndex = 1
@@ -57,7 +58,7 @@ Partial Class frmPapeletaListar
         'btnAprobar
         '
         Me.btnAprobar.Enabled = False
-        Me.btnAprobar.Location = New System.Drawing.Point(12, 285)
+        Me.btnAprobar.Location = New System.Drawing.Point(12, 297)
         Me.btnAprobar.Name = "btnAprobar"
         Me.btnAprobar.Size = New System.Drawing.Size(75, 23)
         Me.btnAprobar.TabIndex = 2
@@ -67,18 +68,29 @@ Partial Class frmPapeletaListar
         'btnEliminar
         '
         Me.btnEliminar.Enabled = False
-        Me.btnEliminar.Location = New System.Drawing.Point(102, 285)
+        Me.btnEliminar.Location = New System.Drawing.Point(102, 297)
         Me.btnEliminar.Name = "btnEliminar"
         Me.btnEliminar.Size = New System.Drawing.Size(75, 23)
         Me.btnEliminar.TabIndex = 3
         Me.btnEliminar.Text = "Eliminar"
         Me.btnEliminar.UseVisualStyleBackColor = True
+        Me.btnEliminar.Visible = False
+        '
+        'filtroFecha
+        '
+        Me.filtroFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.filtroFecha.Location = New System.Drawing.Point(538, 12)
+        Me.filtroFecha.MinDate = New Date(2010, 1, 1, 0, 0, 0, 0)
+        Me.filtroFecha.Name = "filtroFecha"
+        Me.filtroFecha.Size = New System.Drawing.Size(113, 20)
+        Me.filtroFecha.TabIndex = 4
         '
         'frmPapeletaListar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(663, 320)
+        Me.ClientSize = New System.Drawing.Size(663, 326)
+        Me.Controls.Add(Me.filtroFecha)
         Me.Controls.Add(Me.btnEliminar)
         Me.Controls.Add(Me.btnAprobar)
         Me.Controls.Add(Me.Agregar)
@@ -93,4 +105,5 @@ Partial Class frmPapeletaListar
     Friend WithEvents Agregar As System.Windows.Forms.Button
     Friend WithEvents btnAprobar As System.Windows.Forms.Button
     Friend WithEvents btnEliminar As System.Windows.Forms.Button
+    Friend WithEvents filtroFecha As System.Windows.Forms.DateTimePicker
 End Class
