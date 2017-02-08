@@ -163,7 +163,7 @@ Public Class frmPapeletas
         dtDataPapeleta = LlenarDatosPapeleta()
         drRptaPapeleta = objPapeleta.MantenimientoXML("R", dtDataPapeleta).Rows(0)
         MessageBox.Show(drRptaPapeleta.Item("MensajeTitulo").ToString & vbCrLf & drRptaPapeleta.Item("MensajeProcedure").ToString, _
-                            "Gestion Documentaria", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            "Sistema Banco", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.DialogResult = Windows.Forms.DialogResult.OK
     End Sub
 

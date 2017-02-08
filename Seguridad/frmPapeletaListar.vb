@@ -12,17 +12,13 @@ Public Class frmPapeletaListar
     Private Sub CargarDatos()
         Dim drRpta As DataTable = Nothing
         Dim objCargo As New clsPapeleta
-        drRpta = objCargo.MantenimientoSimple("LP", filtroFecha.Value.ToString("yyyy-MM-dd"))
+        drRpta = objCargo.MantenimientoSimple("LP", usuarioLogueado("par_are_Codigo"))
         dgLista.DataSource = drRpta
         dgLista.ClearSelection()
     End Sub
 
     Private Sub frmPapeletaListar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarDatos()
-        If (usuarioLogueado("per_Codigo") = usuarioLogueado("par_per_Codigo")) Then
-            btnAprobar.Visible = False
-        End If
-
         'dataRetornar = dgvLista.Rows(0)
     End Sub
     Private Sub dgLista_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgLista.CellContentClick
@@ -34,10 +30,6 @@ Public Class frmPapeletaListar
             btnAprobar.Enabled = False
             btnEliminar.Enabled = False
 
-        End If
-        If usuarioLogueado("per_Nombres") = dataRetornar.Cells(0).Value And
-            usuarioLogueado("per_Apellidos") = dataRetornar.Cells(1).Value Then
-            btnEliminar.Visible = True
         End If
     End Sub
 
@@ -65,7 +57,6 @@ Public Class frmPapeletaListar
             drRpta = objCargo.MantenimientoSimple("A", dataRetornar.Cells(0).Value)
             dataRetornar.Cells(5).Value = "SI"
         End If
-
     End Sub
 
     Private Sub btnEliminar_Click(sender As Object, e As EventArgs) Handles btnEliminar.Click
@@ -83,21 +74,5 @@ Public Class frmPapeletaListar
             drRpta = objCargo.MantenimientoSimple("D", dataRetornar.Cells(0).Value)
             dgLista.Rows.Remove(dataRetornar)
         End If
-    End Sub
-
-    Private Sub filtroFecha_ValueChanged(sender As Object, e As EventArgs) Handles filtroFecha.ValueChanged
-        CargarDatos()
-    End Sub
-
-    Private Sub dgLista_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs) Handles dgLista.CellFormatting
-        'If e.Value = "SI" Then
-        'If e.Value IsNot Nothing Then
-        'e.CellStyle.BackColor = Color.LightGreen
-        'End If
-        'ElseIf e.Value = "NO" Then
-        'If e.Value IsNot Nothing Then
-        'e.CellStyle.BackColor = Color.LightCoral
-        'End If
-        'End If
     End Sub
 End Class

@@ -3,15 +3,12 @@
 Public Class frmRegistroDocumentoVacacion
     Dim usuario As DataRow
     Dim NuevoCodigoDocumento As String
-    Dim StartDate As Date
-    Dim EndDate As Date
-    Property usuarioLogueado As DataRow
-    Property usuarioLogueadoQuery As DataTable
+
     Public Sub DatosU(u As DataRow)
         usuario = u
     End Sub
 
-    Private Function getEstructuraMantenimiento() As DataTable
+    Private Function GetEstructuraDocumento() As DataTable
         Try
             Dim dtCargo As New DataTable
 
@@ -19,6 +16,8 @@ Public Class frmRegistroDocumentoVacacion
                 .Add("doc_Codigo", GetType(String))
                 .Add("doc_dpl_Codigo", GetType(String))
                 .Add("doc_usu_Codigo", GetType(String))
+                .Add("doc_Fecha", GetType(Date))
+                .Add("doc_Hora", GetType(DateTime))
                 .Add("doc_Numero", GetType(String))
                 .Add("doc_dan_Codigo", GetType(String))
                 .Add("doc_Titulo", GetType(String))
@@ -34,7 +33,6 @@ Public Class frmRegistroDocumentoVacacion
                 .Add("doc_DescargaDocumento", GetType(String))
                 .Add("doc_ConfirmaFirma", GetType(String))
                 .Add("doc_Firma", GetType(String))
-                .Add("doc_Fecha", GetType(String))
                 .Add("doc_Gas_SerieCod", GetType(String))
                 .Add("doc_ApruebaMov", GetType(String))
                 .Add("doc_ApruebaPape", GetType(String))
@@ -47,16 +45,15 @@ Public Class frmRegistroDocumentoVacacion
         End Try
     End Function
 
-
     Private Function GetEstructuraDocumentoVacacion() As DataTable
         Try
             Dim dtCargo As New DataTable
 
             With dtCargo.Columns
                 .Add("Vaca_doc_Cod", GetType(String))
-                .Add("Vaca_FechaSalida", GetType(String))
-                .Add("Vaca_FechaTermino", GetType(String))
-                .Add("Vaca_FechaRetorno", GetType(String))
+                .Add("Vaca_FechaSalida", GetType(Date))
+                .Add("Vaca_FechaTermino", GetType(Date))
+                .Add("Vaca_FechaRetorno", GetType(Date))
                 .Add("Vaca_Dias", GetType(Integer))
                 .Add("Vaca_Pape_ApruebaJefe", GetType(String))
                 .Add("Vaca_Pape_ApruebaRRHH", GetType(String))
@@ -69,36 +66,39 @@ Public Class frmRegistroDocumentoVacacion
         End Try
     End Function
 
-    Private Function LlenarDatos() As DataTable
+    Private Function LlenarDatosDocumento() As DataTable
         Dim dtCargo As DataTable = Nothing
         Dim drCargo As DataRow = Nothing
 
         Try
-            dtCargo = getEstructuraMantenimiento()
+            dtCargo = GetEstructuraDocumento()
             drCargo = dtCargo.NewRow
-            drCargo("doc_Codigo") = txtCodigo.Text
-            drCargo("doc_dpl_Codigo") = "DPL0000010"
-            drCargo("doc_usu_Codigo") = usuarioLogueado("usu_Codigo")
-            drCargo("doc_Numero") = "PAPELETA-0100025-OFA/UCV-CH-16"
+
+            drCargo("doc_Codigo") = NuevoCodigoDocumento
+            drCargo("doc_dpl_Codigo") = "DPL0000001"
+            drCargo("doc_usu_Codigo") = usuario.Item("usu_Codigo")
+            drCargo("doc_Fecha") = dtpDocumento.Value.Date
+            drCargo("doc_Hora") = CType(dtpDocumento.Value.Hour.ToString + ":" + dtpDocumento.Value.Minute.ToString + ":" + dtpDocumento.Value.Second.ToString, DateTime)
+            drCargo("doc_Numero") = txtNumero.Text
             drCargo("doc_dan_Codigo") = "DAN010"
-            drCargo("doc_Titulo") = "DTI0000008"
-            drCargo("doc_Remitente") = usuarioLogueado("usu_Codigo")
-            drCargo("doc_Fecha") = Date.Now.ToString("yyyy-MM-dd")
-            drCargo("doc_Destinatario") = "PER0000084"
+            drCargo("doc_Titulo") = "DTI0000009"
+            drCargo("doc_Remitente") = txtRemitente.Text
+            drCargo("doc_Destinatario") = txtDestinatario.Text
             drCargo("doc_Asunto") = ""
             drCargo("doc_Contenido") = ""
             drCargo("doc_Referencia") = ""
-            drCargo("doc_Estado") = 1
+            drCargo("doc_Estado") = CInt("1")
             drCargo("doc_Actividad") = ""
             drCargo("doc_CodigoPresupues") = ""
             drCargo("doc_Meta") = ""
             drCargo("doc_DescargaDocumento") = ""
-            drCargo("doc_ConfirmaFirma") = "NO"
-            drCargo("doc_Firma") = "NO"
+            drCargo("doc_ConfirmaFirma") = ""
+            drCargo("doc_Firma") = ""
             drCargo("doc_Gas_SerieCod") = ""
             drCargo("doc_ApruebaMov") = "NO"
             drCargo("doc_ApruebaPape") = "NO"
             drCargo("doc_ApruebaViat") = "NO"
+
             dtCargo.Rows.Add(drCargo)
             Return dtCargo
         Catch ex As Exception
@@ -106,18 +106,28 @@ Public Class frmRegistroDocumentoVacacion
         End Try
     End Function
 
-    Private Sub CodigoDocumento()
+    Private Function CodigoDocumento() As String
         Dim dataResult As DataRow = Nothing
-        Dim objNegocio As New clsDocumentoVacacion
+        Dim objNegocio As New clsGasto
+        Dim docCodigo As String
+        Try
+            dataResult = objNegocio.Inicializar("I")
 
-        dataResult = objNegocio.Inicializar("I")
+            txtNumero.Text = dataResult("doc_Numero")
 
-        Dim ultimoCodigo As String = dataResult("doc_Codigo")
-        Dim codigo As Integer = Integer.Parse(ultimoCodigo.Substring(3))
-        Dim nuevoCodigo As String = (codigo + 1) & ""
-        nuevoCodigo = nuevoCodigo.PadLeft(7, "0")
-        txtCodigo.Text = "DOC" & nuevoCodigo
-    End Sub
+            Dim ultimoCodigo As String = dataResult("doc_Codigo")
+            Dim codigo As Integer = Integer.Parse(UltimoCodigo.Substring(3))
+            Dim nuevoCodigo As String = (codigo + 1) & ""
+            nuevoCodigo = nuevoCodigo.PadLeft(7, "0")
+
+            docCodigo = "DOC" & nuevoCodigo
+
+            Return docCodigo
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
 
     Private Function LlenarDatosDocumentoVacacion() As DataTable
         Dim dtCargo As DataTable = Nothing
@@ -127,10 +137,10 @@ Public Class frmRegistroDocumentoVacacion
             drCargo = dtCargo.NewRow
 
             drCargo("Vaca_doc_Cod") = NuevoCodigoDocumento
-            drCargo("Vaca_FechaSalida") = dtpFechaSalida.Value.ToString("yyyy-MM-dd")
-            drCargo("Vaca_FechaTermino") = EndDate.ToString("yyyy-MM-dd")
-            drCargo("Vaca_FechaRetorno") = EndDate.AddDays(1).ToString("yyyy-MM-dd")
-            drCargo("Vaca_Dias") = cmbDias.SelectedItem
+            drCargo("Vaca_FechaSalida") = dtpFechaSalida.Value.Date
+            drCargo("Vaca_FechaTermino") = dtpFechaTermino.Value.Date
+            drCargo("Vaca_FechaRetorno") = dtpRetorno.Value.Date
+            drCargo("Vaca_Dias") = 0
             drCargo("Vaca_Pape_ApruebaJefe") = "NO"
             drCargo("Vaca_Pape_ApruebaRRHH") = "NO"
             drCargo("Vaca_Observacion") = ""
@@ -143,13 +153,16 @@ Public Class frmRegistroDocumentoVacacion
     End Function
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        Dim objCargo As New clsMantenimiento
+        Dim objCargo As New clsDocumento
         Dim dtData As DataTable = Nothing
         Dim drRpta As DataRow = Nothing
-        CodigoDocumento()
-        dtData = LlenarDatos()
+        NuevoCodigoDocumento = CodigoDocumento()
+        dtData = LlenarDatosDocumento()
 
-        drRpta = objCargo.MantenimientoDocumento("R", dtData)
+        drRpta = objCargo.Mantenimiento("R", dtData)
+
+        MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString, _
+                        "Sistema Banco", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Dim objCargo2 As New clsDocumentoVacacion
         Dim dtData2 As DataTable = Nothing
@@ -160,20 +173,16 @@ Public Class frmRegistroDocumentoVacacion
         drRpta2 = objCargo2.Mantenimiento("R", dtData2)
 
         MessageBox.Show(drRpta2.Item("MensajeTitulo").ToString & vbCrLf & drRpta2.Item("MensajeProcedure").ToString, _
-                        "Gestion Documentaria", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        "Sistema Banco", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        LimpiarCampos()
+    End Sub
+
+    Private Sub LimpiarCampos()
+        txtNumero.Text = ""
+        txtRemitente.Text = ""
+        txtDestinatario.Text = ""
 
     End Sub
 
-    Private Sub Calcular()
-        StartDate = dtpFechaSalida.Value
-        EndDate = StartDate.Add(TimeSpan.FromDays(CInt(cmbDias.SelectedItem)))
-        If EndDate.DayOfWeek = DayOfWeek.Sunday Then
-            EndDate = EndDate.Add(TimeSpan.FromDays(1))
-        End If
-        Calendar.SelectionRange = New SelectionRange(StartDate, EndDate)
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Calcular()
-    End Sub
 End Class

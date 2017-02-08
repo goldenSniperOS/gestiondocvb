@@ -61,10 +61,17 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -85,12 +92,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmAsignarVacaciones.Designer.vb">
-      <DependentUpon>frmAsignarVacaciones.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmAsignarVacaciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmBuscarTrabajadorArea.Designer.vb">
       <DependentUpon>frmBuscarTrabajadorArea.vb</DependentUpon>
     </Compile>
@@ -119,6 +120,12 @@
       <DependentUpon>frmListadoPersona.vb</DependentUpon>
     </Compile>
     <Compile Include="frmListadoPersona.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMarcacion.Designer.vb">
+      <DependentUpon>frmMarcacion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMarcacion.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmPapeletaListar.Designer.vb">
@@ -191,13 +198,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="rptVacaciones.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptVacaciones.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmAsignarVacaciones.resx">
-      <DependentUpon>frmAsignarVacaciones.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmGastoMovilidad.resx">
       <DependentUpon>frmGastoMovilidad.vb</DependentUpon>
     </EmbeddedResource>
@@ -210,17 +217,14 @@
     <EmbeddedResource Include="frmListadoPersona.resx">
       <DependentUpon>frmListadoPersona.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmPapeletaListar.resx">
-      <DependentUpon>frmPapeletaListar.vb</DependentUpon>
+    <EmbeddedResource Include="frmMarcacion.resx">
+      <DependentUpon>frmMarcacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPersona.resx">
       <DependentUpon>frmPersona.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmRegistroDocumentoVacacion.resx">
-      <DependentUpon>frmRegistroDocumentoVacacion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteVacacion.resx">
       <DependentUpon>frmReporteVacacion.vb</DependentUpon>
@@ -237,6 +241,10 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="rptVacaciones.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptVacaciones.vb</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
@@ -250,7 +258,9 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapaNegocio\CapaNegocio.vbproj">
       <Project>{f6baa887-df0a-4958-b46f-017d47eefece}</Project>
