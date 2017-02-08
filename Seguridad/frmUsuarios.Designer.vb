@@ -23,8 +23,8 @@ Partial Class frmUsuarios
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.gbListado = New System.Windows.Forms.GroupBox()
+        Me.dgvUsuarios = New System.Windows.Forms.DataGridView()
         Me.btnEliminar = New System.Windows.Forms.Button()
-        Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnModificar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtFiltro = New System.Windows.Forms.TextBox()
@@ -36,10 +36,17 @@ Partial Class frmUsuarios
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtUsuario = New System.Windows.Forms.TextBox()
-        Me.lblHead = New System.Windows.Forms.Label()
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.trvPermisos = New System.Windows.Forms.TreeView()
-        Me.dgvUsuarios = New System.Windows.Forms.DataGridView()
+        Me.chkPersona = New System.Windows.Forms.CheckBox()
+        Me.chkPapeleta = New System.Windows.Forms.CheckBox()
+        Me.lblHead = New System.Windows.Forms.Label()
+        Me.chkVacaciones = New System.Windows.Forms.CheckBox()
+        Me.chkGasto = New System.Windows.Forms.CheckBox()
+        Me.chkMarcacion = New System.Windows.Forms.CheckBox()
+        Me.chkNotaContable = New System.Windows.Forms.CheckBox()
+        Me.gbPermisos = New System.Windows.Forms.GroupBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Telefono = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EstadoCivil = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -76,55 +83,54 @@ Partial Class frmUsuarios
         Me.Sexo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProvinciaCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DepartamentoCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.chkNotaContable = New System.Windows.Forms.CheckBox()
-        Me.chkMarcacion = New System.Windows.Forms.CheckBox()
-        Me.chkGasto = New System.Windows.Forms.CheckBox()
-        Me.chkVacaciones = New System.Windows.Forms.CheckBox()
-        Me.chkPapeleta = New System.Windows.Forms.CheckBox()
-        Me.chkPersona = New System.Windows.Forms.CheckBox()
-        Me.lblLogueado = New System.Windows.Forms.Label()
+        Me.Estado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.gbListado.SuspendLayout()
-        Me.gbUsuario.SuspendLayout()
         CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbUsuario.SuspendLayout()
+        Me.gbPermisos.SuspendLayout()
         Me.SuspendLayout()
         '
         'gbListado
         '
         Me.gbListado.Controls.Add(Me.dgvUsuarios)
         Me.gbListado.Controls.Add(Me.btnEliminar)
-        Me.gbListado.Controls.Add(Me.btnNuevo)
         Me.gbListado.Controls.Add(Me.btnModificar)
         Me.gbListado.Controls.Add(Me.Label2)
         Me.gbListado.Controls.Add(Me.txtFiltro)
         Me.gbListado.Controls.Add(Me.btnBuscar)
-        Me.gbListado.Location = New System.Drawing.Point(352, 31)
+        Me.gbListado.Location = New System.Drawing.Point(352, 12)
         Me.gbListado.Name = "gbListado"
-        Me.gbListado.Size = New System.Drawing.Size(538, 240)
+        Me.gbListado.Size = New System.Drawing.Size(618, 259)
         Me.gbListado.TabIndex = 13
         Me.gbListado.TabStop = False
         Me.gbListado.Text = "Listado"
         '
+        'dgvUsuarios
+        '
+        Me.dgvUsuarios.AllowUserToAddRows = False
+        Me.dgvUsuarios.AllowUserToDeleteRows = False
+        Me.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvUsuarios.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.Telefono, Me.EstadoCivil, Me.Estudios, Me.UsuarioCodigo, Me.UsuarioNombre, Me.UsuarioContrasena, Me.UsuarioTramite, Me.UsuarioMarcacion, Me.UsuarioPapeleta, Me.UsuarioNotaContable, Me.UsuarioGasto, Me.UsuarioPersona, Me.UsuarioVacaciones, Me.DistritoCodigo, Me.ViaCodigo, Me.ZonaCodigo, Me.NombreZona, Me.NombreVia, Me.NumeroVia, Me.FechaNacimiento, Me.DireccionCodigo, Me.Email, Me.Nombres, Me.Apellidos, Me.DNI, Me.CodPeople, Me.Area, Me.Cargo, Me.CaducidadDNI, Me.CodigoArea, Me.CargoCodigo, Me.Prefijo, Me.Sexo, Me.ProvinciaCodigo, Me.DepartamentoCodigo, Me.Estado})
+        Me.dgvUsuarios.Location = New System.Drawing.Point(6, 43)
+        Me.dgvUsuarios.MultiSelect = False
+        Me.dgvUsuarios.Name = "dgvUsuarios"
+        Me.dgvUsuarios.ReadOnly = True
+        Me.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvUsuarios.Size = New System.Drawing.Size(606, 176)
+        Me.dgvUsuarios.TabIndex = 14
+        '
         'btnEliminar
         '
-        Me.btnEliminar.Location = New System.Drawing.Point(295, 200)
+        Me.btnEliminar.Location = New System.Drawing.Point(456, 225)
         Me.btnEliminar.Name = "btnEliminar"
         Me.btnEliminar.Size = New System.Drawing.Size(75, 23)
         Me.btnEliminar.TabIndex = 9
         Me.btnEliminar.Text = "Eliminar"
         Me.btnEliminar.UseVisualStyleBackColor = True
         '
-        'btnNuevo
-        '
-        Me.btnNuevo.Location = New System.Drawing.Point(376, 200)
-        Me.btnNuevo.Name = "btnNuevo"
-        Me.btnNuevo.Size = New System.Drawing.Size(75, 23)
-        Me.btnNuevo.TabIndex = 8
-        Me.btnNuevo.Text = "Nuevo"
-        Me.btnNuevo.UseVisualStyleBackColor = True
-        '
         'btnModificar
         '
-        Me.btnModificar.Location = New System.Drawing.Point(457, 200)
+        Me.btnModificar.Location = New System.Drawing.Point(537, 225)
         Me.btnModificar.Name = "btnModificar"
         Me.btnModificar.Size = New System.Drawing.Size(75, 23)
         Me.btnModificar.TabIndex = 7
@@ -144,12 +150,12 @@ Partial Class frmUsuarios
         '
         Me.txtFiltro.Location = New System.Drawing.Point(38, 17)
         Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Size = New System.Drawing.Size(413, 20)
+        Me.txtFiltro.Size = New System.Drawing.Size(494, 20)
         Me.txtFiltro.TabIndex = 4
         '
         'btnBuscar
         '
-        Me.btnBuscar.Location = New System.Drawing.Point(457, 15)
+        Me.btnBuscar.Location = New System.Drawing.Point(537, 15)
         Me.btnBuscar.Name = "btnBuscar"
         Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
         Me.btnBuscar.TabIndex = 5
@@ -167,7 +173,7 @@ Partial Class frmUsuarios
         Me.gbUsuario.Enabled = False
         Me.gbUsuario.Location = New System.Drawing.Point(352, 277)
         Me.gbUsuario.Name = "gbUsuario"
-        Me.gbUsuario.Size = New System.Drawing.Size(532, 104)
+        Me.gbUsuario.Size = New System.Drawing.Size(618, 104)
         Me.gbUsuario.TabIndex = 12
         Me.gbUsuario.TabStop = False
         Me.gbUsuario.Text = "Usuario"
@@ -187,7 +193,7 @@ Partial Class frmUsuarios
         Me.cmbRol.FormattingEnabled = True
         Me.cmbRol.Location = New System.Drawing.Point(98, 66)
         Me.cmbRol.Name = "cmbRol"
-        Me.cmbRol.Size = New System.Drawing.Size(428, 21)
+        Me.cmbRol.Size = New System.Drawing.Size(514, 21)
         Me.cmbRol.TabIndex = 4
         '
         'txtPassword
@@ -195,7 +201,7 @@ Partial Class frmUsuarios
         Me.txtPassword.Location = New System.Drawing.Point(98, 39)
         Me.txtPassword.Name = "txtPassword"
         Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(428, 20)
+        Me.txtPassword.Size = New System.Drawing.Size(514, 20)
         Me.txtPassword.TabIndex = 3
         '
         'Label4
@@ -220,21 +226,12 @@ Partial Class frmUsuarios
         '
         Me.txtUsuario.Location = New System.Drawing.Point(98, 13)
         Me.txtUsuario.Name = "txtUsuario"
-        Me.txtUsuario.Size = New System.Drawing.Size(428, 20)
+        Me.txtUsuario.Size = New System.Drawing.Size(514, 20)
         Me.txtUsuario.TabIndex = 0
-        '
-        'lblHead
-        '
-        Me.lblHead.AutoSize = True
-        Me.lblHead.Location = New System.Drawing.Point(12, 9)
-        Me.lblHead.Name = "lblHead"
-        Me.lblHead.Size = New System.Drawing.Size(64, 13)
-        Me.lblHead.TabIndex = 11
-        Me.lblHead.Text = "Permisos de"
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(755, 387)
+        Me.btnGuardar.Location = New System.Drawing.Point(835, 386)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(129, 23)
         Me.btnGuardar.TabIndex = 10
@@ -244,24 +241,106 @@ Partial Class frmUsuarios
         'trvPermisos
         '
         Me.trvPermisos.CheckBoxes = True
-        Me.trvPermisos.Location = New System.Drawing.Point(12, 74)
+        Me.trvPermisos.Location = New System.Drawing.Point(13, 106)
         Me.trvPermisos.Name = "trvPermisos"
-        Me.trvPermisos.Size = New System.Drawing.Size(310, 307)
+        Me.trvPermisos.Size = New System.Drawing.Size(310, 263)
         Me.trvPermisos.TabIndex = 9
         '
-        'dgvUsuarios
+        'chkPersona
         '
-        Me.dgvUsuarios.AllowUserToAddRows = False
-        Me.dgvUsuarios.AllowUserToDeleteRows = False
-        Me.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUsuarios.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.Telefono, Me.EstadoCivil, Me.Estudios, Me.UsuarioCodigo, Me.UsuarioNombre, Me.UsuarioContrasena, Me.UsuarioTramite, Me.UsuarioMarcacion, Me.UsuarioPapeleta, Me.UsuarioNotaContable, Me.UsuarioGasto, Me.UsuarioPersona, Me.UsuarioVacaciones, Me.DistritoCodigo, Me.ViaCodigo, Me.ZonaCodigo, Me.NombreZona, Me.NombreVia, Me.NumeroVia, Me.FechaNacimiento, Me.DireccionCodigo, Me.Email, Me.Nombres, Me.Apellidos, Me.DNI, Me.CodPeople, Me.Area, Me.Cargo, Me.CaducidadDNI, Me.CodigoArea, Me.CargoCodigo, Me.Prefijo, Me.Sexo, Me.ProvinciaCodigo, Me.DepartamentoCodigo})
-        Me.dgvUsuarios.Location = New System.Drawing.Point(6, 43)
-        Me.dgvUsuarios.MultiSelect = False
-        Me.dgvUsuarios.Name = "dgvUsuarios"
-        Me.dgvUsuarios.ReadOnly = True
-        Me.dgvUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvUsuarios.Size = New System.Drawing.Size(526, 140)
-        Me.dgvUsuarios.TabIndex = 14
+        Me.chkPersona.AutoSize = True
+        Me.chkPersona.Location = New System.Drawing.Point(13, 38)
+        Me.chkPersona.Name = "chkPersona"
+        Me.chkPersona.Size = New System.Drawing.Size(65, 17)
+        Me.chkPersona.TabIndex = 14
+        Me.chkPersona.Text = "Persona"
+        Me.chkPersona.UseVisualStyleBackColor = True
+        '
+        'chkPapeleta
+        '
+        Me.chkPapeleta.AutoSize = True
+        Me.chkPapeleta.Location = New System.Drawing.Point(120, 38)
+        Me.chkPapeleta.Name = "chkPapeleta"
+        Me.chkPapeleta.Size = New System.Drawing.Size(68, 17)
+        Me.chkPapeleta.TabIndex = 15
+        Me.chkPapeleta.Text = "Papeleta"
+        Me.chkPapeleta.UseVisualStyleBackColor = True
+        '
+        'lblHead
+        '
+        Me.lblHead.AutoSize = True
+        Me.lblHead.Location = New System.Drawing.Point(10, 19)
+        Me.lblHead.Name = "lblHead"
+        Me.lblHead.Size = New System.Drawing.Size(46, 13)
+        Me.lblHead.TabIndex = 11
+        Me.lblHead.Text = "Acceso:"
+        '
+        'chkVacaciones
+        '
+        Me.chkVacaciones.AutoSize = True
+        Me.chkVacaciones.Location = New System.Drawing.Point(229, 38)
+        Me.chkVacaciones.Name = "chkVacaciones"
+        Me.chkVacaciones.Size = New System.Drawing.Size(82, 17)
+        Me.chkVacaciones.TabIndex = 16
+        Me.chkVacaciones.Text = "Vacaciones"
+        Me.chkVacaciones.UseVisualStyleBackColor = True
+        '
+        'chkGasto
+        '
+        Me.chkGasto.AutoSize = True
+        Me.chkGasto.Location = New System.Drawing.Point(13, 62)
+        Me.chkGasto.Name = "chkGasto"
+        Me.chkGasto.Size = New System.Drawing.Size(54, 17)
+        Me.chkGasto.TabIndex = 19
+        Me.chkGasto.Text = "Gasto"
+        Me.chkGasto.UseVisualStyleBackColor = True
+        '
+        'chkMarcacion
+        '
+        Me.chkMarcacion.AutoSize = True
+        Me.chkMarcacion.Location = New System.Drawing.Point(120, 62)
+        Me.chkMarcacion.Name = "chkMarcacion"
+        Me.chkMarcacion.Size = New System.Drawing.Size(76, 17)
+        Me.chkMarcacion.TabIndex = 18
+        Me.chkMarcacion.Text = "Marcacion"
+        Me.chkMarcacion.UseVisualStyleBackColor = True
+        '
+        'chkNotaContable
+        '
+        Me.chkNotaContable.AutoSize = True
+        Me.chkNotaContable.Location = New System.Drawing.Point(229, 62)
+        Me.chkNotaContable.Name = "chkNotaContable"
+        Me.chkNotaContable.Size = New System.Drawing.Size(94, 17)
+        Me.chkNotaContable.TabIndex = 17
+        Me.chkNotaContable.Text = "Nota Contable"
+        Me.chkNotaContable.UseVisualStyleBackColor = True
+        '
+        'gbPermisos
+        '
+        Me.gbPermisos.Controls.Add(Me.Label1)
+        Me.gbPermisos.Controls.Add(Me.chkNotaContable)
+        Me.gbPermisos.Controls.Add(Me.chkMarcacion)
+        Me.gbPermisos.Controls.Add(Me.chkGasto)
+        Me.gbPermisos.Controls.Add(Me.chkVacaciones)
+        Me.gbPermisos.Controls.Add(Me.lblHead)
+        Me.gbPermisos.Controls.Add(Me.chkPapeleta)
+        Me.gbPermisos.Controls.Add(Me.chkPersona)
+        Me.gbPermisos.Controls.Add(Me.trvPermisos)
+        Me.gbPermisos.Location = New System.Drawing.Point(8, 12)
+        Me.gbPermisos.Name = "gbPermisos"
+        Me.gbPermisos.Size = New System.Drawing.Size(338, 397)
+        Me.gbPermisos.TabIndex = 20
+        Me.gbPermisos.TabStop = False
+        Me.gbPermisos.Text = "Permisos de"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(10, 90)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(50, 13)
+        Me.Label1.TabIndex = 20
+        Me.Label1.Text = "Modulos:"
         '
         'Codigo
         '
@@ -555,93 +634,24 @@ Partial Class frmUsuarios
         Me.DepartamentoCodigo.ReadOnly = True
         Me.DepartamentoCodigo.Visible = False
         '
-        'chkNotaContable
+        'Estado
         '
-        Me.chkNotaContable.AutoSize = True
-        Me.chkNotaContable.Location = New System.Drawing.Point(228, 53)
-        Me.chkNotaContable.Name = "chkNotaContable"
-        Me.chkNotaContable.Size = New System.Drawing.Size(94, 17)
-        Me.chkNotaContable.TabIndex = 17
-        Me.chkNotaContable.Text = "Nota Contable"
-        Me.chkNotaContable.UseVisualStyleBackColor = True
-        '
-        'chkMarcacion
-        '
-        Me.chkMarcacion.AutoSize = True
-        Me.chkMarcacion.Location = New System.Drawing.Point(114, 53)
-        Me.chkMarcacion.Name = "chkMarcacion"
-        Me.chkMarcacion.Size = New System.Drawing.Size(76, 17)
-        Me.chkMarcacion.TabIndex = 18
-        Me.chkMarcacion.Text = "Marcacion"
-        Me.chkMarcacion.UseVisualStyleBackColor = True
-        '
-        'chkGasto
-        '
-        Me.chkGasto.AutoSize = True
-        Me.chkGasto.Location = New System.Drawing.Point(15, 53)
-        Me.chkGasto.Name = "chkGasto"
-        Me.chkGasto.Size = New System.Drawing.Size(54, 17)
-        Me.chkGasto.TabIndex = 19
-        Me.chkGasto.Text = "Gasto"
-        Me.chkGasto.UseVisualStyleBackColor = True
-        '
-        'chkVacaciones
-        '
-        Me.chkVacaciones.AutoSize = True
-        Me.chkVacaciones.Location = New System.Drawing.Point(228, 31)
-        Me.chkVacaciones.Name = "chkVacaciones"
-        Me.chkVacaciones.Size = New System.Drawing.Size(82, 17)
-        Me.chkVacaciones.TabIndex = 16
-        Me.chkVacaciones.Text = "Vacaciones"
-        Me.chkVacaciones.UseVisualStyleBackColor = True
-        '
-        'chkPapeleta
-        '
-        Me.chkPapeleta.AutoSize = True
-        Me.chkPapeleta.Location = New System.Drawing.Point(114, 30)
-        Me.chkPapeleta.Name = "chkPapeleta"
-        Me.chkPapeleta.Size = New System.Drawing.Size(68, 17)
-        Me.chkPapeleta.TabIndex = 15
-        Me.chkPapeleta.Text = "Papeleta"
-        Me.chkPapeleta.UseVisualStyleBackColor = True
-        '
-        'chkPersona
-        '
-        Me.chkPersona.AutoSize = True
-        Me.chkPersona.Location = New System.Drawing.Point(15, 31)
-        Me.chkPersona.Name = "chkPersona"
-        Me.chkPersona.Size = New System.Drawing.Size(65, 17)
-        Me.chkPersona.TabIndex = 14
-        Me.chkPersona.Text = "Persona"
-        Me.chkPersona.UseVisualStyleBackColor = True
-        '
-        'lblLogueado
-        '
-        Me.lblLogueado.AutoSize = True
-        Me.lblLogueado.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblLogueado.ForeColor = System.Drawing.Color.Green
-        Me.lblLogueado.Location = New System.Drawing.Point(82, 9)
-        Me.lblLogueado.Name = "lblLogueado"
-        Me.lblLogueado.Size = New System.Drawing.Size(0, 13)
-        Me.lblLogueado.TabIndex = 11
+        Me.Estado.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.Estado.DataPropertyName = "usu_Estado"
+        Me.Estado.HeaderText = "Estado"
+        Me.Estado.Name = "Estado"
+        Me.Estado.ReadOnly = True
+        Me.Estado.Width = 65
         '
         'frmUsuarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(904, 435)
-        Me.Controls.Add(Me.chkNotaContable)
-        Me.Controls.Add(Me.chkMarcacion)
-        Me.Controls.Add(Me.chkGasto)
-        Me.Controls.Add(Me.chkVacaciones)
-        Me.Controls.Add(Me.chkPapeleta)
-        Me.Controls.Add(Me.chkPersona)
+        Me.ClientSize = New System.Drawing.Size(982, 435)
+        Me.Controls.Add(Me.gbPermisos)
         Me.Controls.Add(Me.gbListado)
         Me.Controls.Add(Me.gbUsuario)
-        Me.Controls.Add(Me.lblLogueado)
-        Me.Controls.Add(Me.lblHead)
         Me.Controls.Add(Me.btnGuardar)
-        Me.Controls.Add(Me.trvPermisos)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -650,17 +660,17 @@ Partial Class frmUsuarios
         Me.Text = "Control de Usuarios"
         Me.gbListado.ResumeLayout(False)
         Me.gbListado.PerformLayout()
+        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbUsuario.ResumeLayout(False)
         Me.gbUsuario.PerformLayout()
-        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbPermisos.ResumeLayout(False)
+        Me.gbPermisos.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents gbListado As GroupBox
     Friend WithEvents btnEliminar As Button
-    Friend WithEvents btnNuevo As Button
     Friend WithEvents btnModificar As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents txtFiltro As TextBox
@@ -672,51 +682,53 @@ Partial Class frmUsuarios
     Friend WithEvents Label4 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents txtUsuario As TextBox
-    Friend WithEvents lblHead As Label
     Friend WithEvents btnGuardar As Button
-    Friend WithEvents trvPermisos As TreeView
     Friend WithEvents dgvUsuarios As System.Windows.Forms.DataGridView
-    Friend WithEvents Codigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Telefono As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents EstadoCivil As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Estudios As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioNombre As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioContrasena As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioTramite As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioMarcacion As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioPapeleta As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioNotaContable As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioGasto As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioPersona As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents UsuarioVacaciones As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DistritoCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ViaCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ZonaCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NombreZona As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NombreVia As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents NumeroVia As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents FechaNacimiento As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DireccionCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Email As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Nombres As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Apellidos As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DNI As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CodPeople As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Area As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Cargo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CaducidadDNI As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CodigoArea As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents CargoCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Prefijo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Sexo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents ProvinciaCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DepartamentoCodigo As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents chkNotaContable As System.Windows.Forms.CheckBox
-    Friend WithEvents chkMarcacion As System.Windows.Forms.CheckBox
-    Friend WithEvents chkGasto As System.Windows.Forms.CheckBox
-    Friend WithEvents chkVacaciones As System.Windows.Forms.CheckBox
-    Friend WithEvents chkPapeleta As System.Windows.Forms.CheckBox
-    Friend WithEvents chkPersona As System.Windows.Forms.CheckBox
-    Friend WithEvents lblLogueado As System.Windows.Forms.Label
+    Friend WithEvents trvPermisos As TreeView
+    Friend WithEvents chkPersona As CheckBox
+    Friend WithEvents chkPapeleta As CheckBox
+    Friend WithEvents lblHead As Label
+    Friend WithEvents chkVacaciones As CheckBox
+    Friend WithEvents chkGasto As CheckBox
+    Friend WithEvents chkMarcacion As CheckBox
+    Friend WithEvents chkNotaContable As CheckBox
+    Friend WithEvents gbPermisos As GroupBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents Telefono As DataGridViewTextBoxColumn
+    Friend WithEvents EstadoCivil As DataGridViewTextBoxColumn
+    Friend WithEvents Estudios As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioNombre As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioContrasena As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioTramite As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioMarcacion As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioPapeleta As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioNotaContable As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioGasto As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioPersona As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioVacaciones As DataGridViewTextBoxColumn
+    Friend WithEvents DistritoCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents ViaCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents ZonaCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents NombreZona As DataGridViewTextBoxColumn
+    Friend WithEvents NombreVia As DataGridViewTextBoxColumn
+    Friend WithEvents NumeroVia As DataGridViewTextBoxColumn
+    Friend WithEvents FechaNacimiento As DataGridViewTextBoxColumn
+    Friend WithEvents DireccionCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents Email As DataGridViewTextBoxColumn
+    Friend WithEvents Nombres As DataGridViewTextBoxColumn
+    Friend WithEvents Apellidos As DataGridViewTextBoxColumn
+    Friend WithEvents DNI As DataGridViewTextBoxColumn
+    Friend WithEvents CodPeople As DataGridViewTextBoxColumn
+    Friend WithEvents Area As DataGridViewTextBoxColumn
+    Friend WithEvents Cargo As DataGridViewTextBoxColumn
+    Friend WithEvents CaducidadDNI As DataGridViewTextBoxColumn
+    Friend WithEvents CodigoArea As DataGridViewTextBoxColumn
+    Friend WithEvents CargoCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents Prefijo As DataGridViewTextBoxColumn
+    Friend WithEvents Sexo As DataGridViewTextBoxColumn
+    Friend WithEvents ProvinciaCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents DepartamentoCodigo As DataGridViewTextBoxColumn
+    Friend WithEvents Estado As DataGridViewTextBoxColumn
 End Class

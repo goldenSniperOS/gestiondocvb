@@ -165,7 +165,6 @@ Public Class frmPersona
                 chkGasto.Checked = False
                 chkNotaContable.Checked = False
         End Select
-
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
