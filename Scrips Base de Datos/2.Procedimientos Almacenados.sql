@@ -44,7 +44,7 @@ BEGIN
 		WHEN 4 THEN 'Otros' END) As Motivo, 
 		pape.Pape_Fecha As Fecha, pape.Pape_ApruebaPapeRRHH As Aprobado
 		FROM tbpersona per INNER JOIN tbdocumento doc ON per.per_Codigo = doc.doc_Remitente
-		INNER JOIN tbdocumento_papeleta pape ON pape.pape_doc_Cod = doc.doc_Codigo ORDER BY pape.Pape_Codigo DESC
+		INNER JOIN tbdocumento_papeleta pape ON pape.pape_doc_Cod = doc.doc_Codigo WHERE pape.Pape_Fecha = @InfoXML ORDER BY pape.Pape_Codigo DESC
 	END
 	 IF (@Tipo = 'I')
 	 BEGIN
@@ -77,6 +77,7 @@ BEGIN
 		where TBP.Pape_Retorno = 'SI' order by TBP.Pape_Codigo Desc
 		execute sp_xml_RemoveDocument @IDXML
 	 END 
+
 	 IF (@Tipo = '3') -- Marcacion Salida
 	 BEGIN
 		execute sp_xml_prepareDocument @IDXML output, @InfoXML
@@ -104,6 +105,7 @@ BEGIN
 		execute sp_xml_RemoveDocument @IDXML
 	 END 
 END
+
 
 GO
 SET QUOTED_IDENTIFIER ON
@@ -214,7 +216,7 @@ BEGIN
 		with(Vaca_doc_Cod varchar(10), Vaca_FechaSalida date, Vaca_FechaTermino date, Vaca_FechaRetorno date, Vaca_Dias int,
 			 Vaca_Pape_ApruebaJefe char(2), Vaca_Pape_ApruebaRRHH char(2), Vaca_Observacion varchar(200))
 
-			select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
+			select 'Gestion Documentaria' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
 	 END
 	 IF (@Tipo = 'A')
 	 BEGIN
@@ -229,8 +231,16 @@ BEGIN
 		AS TablaLoca
 		WHERE tbdocumento_vacaciones.Vaca_Codigo = TablaLoca.Vaca_Codigo
 
-		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se modificio :D!!!...' as MensajeProcedure
+		select 'Gestion Documentaria' as MensajeTitulo, 'Exitosamente se modificio :D!!!...' as MensajeProcedure
 	 END
+	 
+	 IF (@Tipo = 'I')
+	 BEGIN
+			SELECT TOP 1 (SELECT TOP 1 doc_Codigo FROM tbdocumento ORDER BY doc_Codigo DESC) AS doc_Codigo
+			FROM tbdocumento
+			ORDER BY doc_Codigo DESC
+	 END 
+
 
 	 IF (@Tipo = '1') --Listar Para Recursos Humanos -> Lista todos los documentos Vacacion sin excepcion
 	 BEGIN
@@ -511,22 +521,38 @@ BEGIN
 	IF (@Tipo = 'A')
 	BEGIN
 		DECLARE @allData TABLE (usu_mod_Id INT,usu_mod_Modulo INT, usu_mod_Usuario VARCHAR(10), Accion VARCHAR(20));
-		DECLARE @user TABLE (usu_Codigo VARCHAR(10),usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),usu_Estado BIT);
+		DECLARE @user TABLE (usu_Codigo VARCHAR(10),usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
+		usu_Persona CHAR(2),usu_Estado BIT);
+
+		INSERT INTO @user 
+		SELECT usu_Codigo,usu_Nombre, usu_Contrasena,usu_Beneficio,usu_Vacaciones,usu_Marcacion ,usu_Papeleta,usu_NotaContable,
+		usu_Persona,usu_Estado
+		FROM openXML(@IDXML, '/Dato/Usuario',1)
+		WITH(usu_Codigo VARCHAR(10),usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),
+		usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
+		usu_Persona CHAR(2),usu_Estado BIT)
+
+		DELETE UM
+		FROM tbusuario_modulo UM
+		WHERE UM.usu_mod_Usuario = (SELECT TOP 1 usu_Codigo FROM @user)
 
 		INSERT INTO @allData 
 		SELECT usu_mod_Id,usu_mod_Modulo,usu_mod_Usuario,Accion
 		FROM openXML(@IDXML, '/Dato/Principal',1)
 		WITH(usu_mod_Id INT,usu_mod_Modulo INT, usu_mod_Usuario VARCHAR(10), Accion VARCHAR(20))
 
-		INSERT INTO @user 
-		SELECT usu_Codigo,usu_Nombre, usu_Contrasena,usu_Estado
-		FROM openXML(@IDXML, '/Dato/Usuario',1)
-		WITH(usu_Codigo VARCHAR(10),usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),usu_Estado BIT)
+		
 
 		UPDATE tbusuario
 		SET usu_Nombre = TA.usu_Nombre,
 			usu_Contrasena = TA.usu_Contrasena,
-			usu_Estado = TA.usu_Estado
+			usu_Estado = TA.usu_Estado,
+			usu_Persona = TA.usu_Persona,
+			usu_Papeleta = TA.usu_Papeleta,
+			usu_NotaContable = TA.usu_NotaContable,
+			usu_Marcacion = TA.usu_Marcacion,
+			usu_Beneficio = TA.usu_Beneficio,
+			usu_Vacaciones = TA.usu_Vacaciones
 		FROM tbusuario U
 		INNER JOIN @user TA on U.usu_Codigo = TA.usu_Codigo
 
@@ -535,9 +561,7 @@ BEGIN
 		FROM @allData
 		WHERE Accion = 'INSERT'
 			
-		DELETE UM
-		FROM tbusuario_modulo UM
-		INNER JOIN (SELECT * FROM @allData WHERE Accion = 'DELETE') TA on UM.usu_mod_Id  = TA.usu_mod_Id
+		--INNER JOIN (SELECT * FROM @allData WHERE Accion = 'DELETE') TA on UM.usu_mod_Id  = TA.usu_mod_Id
 
 		Select 'GESTIONDOC' as MensajeTitulo, 'Usuario Modificado Correctamente' as MensajeProcedure
 	END
@@ -586,7 +610,6 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
-
 go
 
 
@@ -605,28 +628,182 @@ BEGIN
 	IF (@Tipo = 'R')
 	BEGIN
 		execute sp_xml_prepareDocument @IDXML output, @InfoXML
-		insert into tbpersona(per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, per_DNICaducidad, per_Nacimiento, per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo)
-		select per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, per_DNICaducidad, per_Nacimiento, per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo
+
+		DECLARE @nuevoCodigo VARCHAR (10)
+		SET @nuevoCodigo = dbo.nuevoCodigoPersona()
+
+		DECLARE @nuevoCodigoUsuario VARCHAR (10)
+		SET @nuevoCodigoUsuario = dbo.nuevoCodigoUsuario()
+
+		DECLARE @nuevoCodigoDir VARCHAR (10)
+		SET @nuevoCodigoDir = dbo.nuevoCodigoDireccion()
+		
+		DECLARE @user TABLE (usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),
+		usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
+		usu_Persona CHAR(2),usu_Estado BIT);
+		
+		DECLARE @personaRegister TABLE (per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
+		 per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
+		 per_DNICaducidad date, per_Nacimiento date, per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
+		 per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
+		 per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10));
+
+		DECLARE @datosDireccionReg TABLE (pdi_Codigo varchar(10), pdi_dis_Codigo VARCHAR(7), pdi_pzo_Codigo varchar(6),pdi_NombreZona VARCHAR(50), pdi_pvi_Codigo varchar(6), pdi_NombreVia varchar(50),
+		pdi_Numero int);
+
+		insert into @datosDireccionReg
+		select pdi_Codigo, pdi_dis_Codigo , pdi_pzo_Codigo ,pdi_NombreZona , pdi_pvi_Codigo , pdi_NombreVia ,pdi_Numero 
 		from openXML(@IDXML, '/Dato/Principal',1)
-		with(per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
+		with(pdi_Codigo varchar(10), pdi_dis_Codigo VARCHAR(7), pdi_pzo_Codigo varchar(6),pdi_NombreZona VARCHAR(50), pdi_pvi_Codigo varchar(6), pdi_NombreVia varchar(50),
+		pdi_Numero int)
+
+		INSERT INTO @personaRegister(per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, per_DNICaducidad, per_Nacimiento, per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo)
+		SELECT per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, per_DNICaducidad, per_Nacimiento, per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo
+		FROM openXML(@IDXML, '/Dato/Principal',1)
+		WITH(per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
 		 per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
 		 per_DNICaducidad date, per_Nacimiento date, per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
 		 per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
 		 per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10))
-		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
+
+		 INSERT INTO @user 
+		SELECT usu_Nombre, usu_Contrasena,usu_Beneficio,usu_Vacaciones,usu_Marcacion ,usu_Papeleta,usu_NotaContable,
+		usu_Persona,usu_Estado
+		FROM openXML(@IDXML, '/Dato/Principal',1)
+		WITH(usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),
+		usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
+		usu_Persona CHAR(2),usu_Estado BIT)
+
+		--SELECT * FROM @personaRegister
+		--SELECT * FROM @datosDireccionReg
+		--SELECT * FROM @user
+
+		INSERT INTO tbpersona_direccion
+		SELECT
+			@nuevoCodigoDir pdi_Codigo,
+			pdi_dis_Codigo,
+			pdi_pzo_Codigo,
+			pdi_NombreZona,
+			pdi_pvi_Codigo,
+			pdi_NombreVia,
+			pdi_Numero,
+			0 AS pdi_Piso,
+			'' AS pdi_Interior,
+			'' As pdi_Manzana,
+			0 AS pdi_Lote
+		FROM @datosDireccionReg
+
+		INSERT INTO tbpersona
+		SELECT 
+				@nuevoCodigo AS per_Codigo,
+				'PERSONA NATURAL' As per_TipoEmpresa, 
+				'' AS per_RazonSocial, 
+				NULL AS per_prs_Codigo, 
+				'' AS per_RUC, 
+				per_ppr_Codigo, 
+				per_Nombres, 
+				per_Apellidos, 
+				per_Sexo, 
+				per_DNI, 
+				per_DNICaducidad, 
+				per_Nacimiento, 
+				per_pca_Codigo, 
+				per_Email, 
+				per_Telefono, 
+				'PTI001' As per_pti_Codigo, 
+				@nuevoCodigoDir As per_pdi_Codigo, 
+				0 As per_DiasVacaciones, 
+				per_CodPeople, 
+				per_EstadoCivil, 
+				'' As per_Estudios, 
+				'SI' As per_Actualizacion, 
+				'CHICLAYO' As per_Sede, 
+				'GEL_ADM' AS per_Grupo 
+		FROM @personaRegister
+
+		
+			
+
+		INSERT INTO tbusuario
+		SELECT
+			@nuevoCodigoUsuario As usu_Codigo,
+			@nuevoCodigo As usu_per_Codigo,
+			usu_Nombre,
+			usu_Contrasena,
+			1 As usu_Estado,
+			'NO' As usu_Digitalizaion,
+			'SI' AS usu_Tramite,
+			'NO' AS usu_Requisito,
+			usu_Persona,
+			'NO' as usu_Mantenimiento,
+			'NO' as usu_Reporte,
+			usu_Papeleta,
+			usu_Vacaciones,
+			usu_Beneficio,
+			usu_Marcacion,
+			usu_NotaContable,
+			1 As usu_Sesion
+		From @user
+
+		SELECT
+			@nuevoCodigoUsuario As usu_Codigo,
+			@nuevoCodigo As usu_per_Codigo,
+			usu_Nombre,
+			usu_Contrasena,
+			1 As usu_Estado,
+			'NO' As usu_Digitalizaion,
+			'SI' AS usu_Tramite,
+			'NO' AS usu_Requisito,
+			usu_Persona,
+			'NO' as usu_Mantenimiento,
+			'NO' as usu_Reporte,
+			usu_Papeleta,
+			usu_Vacaciones,
+			usu_Beneficio,
+			usu_Marcacion,
+			usu_NotaContable,
+			1 As usu_Sesion
+		From @user
+
 		execute sp_xml_RemoveDocument @IDXML
 	 END
 	 IF (@Tipo = 'A')
 	BEGIN
 		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		DECLARE @datosPersona TABLE (per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
-		per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
-		per_DNICaducidad date, per_Nacimiento date, per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
-		per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
-		per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10));
+		 per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
+		 per_DNICaducidad date, per_Nacimiento date, per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
+		 per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
+		 per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10));
+
+		insert into @datosPersona
+		select per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, CONVERT(DATE,per_DNICaducidad,103), CONVERT(DATE,per_Nacimiento,103), per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
+		 per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
+		 per_DNICaducidad VARCHAR(100), per_Nacimiento VARCHAR(100), per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
+		 per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
+		 per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10))
 
 		DECLARE @datosDireccion TABLE (pdi_Codigo varchar(10), pdi_dis_Codigo VARCHAR(7), pdi_pzo_Codigo varchar(6),pdi_NombreZona VARCHAR(50), pdi_pvi_Codigo varchar(6), pdi_NombreVia varchar(50),
 		pdi_Numero int);
+
+		insert into @datosDireccion
+		select pdi_Codigo, pdi_dis_Codigo , pdi_pzo_Codigo ,pdi_NombreZona , pdi_pvi_Codigo , pdi_NombreVia ,pdi_Numero 
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(pdi_Codigo varchar(10), pdi_dis_Codigo VARCHAR(7), pdi_pzo_Codigo varchar(6),pdi_NombreZona VARCHAR(50), pdi_pvi_Codigo varchar(6), pdi_NombreVia varchar(50),
+		pdi_Numero int)
+
+
+		UPDATE tbpersona_direccion
+		SET pdi_dis_Codigo = DI.pdi_dis_Codigo,
+			pdi_pzo_Codigo = DI.pdi_pzo_Codigo,
+			pdi_NombreZona = DI.pdi_NombreZona,
+			pdi_pvi_Codigo = DI.pdi_pvi_Codigo,
+			pdi_NombreVia = DI.pdi_NombreVia,
+			pdi_Numero = DI.pdi_Numero
+		FROM tbpersona_direccion DIR
+		INNER JOIN @datosDireccion DI on DIR.pdi_Codigo = DI.pdi_Codigo
 
 		UPDATE tbpersona
 		SET per_Nombres = DP.per_Nombres,
@@ -654,16 +831,6 @@ BEGIN
 		FROM tbpersona P
 		INNER JOIN @datosPersona DP on P.per_Codigo = DP.per_Codigo
 
-		UPDATE tbpersona_direccion
-		SET pdi_dis_Codigo = DI.pdi_dis_Codigo,
-			pdi_pzo_Codigo = DI.pdi_pzo_Codigo,
-			pdi_NombreZona = DI.pdi_NombreZona,
-			pdi_pvi_Codigo = DI.pdi_pvi_Codigo,
-			pdi_NombreVia = DI.pdi_NombreVia,
-			pdi_Numero = DI.pdi_Numero
-		FROM tbpersona_direccion DIR
-		INNER JOIN @datosDireccion DI on DIR.pdi_Codigo = DI.pdi_Codigo
-
 		select 'GESTIONDOC' as MensajeTitulo, 'Se actualizaron Datos de PERSONA' as MensajeProcedure
 		
 		execute sp_xml_RemoveDocument @IDXML
@@ -683,6 +850,7 @@ BEGIN
 				pca_Codigo,
 				pca_Nombre,
 				per_Email,
+				per_Telefono,
 				pdi_Codigo,
 				pdi_dis_Codigo,
 				pro_Codigo,
@@ -705,7 +873,8 @@ BEGIN
 				usu_Vacaciones,
 				usu_Beneficio,
 				usu_Marcacion,
-				usu_NotaContable 
+				usu_NotaContable,
+				usu_Estado
 		FROM tbpersona
 		INNER JOIN tbpersona_area ON par_per_Codigo = per_Codigo
 		INNER JOIN tbpersona_prefijo ON per_ppr_Codigo = ppr_Codigo
@@ -733,6 +902,7 @@ BEGIN
 				pca_Codigo,
 				pca_Nombre,
 				per_Email,
+				per_Telefono,
 				pdi_Codigo,
 				pdi_dis_Codigo,
 				pro_Codigo,
@@ -755,7 +925,8 @@ BEGIN
 				usu_Vacaciones,
 				usu_Beneficio,
 				usu_Marcacion,
-				usu_NotaContable 
+				usu_NotaContable,
+				usu_Estado
 		FROM tbpersona
 		INNER JOIN tbpersona_area ON par_per_Codigo = per_Codigo
 		INNER JOIN tbpersona_prefijo ON per_ppr_Codigo = ppr_Codigo
@@ -774,14 +945,6 @@ BEGIN
 		ORDER BY per_Codigo
 	 END
 END
-
-/****** Object:  StoredProcedure [dbo].[pa_MantenimientoNotaContable]    Script Date: 11/01/2017 10:54:46 ******/
-SET ANSI_NULLS ON
-
-
-
-
-
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Rol')
@@ -895,3 +1058,21 @@ BEGIN
 		SELECT * FROM tbrol
 	END
 END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteVacacion')
+	drop procedure p_ReporteVacacion
+go
+
+create proc [dbo].[p_ReporteVacacion]
+@Codigo as integer
+as
+select TDA.dan_Nombre, TP.per_Apellidos,TP.per_Nombres, TD.doc_Numero,TP.per_DNI, TBV.Vaca_FechaSalida, TBV.Vaca_FechaTermino,
+		TBV.Vaca_Dias
+from tbdocumento_vacaciones as TBV 
+inner join tbdocumento as TD on TBV.Vaca_doc_Cod = TD.doc_Codigo
+inner join tbdocumento_ano as TDA on TDA.dan_Codigo = TD.doc_dan_Codigo
+inner join tbusuario as TU on TD.doc_usu_Codigo = TU.usu_Codigo
+inner join tbpersona as TP on TU.usu_per_Codigo = TP.per_Codigo
+where TBV.Vaca_Codigo = @Codigo
+GO
