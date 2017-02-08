@@ -73,10 +73,12 @@ Partial Class frmPersona
         Me.Label19 = New System.Windows.Forms.Label()
         Me.chkPapeleta = New System.Windows.Forms.CheckBox()
         Me.chkPersona = New System.Windows.Forms.CheckBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.btnNuevo = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.txtTelefono = New System.Windows.Forms.TextBox()
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
@@ -96,7 +98,9 @@ Partial Class frmPersona
         Me.gbPersona.Controls.Add(Me.Label18)
         Me.gbPersona.Controls.Add(Me.txtDNI)
         Me.gbPersona.Controls.Add(Me.Label3)
+        Me.gbPersona.Controls.Add(Me.txtTelefono)
         Me.gbPersona.Controls.Add(Me.txtEmail)
+        Me.gbPersona.Controls.Add(Me.Label21)
         Me.gbPersona.Controls.Add(Me.txtApellidos)
         Me.gbPersona.Controls.Add(Me.Label8)
         Me.gbPersona.Controls.Add(Me.txtNombres)
@@ -106,6 +110,7 @@ Partial Class frmPersona
         Me.gbPersona.Controls.Add(Me.lblGrado)
         Me.gbPersona.Controls.Add(Me.cmbCargo)
         Me.gbPersona.Controls.Add(Me.cmbGrado)
+        Me.gbPersona.Enabled = False
         Me.gbPersona.Location = New System.Drawing.Point(12, 12)
         Me.gbPersona.Name = "gbPersona"
         Me.gbPersona.Size = New System.Drawing.Size(329, 427)
@@ -219,7 +224,7 @@ Partial Class frmPersona
         '
         Me.txtEmail.Location = New System.Drawing.Point(6, 347)
         Me.txtEmail.Name = "txtEmail"
-        Me.txtEmail.Size = New System.Drawing.Size(314, 20)
+        Me.txtEmail.Size = New System.Drawing.Size(208, 20)
         Me.txtEmail.TabIndex = 3
         '
         'txtApellidos
@@ -317,6 +322,7 @@ Partial Class frmPersona
         Me.gbUbicacion.Controls.Add(Me.Label12)
         Me.gbUbicacion.Controls.Add(Me.txtNombreVia)
         Me.gbUbicacion.Controls.Add(Me.txtNombreZona)
+        Me.gbUbicacion.Enabled = False
         Me.gbUbicacion.Location = New System.Drawing.Point(347, 12)
         Me.gbUbicacion.Name = "gbUbicacion"
         Me.gbUbicacion.Size = New System.Drawing.Size(332, 343)
@@ -475,6 +481,7 @@ Partial Class frmPersona
         Me.gbPermisos.Controls.Add(Me.Label19)
         Me.gbPermisos.Controls.Add(Me.chkPapeleta)
         Me.gbPermisos.Controls.Add(Me.chkPersona)
+        Me.gbPermisos.Enabled = False
         Me.gbPermisos.Location = New System.Drawing.Point(685, 12)
         Me.gbPermisos.Name = "gbPermisos"
         Me.gbPermisos.Size = New System.Drawing.Size(275, 343)
@@ -577,32 +584,34 @@ Partial Class frmPersona
         Me.chkPersona.Text = "Persona"
         Me.chkPersona.UseVisualStyleBackColor = True
         '
-        'Button1
+        'btnGuardar
         '
-        Me.Button1.Location = New System.Drawing.Point(830, 415)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(128, 23)
-        Me.Button1.TabIndex = 5
-        Me.Button1.Text = "Guardar Persona"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnGuardar.Enabled = False
+        Me.btnGuardar.Location = New System.Drawing.Point(830, 415)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(128, 23)
+        Me.btnGuardar.TabIndex = 5
+        Me.btnGuardar.Text = "Guardar Persona"
+        Me.btnGuardar.UseVisualStyleBackColor = True
         '
-        'Button2
+        'btnNuevo
         '
-        Me.Button2.Location = New System.Drawing.Point(749, 415)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 5
-        Me.Button2.Text = "Nuevo"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnNuevo.Location = New System.Drawing.Point(749, 415)
+        Me.btnNuevo.Name = "btnNuevo"
+        Me.btnNuevo.Size = New System.Drawing.Size(75, 23)
+        Me.btnNuevo.TabIndex = 5
+        Me.btnNuevo.Text = "Nuevo"
+        Me.btnNuevo.UseVisualStyleBackColor = True
         '
-        'Button3
+        'btnCancelar
         '
-        Me.Button3.Location = New System.Drawing.Point(668, 415)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(75, 23)
-        Me.Button3.TabIndex = 5
-        Me.Button3.Text = "Cancelar"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.btnCancelar.Enabled = False
+        Me.btnCancelar.Location = New System.Drawing.Point(668, 415)
+        Me.btnCancelar.Name = "btnCancelar"
+        Me.btnCancelar.Size = New System.Drawing.Size(75, 23)
+        Me.btnCancelar.TabIndex = 5
+        Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.UseVisualStyleBackColor = True
         '
         'btnBuscar
         '
@@ -613,19 +622,39 @@ Partial Class frmPersona
         Me.btnBuscar.Text = "Buscar"
         Me.btnBuscar.UseVisualStyleBackColor = True
         '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(217, 330)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(52, 13)
+        Me.Label21.TabIndex = 2
+        Me.Label21.Text = "Telefono:"
+        '
+        'txtTelefono
+        '
+        Me.txtTelefono.Location = New System.Drawing.Point(220, 347)
+        Me.txtTelefono.Name = "txtTelefono"
+        Me.txtTelefono.Size = New System.Drawing.Size(100, 20)
+        Me.txtTelefono.TabIndex = 3
+        '
         'frmPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(972, 455)
         Me.Controls.Add(Me.btnBuscar)
-        Me.Controls.Add(Me.Button3)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btnCancelar)
+        Me.Controls.Add(Me.btnNuevo)
+        Me.Controls.Add(Me.btnGuardar)
         Me.Controls.Add(Me.gbPermisos)
         Me.Controls.Add(Me.gbUbicacion)
         Me.Controls.Add(Me.gbPersona)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "frmPersona"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmPersona"
         Me.gbPersona.ResumeLayout(False)
         Me.gbPersona.PerformLayout()
@@ -688,8 +717,10 @@ Partial Class frmPersona
     Friend WithEvents Label19 As Label
     Friend WithEvents Label20 As Label
     Friend WithEvents trvPermisosPersona As TreeView
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
+    Friend WithEvents btnGuardar As Button
+    Friend WithEvents btnNuevo As Button
+    Friend WithEvents btnCancelar As Button
     Friend WithEvents btnBuscar As Button
+    Friend WithEvents txtTelefono As System.Windows.Forms.TextBox
+    Friend WithEvents Label21 As System.Windows.Forms.Label
 End Class

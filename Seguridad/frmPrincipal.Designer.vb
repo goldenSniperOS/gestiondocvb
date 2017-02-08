@@ -44,7 +44,7 @@ Partial Class frmPrincipal
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmPrincipal"
-        Me.Text = "frmPrincipal"
+        Me.Text = "SISTEMA DE GESTION DOCUMENTARIA UCV - CHICLAYO"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
         Me.PerformLayout()

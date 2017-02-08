@@ -5,7 +5,6 @@ Public Class frmListadoDocumentoVacacion
 
     Private objVacacion As New clsDocumentoVacacion
     Private dtData As DataTable
-    Public dgvrSeleccion As DataGridViewRow
 
     Private Sub LlenarData()
         Dim dtParam As New DataTable
@@ -213,5 +212,11 @@ Public Class frmListadoDocumentoVacacion
         Else
         MessageBox.Show("Usted No Tiene Permiso Para Aceptar Vacaciones")
         End If
+    End Sub
+
+    Private Sub btnVer_Click(sender As Object, e As EventArgs) Handles btnVer.Click
+        Dim objfrom As New frmReporteVacacion
+        objfrom.Codigo = dgvListado.CurrentRow.Cells("CODIGO").Value.ToString
+        objfrom.Show()
     End Sub
 End Class

@@ -4,6 +4,44 @@ Public Class frmPersona
     Dim permisosFinales As New DataTable
     Dim personaSeleccionada As DataRow
     Dim formLoad As Boolean = False
+
+    Dim modificando As Boolean = False
+
+    Private Function GetEstructuraPersona() As DataTable
+        Try
+            Dim dtCargo As New DataTable
+
+            With dtCargo.Columns
+                .Add("per_Codigo", GetType(String))
+                .Add("per_Nombres", GetType(String))
+                .Add("per_Apellidos", GetType(String))
+                .Add("per_ppr_Codigo", GetType(String))
+                .Add("per_Sexo", GetType(String))
+                .Add("per_DNI", GetType(String))
+                .Add("per_DNICaducidad", GetType(Date))
+                .Add("per_Nacimiento", GetType(Date))
+                .Add("per_pca_Codigo", GetType(String))
+                .Add("per_Email", GetType(String))
+                .Add("per_Telefono", GetType(Integer))
+                .Add("per_pdi_Codigo", GetType(String))
+                .Add("per_CodPeople", GetType(String))
+                .Add("per_EstadoCivil", GetType(String))
+
+                .Add("pdi_Codigo", GetType(String))
+                .Add("pdi_dis_Codigo", GetType(String))
+                .Add("pdi_pzo_Codigo", GetType(String))
+                .Add("pdi_NombreZona", GetType(String))
+                .Add("pdi_pvi_Codigo", GetType(String))
+                .Add("pdi_NombreVia", GetType(String))
+                .Add("pdi_Numero", GetType(String))
+            End With
+            dtCargo.Rows.Clear()
+            Return dtCargo
+        Catch ex As Exception
+            Throw
+        End Try
+    End Function
+
     Private Sub frmPersona_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim listado As New clsListados
 
@@ -127,7 +165,6 @@ Public Class frmPersona
                 chkGasto.Checked = False
                 chkNotaContable.Checked = False
         End Select
-
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click
@@ -139,6 +176,7 @@ Public Class frmPersona
             txtCodigoPeople.Text = personaSeleccionada("per_CodPeople")
             txtDNI.Text = personaSeleccionada("per_DNI")
             txtEmail.Text = personaSeleccionada("per_Email")
+            txtTelefono.Text = personaSeleccionada("per_Telefono")
             txtNombreVia.Text = personaSeleccionada("pdi_NombreVia")
             txtNombreZona.Text = personaSeleccionada("pdi_NombreZona")
             txtNumero.Text = personaSeleccionada("pdi_Numero")
@@ -156,6 +194,112 @@ Public Class frmPersona
             chkPersona.Checked = (personaSeleccionada("usu_Persona") = "SI")
             chkVacaciones.Checked = (personaSeleccionada("usu_Vacaciones") = "SI")
 
+            dtpFechaNacimiento.Value = personaSeleccionada("per_Nacimiento")
+            dtpCaducidadDNI.Value = personaSeleccionada("per_DNICaducidad")
+
+            modificando = True
+            gbPermisos.Enabled = False
+            gbPersona.Enabled = True
+            gbUbicacion.Enabled = True
+
+            btnBuscar.Enabled = False
+            btnCancelar.Enabled = True
+            btnNuevo.Enabled = False
+            btnGuardar.Enabled = True
         End If
+    End Sub
+
+    Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
+        btnBuscar.Enabled = False
+        btnCancelar.Enabled = True
+        btnNuevo.Enabled = False
+        btnGuardar.Enabled = True
+
+        gbPermisos.Enabled = True
+        gbPersona.Enabled = True
+        gbUbicacion.Enabled = True
+
+        LimpiarCampos()
+
+    End Sub
+
+    Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
+        LimpiarCampos()
+        gbPermisos.Enabled = False
+        gbPersona.Enabled = False
+        gbUbicacion.Enabled = False
+
+        btnBuscar.Enabled = True
+        btnCancelar.Enabled = False
+        btnNuevo.Enabled = True
+        btnGuardar.Enabled = False
+    End Sub
+
+    Private Sub LimpiarCampos()
+        txtApellidos.Text = ""
+        txtCodigoPeople.Text = ""
+        txtDNI.Text = ""
+        txtNombres.Text = ""
+        txtNombreVia.Text = ""
+        txtNombreZona.Text = ""
+        txtNumero.Text = ""
+        txtNombres.Text = ""
+        txtEmail.Text = ""
+
+        cmbCargo.SelectedIndex = 0
+        cmbDepartamento.SelectedIndex = 0
+        cmbEstadoCivil.SelectedIndex = 0
+        cmbGrado.SelectedIndex = 0
+        cmbRol.SelectedIndex = 0
+        cmbGenero.SelectedIndex = 0
+        cmbVia.SelectedIndex = 0
+        cmbZona.SelectedIndex = 0
+    End Sub
+
+    Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        Dim tablaGuardar As DataTable = GetEstructuraPersona()
+        Dim rowGuardar As DataRow = tablaGuardar.NewRow
+
+        Dim clsBD As New clsPersona
+        Dim drRpta As DataRow
+
+        rowGuardar("per_Nombres") = txtNombres.Text
+        rowGuardar("per_Apellidos") = txtApellidos.Text
+        rowGuardar("per_ppr_Codigo") = cmbGrado.SelectedValue
+        rowGuardar("per_Sexo") = cmbGrado.SelectedItem.ToString.Chars(0)
+        rowGuardar("per_DNI") = txtDNI.Text
+        rowGuardar("per_DNICaducidad") = dtpCaducidadDNI.Value.Date
+        rowGuardar("per_Nacimiento") = dtpFechaNacimiento.Value.Date
+        rowGuardar("per_pca_Codigo") = cmbCargo.SelectedValue
+        rowGuardar("per_Email") = txtEmail.Text
+        rowGuardar("per_Telefono") = CType(txtTelefono.Text, Integer)
+
+        rowGuardar("per_CodPeople") = txtCodigoPeople.Text
+        rowGuardar("per_EstadoCivil") = cmbEstadoCivil.SelectedItem
+
+        rowGuardar("pdi_dis_Codigo") = cmbDistrito.SelectedValue
+        rowGuardar("pdi_pzo_Codigo") = cmbZona.SelectedValue
+        rowGuardar("pdi_NombreZona") = txtNombreZona.Text
+        rowGuardar("pdi_pvi_Codigo") = cmbVia.SelectedValue
+        rowGuardar("pdi_NombreVia") = txtNombreVia.Text
+        rowGuardar("pdi_Numero") = txtNumero.Text
+
+        If (modificando) Then
+            rowGuardar("per_Codigo") = personaSeleccionada("per_Codigo")
+            rowGuardar("pdi_Codigo") = personaSeleccionada("pdi_Codigo")
+            rowGuardar("per_pdi_Codigo") = personaSeleccionada("pdi_Codigo")
+            tablaGuardar.Rows.Add(rowGuardar)
+            drRpta = clsBD.Mantenimiento("A", tablaGuardar)
+        Else
+            rowGuardar("per_Codigo") = ""
+            rowGuardar("pdi_Codigo") = ""
+            tablaGuardar.Rows.Add(rowGuardar)
+            drRpta = clsBD.Mantenimiento("R", tablaGuardar)
+        End If
+
+        MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
+                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        btnCancelar.PerformClick()
+
     End Sub
 End Class

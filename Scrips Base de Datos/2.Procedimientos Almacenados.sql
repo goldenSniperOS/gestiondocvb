@@ -19,33 +19,32 @@ BEGIN
 	declare @IDXML int
 	IF (@Tipo = 'R')
 	BEGIN
-		insert into tbdocumento_papeleta(Pape_Codigo, Pape_doc_Cod, Pape_Motivo, Pape_Lugar, Pape_Justificacion, Pape_Retorno, Pape_Fecha, Pape_HoraSalida, Pape_HoraEntrada, Pape_ApruebaPapeRRHH, Pape_Observacion)
-		select Pape_Codigo, Pape_doc_Cod, Pape_Motivo, Pape_Lugar, Pape_Justificacion, Pape_Retorno, Pape_Fecha, Pape_HoraSalida, Pape_HoraEntrada, Pape_ApruebaPapeRRHH, Pape_Observacion
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+		insert into tbdocumento_papeleta(Pape_doc_Cod, Pape_Motivo, Pape_Lugar, Pape_Justificacion, Pape_Retorno, Pape_Fecha, Pape_HoraSalida, Pape_HoraEntrada, Pape_ApruebaPapeRRHH, Pape_Observacion)
+		select Pape_doc_Cod, Pape_Motivo, Pape_Lugar, Pape_Justificacion, Pape_Retorno, Pape_Fecha, Pape_HoraSalida, Pape_HoraEntrada, Pape_ApruebaPapeRRHH, Pape_Observacion
 		from openXML(@IDXML, '/Dato/Principal',1)
-		with(Pape_Codigo int, Pape_doc_Cod varchar(10), Pape_Motivo char(1), Pape_Lugar varchar(400), Pape_Justificacion varchar(400),
+		with(Pape_doc_Cod varchar(10), Pape_Motivo char(1), Pape_Lugar varchar(400), Pape_Justificacion varchar(400),
 		Pape_Retorno char(2),Pape_Fecha date, Pape_HoraSalida time, Pape_HoraEntrada time , Pape_ApruebaPapeRRHH char(2), Pape_Observacion varchar(400))
-
+		execute sp_xml_RemoveDocument @IDXML
 			select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
 	 END
 	IF (@Tipo = 'L')
 	BEGIN
-	execute sp_xml_prepareDocument @IDXML output, @InfoXML
-		SELECT per.per_Codigo, per.per_Nombres, per.per_Apellidos
-		from openXML(@IDXML, '/Dato/Principal',1)
-		with(Area varchar(10))
-		As TablaLoca
-		INNER JOIN tbpersona_area par ON par.par_are_Codigo = TablaLoca.Area
-		INNER JOIN tbpersona per ON per.per_Codigo = par.par_per_Codigo
-	 execute sp_xml_RemoveDocument @IDXML	 
+		SELECT per.per_Codigo, per.per_Nombres, per.per_Apellidos FROM
+		tbpersona per INNER JOIN tbpersona_area par ON per.per_Codigo = par.par_per_Codigo
+		WHERE par.par_are_Codigo = @InfoXML
 	END
 	IF (@Tipo = 'LP')
 	BEGIN
-	execute sp_xml_prepareDocument @IDXML output, @InfoXML
-		SELECT per.per_Nombres As Nombres, per.per_Apellidos As Apellidos, pape.Pape_Motivo As Motivo , 
+		SELECT per.per_Nombres As Nombres, per.per_Apellidos As Apellidos, 
+		(CASE pape.Pape_Motivo 
+		WHEN 1 THEN 'Comisión de Servicios'
+		WHEN 2 THEN 'Consulta Médica'
+		WHEN 3 THEN 'Asuntos Personales'
+		WHEN 4 THEN 'Otros' END) As Motivo, 
 		pape.Pape_Fecha As Fecha, pape.Pape_ApruebaPapeRRHH As Aprobado
 		FROM tbpersona per INNER JOIN tbdocumento doc ON per.per_Codigo = doc.doc_Remitente
-		INNER JOIN tbdocumento_papeleta pape ON pape.pape_doc_Cod = doc.doc_Codigo 
-	 execute sp_xml_RemoveDocument @IDXML	 
+		INNER JOIN tbdocumento_papeleta pape ON pape.pape_doc_Cod = doc.doc_Codigo ORDER BY pape.Pape_Codigo DESC
 	END
 	 IF (@Tipo = 'I')
 	 BEGIN
@@ -54,13 +53,57 @@ BEGIN
 		WHERE doc_Titulo = 'DTI0000008'
 		ORDER BY doc_Codigo DESC
 	 END 
+	 IF (@Tipo = '1') --LISTAR LAS ULTIMAS 20 PAPELETAS REGSITRADAS QUE TIENEN RETORNO
+	 BEGIN
+		select top 20 TBP.Pape_Codigo, TBP.Pape_Fecha, TP.per_Apellidos, TP.per_Nombres, TBP.Pape_Motivo, TBP.Pape_ApruebaPapeRRHH,
+		TBP.Pape_HoraSalida, TBP.Pape_HoraEntrada from tbdocumento_papeleta as TBP 
+		inner join tbdocumento as TD on TD.doc_Codigo = TBP.Pape_doc_Cod
+		inner join tbpersona as TP on TP.per_Codigo = TD.doc_Remitente
+
+		where TBP.Pape_Retorno = 'SI' order by TBP.Pape_Codigo Desc
+	 END 
+
+	 IF (@Tipo = '2') -- LISTAR POR DNI BUSCADO
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+		select TBP.Pape_Codigo, TBP.Pape_Fecha, TP.per_Apellidos, TP.per_Nombres, TBP.Pape_Motivo, TBP.Pape_ApruebaPapeRRHH,
+		TBP.Pape_HoraSalida, TBP.Pape_HoraEntrada
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(per_DNI VARCHAR(8))
+		AS TablaLoca
+		INNER JOIN tbpersona as TP ON TablaLoca.per_DNI = TP.per_DNI
+		INNER JOIN tbdocumento as TD on TP.per_Codigo = TD.doc_Remitente
+		Inner Join tbdocumento_papeleta as TBP on TD.doc_Codigo = TBP.Pape_doc_Cod
+		where TBP.Pape_Retorno = 'SI' order by TBP.Pape_Codigo Desc
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
+	 IF (@Tipo = '3') -- Marcacion Salida
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+		UPDATE tbdocumento_papeleta SET Pape_HoraSalida = (select convert(time, SYSDATETIME()))
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(Pape_Codigo int)
+		AS TablaLoca
+		WHERE tbdocumento_papeleta.Pape_Codigo = TablaLoca.Pape_Codigo
+
+		select 'Modulo Marcaciones' as MensajeTitulo, 'Marcado Salida Con Exito' as MensajeProcedure
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
+	 IF (@Tipo = '4') -- Marcacion Salida
+	 BEGIN
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+		UPDATE tbdocumento_papeleta SET Pape_HoraEntrada = (select convert(time, SYSDATETIME()))
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(Pape_Codigo int)
+		AS TablaLoca
+		WHERE tbdocumento_papeleta.Pape_Codigo = TablaLoca.Pape_Codigo
+
+		select 'Modulo Marcaciones' as MensajeTitulo, 'Marcado Entrada Con Exito' as MensajeProcedure
+		execute sp_xml_RemoveDocument @IDXML
+	 END 
 END
-
-
-
-/****** Object:  StoredProcedure [dbo].[pa_GastoMovilidad]    Script Date: 11/01/2017 10:53:44 ******/
-SET ANSI_NULLS ON
-
 
 GO
 SET QUOTED_IDENTIFIER ON
@@ -573,26 +616,171 @@ BEGIN
 		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
 		execute sp_xml_RemoveDocument @IDXML
 	 END
-/*
 	 IF (@Tipo = 'A')
-	 BEGIN
+	BEGIN
 		execute sp_xml_prepareDocument @IDXML output, @InfoXML
-		UPDATE CLIENTE SET Dni = TablaLoca.Dni, Nombre=TablaLoca.Nombre, Apellidos = TablaLoca.Apellidos, Direccion = TablaLoca.Direccion, Telefono = TablaLoca.Telefono, Sexo = TablaLoca.Sexo, Edad =TablaLoca.Edad 
-		from openXML(@IDXML, '/Dato/Principal',1)
-		with(Id int, Dni char(8), Nombre varchar(20), Apellidos varchar(30),Direccion varchar(30), Telefono varchar(20), Sexo varchar(4), Edad int)
-		AS TablaLoca
-		WHERE CLIENTE.Id = TablaLoca.Id
-		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Modifico :D!!!...' as MensajeProcedure
+		DECLARE @datosPersona TABLE (per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
+		per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
+		per_DNICaducidad date, per_Nacimiento date, per_pca_Codigo  varchar(6), per_Email varchar(50), per_Telefono int, 
+		per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
+		per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10));
+
+		DECLARE @datosDireccion TABLE (pdi_Codigo varchar(10), pdi_dis_Codigo VARCHAR(7), pdi_pzo_Codigo varchar(6),pdi_NombreZona VARCHAR(50), pdi_pvi_Codigo varchar(6), pdi_NombreVia varchar(50),
+		pdi_Numero int);
+
+		UPDATE tbpersona
+		SET per_Nombres = DP.per_Nombres,
+			per_Apellidos = DP.per_Apellidos,
+			per_TipoEmpresa = 'PERSONA NATURAL',
+			per_RazonSocial = '',
+			per_prs_Codigo = NULL,
+			per_RUC = '',
+			per_ppr_Codigo = DP.per_ppr_Codigo,
+			per_Sexo = DP.per_Sexo,
+			per_DNI = DP.per_DNI,
+			per_DNICaducidad = DP.per_DNICaducidad,
+			per_Nacimiento = DP.per_Nacimiento,
+			per_pca_Codigo = DP.per_pca_Codigo,
+			per_Email = DP.per_Email,
+			per_Telefono = DP.per_Telefono,
+			per_pti_Codigo = 'PTI001',
+			per_pdi_Codigo = DP.per_pdi_Codigo,
+			per_CodPeople = DP.per_CodPeople,
+			per_EstadoCivil = DP.per_EstadoCivil,
+			per_Estudios = '',
+			per_Actualizacion = 'SI',
+			per_Sede = 'CHICLAYO',
+			per_Grupo = 'GEL_ADM'
+		FROM tbpersona P
+		INNER JOIN @datosPersona DP on P.per_Codigo = DP.per_Codigo
+
+		UPDATE tbpersona_direccion
+		SET pdi_dis_Codigo = DI.pdi_dis_Codigo,
+			pdi_pzo_Codigo = DI.pdi_pzo_Codigo,
+			pdi_NombreZona = DI.pdi_NombreZona,
+			pdi_pvi_Codigo = DI.pdi_pvi_Codigo,
+			pdi_NombreVia = DI.pdi_NombreVia,
+			pdi_Numero = DI.pdi_Numero
+		FROM tbpersona_direccion DIR
+		INNER JOIN @datosDireccion DI on DIR.pdi_Codigo = DI.pdi_Codigo
+
+		select 'GESTIONDOC' as MensajeTitulo, 'Se actualizaron Datos de PERSONA' as MensajeProcedure
+		
 		execute sp_xml_RemoveDocument @IDXML
-	 END*/
+	 END
 	 IF (@Tipo = 'L')
 	 BEGIN
-		SELECT per_Codigo, per_TipoEmpresa, per_RazonSocial, per_prs_Codigo, per_RUC, per_ppr_Codigo, per_Nombres, per_Apellidos, per_Sexo, per_DNI, per_DNICaducidad, per_Nacimiento, per_pca_Codigo, per_Email, per_Telefono, per_pti_Codigo, per_pdi_Codigo, per_DiasVacaciones, per_CodPeople, per_EstadoCivil, per_Estudios, per_Actualizacion, per_Sede, per_Grupo FROM tbpersona
+		SELECT TOP 20 
+				per_Codigo,
+				per_ppr_Codigo,
+				per_Nombres,
+				per_Apellidos,
+				per_Sexo,
+				per_DNI,
+				per_CodPeople,
+				per_DNICaducidad,
+				per_Nacimiento,
+				pca_Codigo,
+				pca_Nombre,
+				per_Email,
+				pdi_Codigo,
+				pdi_dis_Codigo,
+				pro_Codigo,
+				dep_Codigo,
+				pdi_pzo_Codigo,
+				pdi_NombreZona,
+				pdi_NombreVia,
+				pdi_pvi_Codigo,
+				pdi_Numero,
+				per_EstadoCivil,
+				per_Estudios,
+				are_Codigo,
+				are_Nombre,
+				usu_Codigo,
+				usu_Nombre,
+				usu_Contrasena,
+				usu_Tramite,
+				usu_Persona,
+				usu_Papeleta,
+				usu_Vacaciones,
+				usu_Beneficio,
+				usu_Marcacion,
+				usu_NotaContable 
+		FROM tbpersona
+		INNER JOIN tbpersona_area ON par_per_Codigo = per_Codigo
+		INNER JOIN tbpersona_prefijo ON per_ppr_Codigo = ppr_Codigo
+		INNER JOIN tbarea ON are_Codigo = par_are_Codigo
+		INNER JOIN tbpersona_cargo ON per_pca_Codigo = pca_Codigo
+		INNER JOIN tbpersona_direccion ON per_pdi_Codigo = pdi_Codigo
+		INNER JOIN tbpersona_distrito ON pdi_dis_Codigo = dis_Codigo
+		INNER JOIN tbpersona_provincia ON dis_pro_Codigo = pro_Codigo
+		INNER JOIN tbpersona_departamento ON pro_dep_Codigo = dep_Codigo
+		INNER JOIN tbusuario ON usu_per_Codigo = per_Codigo
+		ORDER BY per_Codigo
+	 END
+	 IF (@Tipo = 'F')
+	 BEGIN
+		SELECT TOP 20 
+				per_Codigo,
+				per_ppr_Codigo,
+				per_Nombres,
+				per_Apellidos,
+				per_Sexo,
+				per_DNI,
+				per_CodPeople,
+				per_DNICaducidad,
+				per_Nacimiento,
+				pca_Codigo,
+				pca_Nombre,
+				per_Email,
+				pdi_Codigo,
+				pdi_dis_Codigo,
+				pro_Codigo,
+				dep_Codigo,
+				pdi_pzo_Codigo,
+				pdi_NombreZona,
+				pdi_NombreVia,
+				pdi_pvi_Codigo,
+				pdi_Numero,
+				per_EstadoCivil,
+				per_Estudios,
+				are_Codigo,
+				are_Nombre,
+				usu_Codigo,
+				usu_Nombre,
+				usu_Contrasena,
+				usu_Tramite,
+				usu_Persona,
+				usu_Papeleta,
+				usu_Vacaciones,
+				usu_Beneficio,
+				usu_Marcacion,
+				usu_NotaContable 
+		FROM tbpersona
+		INNER JOIN tbpersona_area ON par_per_Codigo = per_Codigo
+		INNER JOIN tbpersona_prefijo ON per_ppr_Codigo = ppr_Codigo
+		INNER JOIN tbarea ON are_Codigo = par_are_Codigo
+		INNER JOIN tbpersona_cargo ON per_pca_Codigo = pca_Codigo
+		INNER JOIN tbpersona_direccion ON per_pdi_Codigo = pdi_Codigo
+		INNER JOIN tbpersona_distrito ON pdi_dis_Codigo = dis_Codigo
+		INNER JOIN tbpersona_provincia ON dis_pro_Codigo = pro_Codigo
+		INNER JOIN tbpersona_departamento ON pro_dep_Codigo = dep_Codigo
+		INNER JOIN tbusuario ON usu_per_Codigo = per_Codigo
+		WHERE per_Nombres LIKE '%'+@InfoXML+'%'
+		OR per_Apellidos LIKE '%'+@InfoXML+'%'
+		OR per_DNI LIKE '%'+@InfoXML+'%'
+		OR pca_Nombre LIKE '%'+@InfoXML+'%'
+		OR per_CodPeople LIKE '%'+@InfoXML+'%'
+		ORDER BY per_Codigo
 	 END
 END
 
 /****** Object:  StoredProcedure [dbo].[pa_MantenimientoNotaContable]    Script Date: 11/01/2017 10:54:46 ******/
 SET ANSI_NULLS ON
+
+
+
+
 
 go
 
@@ -625,14 +813,85 @@ BEGIN
 		FROM openXML(@IDXML, '/Dato/Principal',1)
 		WITH(rol_mod_Rol INT)
 
-		SELECT 0 AS usu_mod_Id,0 AS usu_mod_Usuario,rol_mod_Modulo AS usu_mod_Modulo,'INSERT' AS Accion,mod_ID,mod_Nombre,mod_Padre,0 As usu_Codigo 
-		FROM tbrol_modulo TA
-		INNER JOIN tbmodulo ON mod_ID = rol_mod_Modulo
-		INNER JOIN @liker E ON E.rol_mod_Rol = TA.rol_mod_Rol
+		SELECT 
+			M.mod_ID,
+			M.mod_Nombre,
+			M.mod_Padre,
+			M.mod_Formulario,
+			ISNULL(TablaFinal.mod_ID,0) As usu_Codigo,
+			0 As usu_mod_Id
+		FROM tbmodulo M
+		LEFT JOIN (
+			SELECT mod_Id,mod_Nombre,mod_Padre,mod_Formulario
+			FROM tbrol_modulo TA
+			INNER JOIN tbmodulo ON mod_ID = rol_mod_Modulo
+			INNER JOIN @liker E ON E.rol_mod_Rol = TA.rol_mod_Rol
+		) As TablaFinal ON M.mod_Id = TablaFinal.mod_ID
+		
 	END
 
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
-
 go
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Listados')
+	drop procedure pa_Listados
+go
+
+CREATE PROCEDURE [dbo].[pa_Listados]
+	@Listado VARCHAR(50),
+	@Foranea VARCHAR(10)
+AS
+BEGIN
+	IF (@Listado = 'Areas')
+	BEGIN
+		SELECT * FROM tbarea
+	END
+	IF (@Listado = 'Cargos')
+	BEGIN
+		SELECT * FROM tbpersona_cargo
+	END
+
+	IF (@Listado = 'Prefijos')
+	BEGIN
+		SELECT * FROM tbpersona_prefijo
+	END
+
+	IF (@Listado = 'Tipos')
+	BEGIN
+		SELECT * FROM tbpersona_tipo
+	END
+	
+	IF (@Listado = 'Departamentos')
+	BEGIN
+		SELECT * FROM tbpersona_departamento
+	END
+	
+	IF (@Listado = 'Provincias')
+	BEGIN
+		SELECT * FROM tbpersona_provincia
+		WHERE pro_dep_Codigo = @Foranea
+	END
+
+	IF (@Listado = 'Distritos')
+	BEGIN
+		SELECT * FROM tbpersona_distrito
+		WHERE dis_pro_Codigo = @Foranea
+	END
+
+	IF (@Listado = 'Vias')
+	BEGIN
+		SELECT * FROM tbpersona_via
+	END
+
+	IF (@Listado = 'Zonas')
+	BEGIN
+		SELECT * FROM tbpersona_zona
+	END
+
+	IF (@Listado = 'Roles')
+	BEGIN
+		SELECT * FROM tbrol
+	END
+END
