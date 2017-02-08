@@ -34,6 +34,15 @@ Public Class frmPersona
                 .Add("pdi_pvi_Codigo", GetType(String))
                 .Add("pdi_NombreVia", GetType(String))
                 .Add("pdi_Numero", GetType(String))
+
+                .Add("usu_Nombre", GetType(String))
+                .Add("usu_Contrasena", GetType(String))
+                .Add("usu_Beneficio", GetType(String))
+                .Add("usu_Marcacion", GetType(String))
+                .Add("usu_Papeleta", GetType(String))
+                .Add("usu_Vacaciones", GetType(String))
+                .Add("usu_NotaContable", GetType(String))
+                .Add("usu_Persona", GetType(String))
             End With
             dtCargo.Rows.Clear()
             Return dtCargo
@@ -260,8 +269,12 @@ Public Class frmPersona
         Dim tablaGuardar As DataTable = GetEstructuraPersona()
         Dim rowGuardar As DataRow = tablaGuardar.NewRow
 
+        Dim clsUsuariosBD As New clsUsuario
+
+
         Dim clsBD As New clsPersona
         Dim drRpta As DataRow
+        Dim drRptaUsuario As DataRow
 
         rowGuardar("per_Nombres") = txtNombres.Text
         rowGuardar("per_Apellidos") = txtApellidos.Text
@@ -284,21 +297,35 @@ Public Class frmPersona
         rowGuardar("pdi_NombreVia") = txtNombreVia.Text
         rowGuardar("pdi_Numero") = txtNumero.Text
 
+        rowGuardar("usu_Persona") = If(chkPersona.Checked, "SI", "NO")
+        rowGuardar("usu_Beneficio") = If(chkGasto.Checked, "SI", "NO")
+        rowGuardar("usu_Papeleta") = If(chkPapeleta.Checked, "SI", "NO")
+        rowGuardar("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
+        rowGuardar("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
+        rowGuardar("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
+
+        rowGuardar("usu_Nombre") = txtNombres.Text.Split(New Char() {" "c})(0).Substring(0, 1) & txtApellidos.Text.Split(New Char() {" "c})(0).ToString & txtApellidos.Text.Split(New Char() {" "c})(1).Substring(0, 1)
+        rowGuardar("usu_Contrasena") = txtDNI.Text
+
+
+
         If (modificando) Then
             rowGuardar("per_Codigo") = personaSeleccionada("per_Codigo")
             rowGuardar("pdi_Codigo") = personaSeleccionada("pdi_Codigo")
             rowGuardar("per_pdi_Codigo") = personaSeleccionada("pdi_Codigo")
             tablaGuardar.Rows.Add(rowGuardar)
             drRpta = clsBD.Mantenimiento("A", tablaGuardar)
+            MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
+                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
-            rowGuardar("per_Codigo") = ""
-            rowGuardar("pdi_Codigo") = ""
             tablaGuardar.Rows.Add(rowGuardar)
             drRpta = clsBD.Mantenimiento("R", tablaGuardar)
+            drRptaUsuario = clsUsuariosBD.Registrar(permisosFinales, drRpta)
+            MessageBox.Show(drRptaUsuario.Item("MensajeTitulo").ToString & vbCrLf & drRptaUsuario.Item("MensajeProcedure").ToString,
+                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
-        MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
-                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         btnCancelar.PerformClick()
 
     End Sub

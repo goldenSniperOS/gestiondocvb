@@ -35,7 +35,9 @@ Partial Class frmPersona
         Me.Label18 = New System.Windows.Forms.Label()
         Me.txtDNI = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtTelefono = New System.Windows.Forms.TextBox()
         Me.txtEmail = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.txtApellidos = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.txtNombres = New System.Windows.Forms.TextBox()
@@ -77,8 +79,6 @@ Partial Class frmPersona
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.txtTelefono = New System.Windows.Forms.TextBox()
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
@@ -114,7 +114,7 @@ Partial Class frmPersona
         Me.gbPersona.Location = New System.Drawing.Point(12, 12)
         Me.gbPersona.Name = "gbPersona"
         Me.gbPersona.Size = New System.Drawing.Size(329, 427)
-        Me.gbPersona.TabIndex = 2
+        Me.gbPersona.TabIndex = 1
         Me.gbPersona.TabStop = False
         Me.gbPersona.Text = "Datos de Persona"
         '
@@ -144,7 +144,7 @@ Partial Class frmPersona
         Me.cmbEstadoCivil.Location = New System.Drawing.Point(6, 391)
         Me.cmbEstadoCivil.Name = "cmbEstadoCivil"
         Me.cmbEstadoCivil.Size = New System.Drawing.Size(150, 21)
-        Me.cmbEstadoCivil.TabIndex = 4
+        Me.cmbEstadoCivil.TabIndex = 10
         '
         'Label5
         '
@@ -160,14 +160,14 @@ Partial Class frmPersona
         Me.dtpCaducidadDNI.Location = New System.Drawing.Point(6, 255)
         Me.dtpCaducidadDNI.Name = "dtpCaducidadDNI"
         Me.dtpCaducidadDNI.Size = New System.Drawing.Size(314, 20)
-        Me.dtpCaducidadDNI.TabIndex = 8
+        Me.dtpCaducidadDNI.TabIndex = 6
         '
         'dtpFechaNacimiento
         '
         Me.dtpFechaNacimiento.Location = New System.Drawing.Point(6, 208)
         Me.dtpFechaNacimiento.Name = "dtpFechaNacimiento"
         Me.dtpFechaNacimiento.Size = New System.Drawing.Size(314, 20)
-        Me.dtpFechaNacimiento.TabIndex = 8
+        Me.dtpFechaNacimiento.TabIndex = 5
         '
         'cmbGenero
         '
@@ -177,14 +177,14 @@ Partial Class frmPersona
         Me.cmbGenero.Location = New System.Drawing.Point(170, 121)
         Me.cmbGenero.Name = "cmbGenero"
         Me.cmbGenero.Size = New System.Drawing.Size(150, 21)
-        Me.cmbGenero.TabIndex = 7
+        Me.cmbGenero.TabIndex = 3
         '
         'txtCodigoPeople
         '
         Me.txtCodigoPeople.Location = New System.Drawing.Point(162, 391)
         Me.txtCodigoPeople.Name = "txtCodigoPeople"
         Me.txtCodigoPeople.Size = New System.Drawing.Size(158, 20)
-        Me.txtCodigoPeople.TabIndex = 5
+        Me.txtCodigoPeople.TabIndex = 11
         '
         'Label4
         '
@@ -209,7 +209,7 @@ Partial Class frmPersona
         Me.txtDNI.Location = New System.Drawing.Point(6, 122)
         Me.txtDNI.Name = "txtDNI"
         Me.txtDNI.Size = New System.Drawing.Size(143, 20)
-        Me.txtDNI.TabIndex = 5
+        Me.txtDNI.TabIndex = 2
         '
         'Label3
         '
@@ -220,19 +220,35 @@ Partial Class frmPersona
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "DNI:"
         '
+        'txtTelefono
+        '
+        Me.txtTelefono.Location = New System.Drawing.Point(220, 347)
+        Me.txtTelefono.Name = "txtTelefono"
+        Me.txtTelefono.Size = New System.Drawing.Size(100, 20)
+        Me.txtTelefono.TabIndex = 9
+        '
         'txtEmail
         '
         Me.txtEmail.Location = New System.Drawing.Point(6, 347)
         Me.txtEmail.Name = "txtEmail"
         Me.txtEmail.Size = New System.Drawing.Size(208, 20)
-        Me.txtEmail.TabIndex = 3
+        Me.txtEmail.TabIndex = 8
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(217, 330)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(52, 13)
+        Me.Label21.TabIndex = 2
+        Me.Label21.Text = "Telefono:"
         '
         'txtApellidos
         '
         Me.txtApellidos.Location = New System.Drawing.Point(6, 83)
         Me.txtApellidos.Name = "txtApellidos"
         Me.txtApellidos.Size = New System.Drawing.Size(314, 20)
-        Me.txtApellidos.TabIndex = 3
+        Me.txtApellidos.TabIndex = 1
         '
         'Label8
         '
@@ -248,7 +264,7 @@ Partial Class frmPersona
         Me.txtNombres.Location = New System.Drawing.Point(6, 42)
         Me.txtNombres.Name = "txtNombres"
         Me.txtNombres.Size = New System.Drawing.Size(314, 20)
-        Me.txtNombres.TabIndex = 3
+        Me.txtNombres.TabIndex = 0
         '
         'Label2
         '
@@ -293,7 +309,7 @@ Partial Class frmPersona
         Me.cmbCargo.Location = New System.Drawing.Point(6, 300)
         Me.cmbCargo.Name = "cmbCargo"
         Me.cmbCargo.Size = New System.Drawing.Size(314, 21)
-        Me.cmbCargo.TabIndex = 0
+        Me.cmbCargo.TabIndex = 7
         '
         'cmbGrado
         '
@@ -302,7 +318,7 @@ Partial Class frmPersona
         Me.cmbGrado.Location = New System.Drawing.Point(6, 164)
         Me.cmbGrado.Name = "cmbGrado"
         Me.cmbGrado.Size = New System.Drawing.Size(314, 21)
-        Me.cmbGrado.TabIndex = 0
+        Me.cmbGrado.TabIndex = 4
         '
         'gbUbicacion
         '
@@ -326,7 +342,7 @@ Partial Class frmPersona
         Me.gbUbicacion.Location = New System.Drawing.Point(347, 12)
         Me.gbUbicacion.Name = "gbUbicacion"
         Me.gbUbicacion.Size = New System.Drawing.Size(332, 343)
-        Me.gbUbicacion.TabIndex = 3
+        Me.gbUbicacion.TabIndex = 2
         Me.gbUbicacion.TabStop = False
         Me.gbUbicacion.Text = "Ubicacion de la Persona"
         '
@@ -337,7 +353,7 @@ Partial Class frmPersona
         Me.cmbVia.Location = New System.Drawing.Point(9, 254)
         Me.cmbVia.Name = "cmbVia"
         Me.cmbVia.Size = New System.Drawing.Size(314, 21)
-        Me.cmbVia.TabIndex = 0
+        Me.cmbVia.TabIndex = 5
         '
         'Label15
         '
@@ -355,7 +371,7 @@ Partial Class frmPersona
         Me.cmbZona.Location = New System.Drawing.Point(9, 208)
         Me.cmbZona.Name = "cmbZona"
         Me.cmbZona.Size = New System.Drawing.Size(314, 21)
-        Me.cmbZona.TabIndex = 0
+        Me.cmbZona.TabIndex = 4
         '
         'Label13
         '
@@ -373,7 +389,7 @@ Partial Class frmPersona
         Me.cmbDistrito.Location = New System.Drawing.Point(6, 123)
         Me.cmbDistrito.Name = "cmbDistrito"
         Me.cmbDistrito.Size = New System.Drawing.Size(314, 21)
-        Me.cmbDistrito.TabIndex = 0
+        Me.cmbDistrito.TabIndex = 2
         '
         'Label11
         '
@@ -391,7 +407,7 @@ Partial Class frmPersona
         Me.cmbProvincia.Location = New System.Drawing.Point(6, 83)
         Me.cmbProvincia.Name = "cmbProvincia"
         Me.cmbProvincia.Size = New System.Drawing.Size(314, 21)
-        Me.cmbProvincia.TabIndex = 0
+        Me.cmbProvincia.TabIndex = 1
         '
         'Label10
         '
@@ -459,7 +475,7 @@ Partial Class frmPersona
         Me.txtNombreVia.Location = New System.Drawing.Point(9, 301)
         Me.txtNombreVia.Name = "txtNombreVia"
         Me.txtNombreVia.Size = New System.Drawing.Size(238, 20)
-        Me.txtNombreVia.TabIndex = 3
+        Me.txtNombreVia.TabIndex = 6
         '
         'txtNombreZona
         '
@@ -485,7 +501,7 @@ Partial Class frmPersona
         Me.gbPermisos.Location = New System.Drawing.Point(685, 12)
         Me.gbPermisos.Name = "gbPermisos"
         Me.gbPermisos.Size = New System.Drawing.Size(275, 343)
-        Me.gbPermisos.TabIndex = 4
+        Me.gbPermisos.TabIndex = 3
         Me.gbPermisos.TabStop = False
         Me.gbPermisos.Text = "Datos de Usuario"
         '
@@ -512,7 +528,7 @@ Partial Class frmPersona
         Me.chkNotaContable.Location = New System.Drawing.Point(180, 41)
         Me.chkNotaContable.Name = "chkNotaContable"
         Me.chkNotaContable.Size = New System.Drawing.Size(94, 17)
-        Me.chkNotaContable.TabIndex = 3
+        Me.chkNotaContable.TabIndex = 5
         Me.chkNotaContable.Text = "Nota Contable"
         Me.chkNotaContable.UseVisualStyleBackColor = True
         '
@@ -522,7 +538,7 @@ Partial Class frmPersona
         Me.chkMarcacion.Location = New System.Drawing.Point(93, 41)
         Me.chkMarcacion.Name = "chkMarcacion"
         Me.chkMarcacion.Size = New System.Drawing.Size(76, 17)
-        Me.chkMarcacion.TabIndex = 3
+        Me.chkMarcacion.TabIndex = 4
         Me.chkMarcacion.Text = "Marcacion"
         Me.chkMarcacion.UseVisualStyleBackColor = True
         '
@@ -553,7 +569,7 @@ Partial Class frmPersona
         Me.cmbRol.Location = New System.Drawing.Point(6, 83)
         Me.cmbRol.Name = "cmbRol"
         Me.cmbRol.Size = New System.Drawing.Size(263, 21)
-        Me.cmbRol.TabIndex = 0
+        Me.cmbRol.TabIndex = 6
         '
         'Label19
         '
@@ -590,7 +606,7 @@ Partial Class frmPersona
         Me.btnGuardar.Location = New System.Drawing.Point(830, 415)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(128, 23)
-        Me.btnGuardar.TabIndex = 5
+        Me.btnGuardar.TabIndex = 4
         Me.btnGuardar.Text = "Guardar Persona"
         Me.btnGuardar.UseVisualStyleBackColor = True
         '
@@ -621,22 +637,6 @@ Partial Class frmPersona
         Me.btnBuscar.TabIndex = 5
         Me.btnBuscar.Text = "Buscar"
         Me.btnBuscar.UseVisualStyleBackColor = True
-        '
-        'Label21
-        '
-        Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(217, 330)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(52, 13)
-        Me.Label21.TabIndex = 2
-        Me.Label21.Text = "Telefono:"
-        '
-        'txtTelefono
-        '
-        Me.txtTelefono.Location = New System.Drawing.Point(220, 347)
-        Me.txtTelefono.Name = "txtTelefono"
-        Me.txtTelefono.Size = New System.Drawing.Size(100, 20)
-        Me.txtTelefono.TabIndex = 3
         '
         'frmPersona
         '
