@@ -64,6 +64,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsArea.vb" />
     <Compile Include="clsDocumento.vb" />
     <Compile Include="clsDocumentoVacacion.vb" />
     <Compile Include="clsGasto.vb" />

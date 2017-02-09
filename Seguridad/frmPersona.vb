@@ -43,6 +43,8 @@ Public Class frmPersona
                 .Add("usu_Vacaciones", GetType(String))
                 .Add("usu_NotaContable", GetType(String))
                 .Add("usu_Persona", GetType(String))
+
+                .Add("are_Codigo", GetType(String))
             End With
             dtCargo.Rows.Clear()
             Return dtCargo
@@ -53,6 +55,7 @@ Public Class frmPersona
 
     Private Sub frmPersona_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim listado As New clsListados
+        Dim clsBDArea As New clsArea
 
         cmbGrado.DisplayMember = "ppr_Nombre"
         cmbGrado.ValueMember = "ppr_Codigo"
@@ -72,7 +75,6 @@ Public Class frmPersona
         cmbZona.ValueMember = "pzo_Codigo"
         cmbZona.DataSource = listado.De("Zonas")
 
-
         cmbVia.DisplayMember = "pvi_Nombre"
         cmbVia.ValueMember = "pvi_Codigo"
         cmbVia.DataSource = listado.De("Vias")
@@ -80,6 +82,10 @@ Public Class frmPersona
         cmbRol.DisplayMember = "rol_Descripcion"
         cmbRol.ValueMember = "rol_Id"
         cmbRol.DataSource = listado.De("Roles")
+
+        cmbArea.DisplayMember = "are_Nombre"
+        cmbArea.ValueMember = "are_Codigo"
+        cmbArea.DataSource = clsBDArea.Listado
 
         formLoad = True
 
@@ -206,10 +212,13 @@ Public Class frmPersona
             dtpFechaNacimiento.Value = personaSeleccionada("per_Nacimiento")
             dtpCaducidadDNI.Value = personaSeleccionada("per_DNICaducidad")
 
+            cmbArea.SelectedValue = personaSeleccionada("are_Codigo")
+
             modificando = True
             gbPermisos.Enabled = False
             gbPersona.Enabled = True
             gbUbicacion.Enabled = True
+            gbArea.Enabled = True
 
             btnBuscar.Enabled = False
             btnCancelar.Enabled = True
@@ -227,6 +236,7 @@ Public Class frmPersona
         gbPermisos.Enabled = True
         gbPersona.Enabled = True
         gbUbicacion.Enabled = True
+        gbArea.Enabled = True
 
         LimpiarCampos()
 
@@ -237,6 +247,7 @@ Public Class frmPersona
         gbPermisos.Enabled = False
         gbPersona.Enabled = False
         gbUbicacion.Enabled = False
+        gbArea.Enabled = False
 
         btnBuscar.Enabled = True
         btnCancelar.Enabled = False
@@ -303,6 +314,8 @@ Public Class frmPersona
         rowGuardar("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
         rowGuardar("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
         rowGuardar("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
+
+        rowGuardar("are_Codigo") = cmbArea.SelectedValue
 
         rowGuardar("usu_Nombre") = txtNombres.Text.Split(New Char() {" "c})(0).Substring(0, 1) & txtApellidos.Text.Split(New Char() {" "c})(0).ToString & txtApellidos.Text.Split(New Char() {" "c})(1).Substring(0, 1)
         rowGuardar("usu_Contrasena") = txtDNI.Text

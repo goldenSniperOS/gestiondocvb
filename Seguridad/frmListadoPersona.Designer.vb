@@ -24,7 +24,11 @@ Partial Class frmListadoPersona
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dgvPersonas = New System.Windows.Forms.DataGridView()
+        Me.btnSeleccionar = New System.Windows.Forms.Button()
+        Me.txtFiltro = New System.Windows.Forms.TextBox()
+        Me.btnBuscar = New System.Windows.Forms.Button()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.UsuarioEstado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EstadoCivil = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Estudios = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.UsuarioCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -59,9 +63,6 @@ Partial Class frmListadoPersona
         Me.Sexo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ProvinciaCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DepartamentoCodigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btnSeleccionar = New System.Windows.Forms.Button()
-        Me.txtFiltro = New System.Windows.Forms.TextBox()
-        Me.btnBuscar = New System.Windows.Forms.Button()
         CType(Me.dgvPersonas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -79,14 +80,39 @@ Partial Class frmListadoPersona
         Me.dgvPersonas.AllowUserToAddRows = False
         Me.dgvPersonas.AllowUserToDeleteRows = False
         Me.dgvPersonas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPersonas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.EstadoCivil, Me.Estudios, Me.UsuarioCodigo, Me.UsuarioNombre, Me.UsuarioContrasena, Me.UsuarioTramite, Me.UsuarioMarcacion, Me.UsuarioPapeleta, Me.UsuarioNotaContable, Me.UsuarioGasto, Me.UsuarioPersona, Me.UsuarioVacaciones, Me.DistritoCodigo, Me.ViaCodigo, Me.ZonaCodigo, Me.NombreZona, Me.NombreVia, Me.NumeroVia, Me.FechaNacimiento, Me.DireccionCodigo, Me.Email, Me.Nombres, Me.Apellidos, Me.DNI, Me.CodPeople, Me.Area, Me.Cargo, Me.CaducidadDNI, Me.CodigoArea, Me.CargoCodigo, Me.Prefijo, Me.Sexo, Me.ProvinciaCodigo, Me.DepartamentoCodigo})
+        Me.dgvPersonas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.UsuarioEstado, Me.EstadoCivil, Me.Estudios, Me.UsuarioCodigo, Me.UsuarioNombre, Me.UsuarioContrasena, Me.UsuarioTramite, Me.UsuarioMarcacion, Me.UsuarioPapeleta, Me.UsuarioNotaContable, Me.UsuarioGasto, Me.UsuarioPersona, Me.UsuarioVacaciones, Me.DistritoCodigo, Me.ViaCodigo, Me.ZonaCodigo, Me.NombreZona, Me.NombreVia, Me.NumeroVia, Me.FechaNacimiento, Me.DireccionCodigo, Me.Email, Me.Nombres, Me.Apellidos, Me.DNI, Me.CodPeople, Me.Area, Me.Cargo, Me.CaducidadDNI, Me.CodigoArea, Me.CargoCodigo, Me.Prefijo, Me.Sexo, Me.ProvinciaCodigo, Me.DepartamentoCodigo})
         Me.dgvPersonas.Location = New System.Drawing.Point(15, 43)
         Me.dgvPersonas.MultiSelect = False
         Me.dgvPersonas.Name = "dgvPersonas"
         Me.dgvPersonas.ReadOnly = True
         Me.dgvPersonas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPersonas.Size = New System.Drawing.Size(1057, 383)
-        Me.dgvPersonas.TabIndex = 1
+        Me.dgvPersonas.Size = New System.Drawing.Size(1144, 383)
+        Me.dgvPersonas.TabIndex = 2
+        '
+        'btnSeleccionar
+        '
+        Me.btnSeleccionar.Location = New System.Drawing.Point(1084, 432)
+        Me.btnSeleccionar.Name = "btnSeleccionar"
+        Me.btnSeleccionar.Size = New System.Drawing.Size(75, 23)
+        Me.btnSeleccionar.TabIndex = 3
+        Me.btnSeleccionar.Text = "Seleccionar"
+        Me.btnSeleccionar.UseVisualStyleBackColor = True
+        '
+        'txtFiltro
+        '
+        Me.txtFiltro.Location = New System.Drawing.Point(50, 17)
+        Me.txtFiltro.Name = "txtFiltro"
+        Me.txtFiltro.Size = New System.Drawing.Size(1028, 20)
+        Me.txtFiltro.TabIndex = 0
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.Location = New System.Drawing.Point(1084, 15)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
+        Me.btnBuscar.TabIndex = 1
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.UseVisualStyleBackColor = True
         '
         'Codigo
         '
@@ -95,6 +121,14 @@ Partial Class frmListadoPersona
         Me.Codigo.Name = "Codigo"
         Me.Codigo.ReadOnly = True
         Me.Codigo.Visible = False
+        '
+        'UsuarioEstado
+        '
+        Me.UsuarioEstado.DataPropertyName = "usu_Estado"
+        Me.UsuarioEstado.HeaderText = "UsuarioEstado"
+        Me.UsuarioEstado.Name = "UsuarioEstado"
+        Me.UsuarioEstado.ReadOnly = True
+        Me.UsuarioEstado.Visible = False
         '
         'EstadoCivil
         '
@@ -370,36 +404,11 @@ Partial Class frmListadoPersona
         Me.DepartamentoCodigo.ReadOnly = True
         Me.DepartamentoCodigo.Visible = False
         '
-        'btnSeleccionar
-        '
-        Me.btnSeleccionar.Location = New System.Drawing.Point(997, 432)
-        Me.btnSeleccionar.Name = "btnSeleccionar"
-        Me.btnSeleccionar.Size = New System.Drawing.Size(75, 23)
-        Me.btnSeleccionar.TabIndex = 2
-        Me.btnSeleccionar.Text = "Seleccionar"
-        Me.btnSeleccionar.UseVisualStyleBackColor = True
-        '
-        'txtFiltro
-        '
-        Me.txtFiltro.Location = New System.Drawing.Point(50, 17)
-        Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Size = New System.Drawing.Size(941, 20)
-        Me.txtFiltro.TabIndex = 3
-        '
-        'btnBuscar
-        '
-        Me.btnBuscar.Location = New System.Drawing.Point(997, 15)
-        Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
-        Me.btnBuscar.TabIndex = 4
-        Me.btnBuscar.Text = "Buscar"
-        Me.btnBuscar.UseVisualStyleBackColor = True
-        '
         'frmListadoPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1084, 478)
+        Me.ClientSize = New System.Drawing.Size(1171, 478)
         Me.Controls.Add(Me.btnBuscar)
         Me.Controls.Add(Me.txtFiltro)
         Me.Controls.Add(Me.btnSeleccionar)
@@ -407,7 +416,7 @@ Partial Class frmListadoPersona
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmListadoPersona"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "frmListadoPersona"
+        Me.Text = "Listado de Personal"
         CType(Me.dgvPersonas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -420,6 +429,7 @@ Partial Class frmListadoPersona
     Friend WithEvents txtFiltro As TextBox
     Friend WithEvents btnBuscar As Button
     Friend WithEvents Codigo As DataGridViewTextBoxColumn
+    Friend WithEvents UsuarioEstado As DataGridViewTextBoxColumn
     Friend WithEvents EstadoCivil As DataGridViewTextBoxColumn
     Friend WithEvents Estudios As DataGridViewTextBoxColumn
     Friend WithEvents UsuarioCodigo As DataGridViewTextBoxColumn

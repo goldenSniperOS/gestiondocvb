@@ -79,9 +79,12 @@ Partial Class frmPersona
         Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.gbArea = New System.Windows.Forms.GroupBox()
+        Me.cmbArea = New System.Windows.Forms.ComboBox()
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
+        Me.gbArea.SuspendLayout()
         Me.SuspendLayout()
         '
         'gbPersona
@@ -339,7 +342,7 @@ Partial Class frmPersona
         Me.gbUbicacion.Controls.Add(Me.txtNombreVia)
         Me.gbUbicacion.Controls.Add(Me.txtNombreZona)
         Me.gbUbicacion.Enabled = False
-        Me.gbUbicacion.Location = New System.Drawing.Point(347, 12)
+        Me.gbUbicacion.Location = New System.Drawing.Point(347, 96)
         Me.gbUbicacion.Name = "gbUbicacion"
         Me.gbUbicacion.Size = New System.Drawing.Size(332, 343)
         Me.gbUbicacion.TabIndex = 2
@@ -500,7 +503,7 @@ Partial Class frmPersona
         Me.gbPermisos.Enabled = False
         Me.gbPermisos.Location = New System.Drawing.Point(685, 12)
         Me.gbPermisos.Name = "gbPermisos"
-        Me.gbPermisos.Size = New System.Drawing.Size(275, 343)
+        Me.gbPermisos.Size = New System.Drawing.Size(275, 313)
         Me.gbPermisos.TabIndex = 3
         Me.gbPermisos.TabStop = False
         Me.gbPermisos.Text = "Datos de Usuario"
@@ -519,7 +522,7 @@ Partial Class frmPersona
         Me.trvPermisosPersona.CheckBoxes = True
         Me.trvPermisosPersona.Location = New System.Drawing.Point(9, 127)
         Me.trvPermisosPersona.Name = "trvPermisosPersona"
-        Me.trvPermisosPersona.Size = New System.Drawing.Size(253, 194)
+        Me.trvPermisosPersona.Size = New System.Drawing.Size(253, 162)
         Me.trvPermisosPersona.TabIndex = 4
         '
         'chkNotaContable
@@ -604,7 +607,7 @@ Partial Class frmPersona
         '
         Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar
         Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnBuscar.Location = New System.Drawing.Point(528, 388)
+        Me.btnBuscar.Location = New System.Drawing.Point(694, 328)
         Me.btnBuscar.Name = "btnBuscar"
         Me.btnBuscar.Size = New System.Drawing.Size(105, 51)
         Me.btnBuscar.TabIndex = 5
@@ -617,9 +620,9 @@ Partial Class frmPersona
         Me.btnCancelar.Enabled = False
         Me.btnCancelar.Image = Global.Seguridad.My.Resources.Resources.Cancelar
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnCancelar.Location = New System.Drawing.Point(639, 387)
+        Me.btnCancelar.Location = New System.Drawing.Point(694, 387)
         Me.btnCancelar.Name = "btnCancelar"
-        Me.btnCancelar.Size = New System.Drawing.Size(103, 51)
+        Me.btnCancelar.Size = New System.Drawing.Size(105, 51)
         Me.btnCancelar.TabIndex = 5
         Me.btnCancelar.Text = "Cancelar"
         Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -629,9 +632,9 @@ Partial Class frmPersona
         '
         Me.btnNuevo.Image = Global.Seguridad.My.Resources.Resources.Nuevo
         Me.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnNuevo.Location = New System.Drawing.Point(748, 387)
+        Me.btnNuevo.Location = New System.Drawing.Point(852, 328)
         Me.btnNuevo.Name = "btnNuevo"
-        Me.btnNuevo.Size = New System.Drawing.Size(98, 51)
+        Me.btnNuevo.Size = New System.Drawing.Size(108, 51)
         Me.btnNuevo.TabIndex = 5
         Me.btnNuevo.Text = "Nuevo"
         Me.btnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -642,7 +645,7 @@ Partial Class frmPersona
         Me.btnGuardar.Enabled = False
         Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar
         Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btnGuardar.Location = New System.Drawing.Point(852, 387)
+        Me.btnGuardar.Location = New System.Drawing.Point(852, 388)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(108, 51)
         Me.btnGuardar.TabIndex = 4
@@ -650,12 +653,33 @@ Partial Class frmPersona
         Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnGuardar.UseVisualStyleBackColor = True
         '
+        'gbArea
+        '
+        Me.gbArea.Controls.Add(Me.cmbArea)
+        Me.gbArea.Enabled = False
+        Me.gbArea.Location = New System.Drawing.Point(347, 12)
+        Me.gbArea.Name = "gbArea"
+        Me.gbArea.Size = New System.Drawing.Size(332, 80)
+        Me.gbArea.TabIndex = 6
+        Me.gbArea.TabStop = False
+        Me.gbArea.Text = "Area"
+        '
+        'cmbArea
+        '
+        Me.cmbArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbArea.FormattingEnabled = True
+        Me.cmbArea.Location = New System.Drawing.Point(12, 33)
+        Me.cmbArea.Name = "cmbArea"
+        Me.cmbArea.Size = New System.Drawing.Size(308, 21)
+        Me.cmbArea.TabIndex = 0
+        '
         'frmPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(972, 455)
+        Me.ClientSize = New System.Drawing.Size(980, 458)
+        Me.Controls.Add(Me.gbArea)
         Me.Controls.Add(Me.btnBuscar)
         Me.Controls.Add(Me.btnCancelar)
         Me.Controls.Add(Me.btnNuevo)
@@ -675,6 +699,7 @@ Partial Class frmPersona
         Me.gbUbicacion.PerformLayout()
         Me.gbPermisos.ResumeLayout(False)
         Me.gbPermisos.PerformLayout()
+        Me.gbArea.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -736,4 +761,6 @@ Partial Class frmPersona
     Friend WithEvents btnBuscar As Button
     Friend WithEvents txtTelefono As System.Windows.Forms.TextBox
     Friend WithEvents Label21 As System.Windows.Forms.Label
+    Friend WithEvents gbArea As GroupBox
+    Friend WithEvents cmbArea As ComboBox
 End Class

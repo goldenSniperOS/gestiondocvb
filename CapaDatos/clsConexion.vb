@@ -31,8 +31,8 @@ Public Class clsConexion
 #End Region
 
     Sub New()
-        CadenaConexion = "Data Source=LENOVO-PC\MANUELSQLSERVER;Initial Catalog=BDGestionDocumentaria;Integrated Security=True"
-        'CadenaConexion = "Data Source=23.249.166.131;Initial Catalog=BDGestionDocumentaria;User Id = sa; Password = EiAb129018H"
+        'CadenaConexion = "Data Source=LENOVO-PC\MANUELSQLSERVER;Initial Catalog=BDGestionDocumentaria;Integrated Security=True"
+        CadenaConexion = "Data Source=23.249.166.131;Initial Catalog=BDGestionDocumentaria;User Id = sa; Password = EiAb129018H"
         ObjConexion = New SqlConnection(CadenaConexion)
     End Sub
 
