@@ -244,63 +244,63 @@ Partial Class frmRegistroNotaContable
         '
         Me.txtCargodos.Location = New System.Drawing.Point(71, 235)
         Me.txtCargodos.Name = "txtCargodos"
-        Me.txtCargodos.Size = New System.Drawing.Size(161, 20)
+        Me.txtCargodos.Size = New System.Drawing.Size(172, 20)
         Me.txtCargodos.TabIndex = 23
         '
         'txtAbonodos
         '
         Me.txtAbonodos.Location = New System.Drawing.Point(71, 261)
         Me.txtAbonodos.Name = "txtAbonodos"
-        Me.txtAbonodos.Size = New System.Drawing.Size(161, 20)
+        Me.txtAbonodos.Size = New System.Drawing.Size(172, 20)
         Me.txtAbonodos.TabIndex = 22
         '
         'txtMotivo
         '
         Me.txtMotivo.Location = New System.Drawing.Point(71, 46)
         Me.txtMotivo.Name = "txtMotivo"
-        Me.txtMotivo.Size = New System.Drawing.Size(161, 20)
+        Me.txtMotivo.Size = New System.Drawing.Size(172, 20)
         Me.txtMotivo.TabIndex = 19
         '
         'txtSubtotal
         '
         Me.txtSubtotal.Location = New System.Drawing.Point(71, 76)
         Me.txtSubtotal.Name = "txtSubtotal"
-        Me.txtSubtotal.Size = New System.Drawing.Size(161, 20)
+        Me.txtSubtotal.Size = New System.Drawing.Size(172, 20)
         Me.txtSubtotal.TabIndex = 18
         '
         'txtDenegar
         '
         Me.txtDenegar.Location = New System.Drawing.Point(71, 102)
         Me.txtDenegar.Name = "txtDenegar"
-        Me.txtDenegar.Size = New System.Drawing.Size(161, 20)
+        Me.txtDenegar.Size = New System.Drawing.Size(172, 20)
         Me.txtDenegar.TabIndex = 17
         '
         'txtCargouno
         '
         Me.txtCargouno.Location = New System.Drawing.Point(71, 154)
         Me.txtCargouno.Name = "txtCargouno"
-        Me.txtCargouno.Size = New System.Drawing.Size(161, 20)
+        Me.txtCargouno.Size = New System.Drawing.Size(172, 20)
         Me.txtCargouno.TabIndex = 16
         '
         'txtAbonouno
         '
         Me.txtAbonouno.Location = New System.Drawing.Point(71, 183)
         Me.txtAbonouno.Name = "txtAbonouno"
-        Me.txtAbonouno.Size = New System.Drawing.Size(161, 20)
+        Me.txtAbonouno.Size = New System.Drawing.Size(172, 20)
         Me.txtAbonouno.TabIndex = 15
         '
         'txtFilialuno
         '
         Me.txtFilialuno.Location = New System.Drawing.Point(71, 128)
         Me.txtFilialuno.Name = "txtFilialuno"
-        Me.txtFilialuno.Size = New System.Drawing.Size(161, 20)
+        Me.txtFilialuno.Size = New System.Drawing.Size(172, 20)
         Me.txtFilialuno.TabIndex = 14
         '
         'txtFilialdos
         '
         Me.txtFilialdos.Location = New System.Drawing.Point(71, 209)
         Me.txtFilialdos.Name = "txtFilialdos"
-        Me.txtFilialdos.Size = New System.Drawing.Size(161, 20)
+        Me.txtFilialdos.Size = New System.Drawing.Size(172, 20)
         Me.txtFilialdos.TabIndex = 13
         '
         'Label19
@@ -395,17 +395,21 @@ Partial Class frmRegistroNotaContable
         '
         'btnGuardar
         '
-        Me.btnGuardar.Location = New System.Drawing.Point(217, 225)
+        Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGuardar.Location = New System.Drawing.Point(234, 251)
         Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(107, 35)
+        Me.btnGuardar.Size = New System.Drawing.Size(107, 46)
         Me.btnGuardar.TabIndex = 3
         Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnGuardar.UseVisualStyleBackColor = True
         '
         'frmRegistroNotaContable
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(675, 324)
         Me.Controls.Add(Me.btnGuardar)
         Me.Controls.Add(Me.GroupBox2)

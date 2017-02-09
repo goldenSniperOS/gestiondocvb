@@ -54,4 +54,20 @@ Public Class Login
             MsgBox("DATOS INCORRECTOS O AUN NO TIENE PERMISOS PARA EL SISTEMA. POR FAVOR CONTACTAR CON EL ADMINISTRADOR", MsgBoxStyle.Exclamation)
         End If
     End Sub
+
+    Private Sub txtUsu_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtUsu.KeyPress
+        If Char.IsLetter(e.KeyChar) Then
+            e.Handled = False
+        ElseIf Char.IsDigit(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
+
+    Private Sub txtCont_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtCont.KeyPress
+        If Char.IsDigit(e.KeyChar) Then
+            e.Handled = False
+        ElseIf Char.IsLetter(e.KeyChar) Then
+            e.Handled = True
+        End If
+    End Sub
 End Class

@@ -75,10 +75,10 @@ Partial Class frmPersona
         Me.Label19 = New System.Windows.Forms.Label()
         Me.chkPapeleta = New System.Windows.Forms.CheckBox()
         Me.chkPersona = New System.Windows.Forms.CheckBox()
-        Me.btnGuardar = New System.Windows.Forms.Button()
-        Me.btnNuevo = New System.Windows.Forms.Button()
-        Me.btnCancelar = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.btnCancelar = New System.Windows.Forms.Button()
+        Me.btnNuevo = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
@@ -600,48 +600,61 @@ Partial Class frmPersona
         Me.chkPersona.Text = "Persona"
         Me.chkPersona.UseVisualStyleBackColor = True
         '
-        'btnGuardar
+        'btnBuscar
         '
-        Me.btnGuardar.Enabled = False
-        Me.btnGuardar.Location = New System.Drawing.Point(830, 415)
-        Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(128, 23)
-        Me.btnGuardar.TabIndex = 4
-        Me.btnGuardar.Text = "Guardar Persona"
-        Me.btnGuardar.UseVisualStyleBackColor = True
-        '
-        'btnNuevo
-        '
-        Me.btnNuevo.Location = New System.Drawing.Point(749, 415)
-        Me.btnNuevo.Name = "btnNuevo"
-        Me.btnNuevo.Size = New System.Drawing.Size(75, 23)
-        Me.btnNuevo.TabIndex = 5
-        Me.btnNuevo.Text = "Nuevo"
-        Me.btnNuevo.UseVisualStyleBackColor = True
+        Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar
+        Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnBuscar.Location = New System.Drawing.Point(528, 388)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(105, 51)
+        Me.btnBuscar.TabIndex = 5
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnBuscar.UseVisualStyleBackColor = True
         '
         'btnCancelar
         '
         Me.btnCancelar.Enabled = False
-        Me.btnCancelar.Location = New System.Drawing.Point(668, 415)
+        Me.btnCancelar.Image = Global.Seguridad.My.Resources.Resources.Cancelar
+        Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnCancelar.Location = New System.Drawing.Point(639, 387)
         Me.btnCancelar.Name = "btnCancelar"
-        Me.btnCancelar.Size = New System.Drawing.Size(75, 23)
+        Me.btnCancelar.Size = New System.Drawing.Size(103, 51)
         Me.btnCancelar.TabIndex = 5
         Me.btnCancelar.Text = "Cancelar"
+        Me.btnCancelar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnCancelar.UseVisualStyleBackColor = True
         '
-        'btnBuscar
+        'btnNuevo
         '
-        Me.btnBuscar.Location = New System.Drawing.Point(587, 415)
-        Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
-        Me.btnBuscar.TabIndex = 5
-        Me.btnBuscar.Text = "Buscar"
-        Me.btnBuscar.UseVisualStyleBackColor = True
+        Me.btnNuevo.Image = Global.Seguridad.My.Resources.Resources.Nuevo
+        Me.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnNuevo.Location = New System.Drawing.Point(748, 387)
+        Me.btnNuevo.Name = "btnNuevo"
+        Me.btnNuevo.Size = New System.Drawing.Size(98, 51)
+        Me.btnNuevo.TabIndex = 5
+        Me.btnNuevo.Text = "Nuevo"
+        Me.btnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnNuevo.UseVisualStyleBackColor = True
+        '
+        'btnGuardar
+        '
+        Me.btnGuardar.Enabled = False
+        Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.BottomRight
+        Me.btnGuardar.Location = New System.Drawing.Point(852, 387)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(108, 51)
+        Me.btnGuardar.TabIndex = 4
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGuardar.UseVisualStyleBackColor = True
         '
         'frmPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(972, 455)
         Me.Controls.Add(Me.btnBuscar)
         Me.Controls.Add(Me.btnCancelar)
