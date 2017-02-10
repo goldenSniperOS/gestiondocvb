@@ -188,12 +188,6 @@
     <Compile Include="frmRegistroDocumentoVacacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRegistroNotaContable.Designer.vb">
-      <DependentUpon>frmRegistroNotaContable.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmRegistroNotaContable.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmReporteAreaPerido.Designer.vb">
       <DependentUpon>frmReporteAreaPerido.vb</DependentUpon>
     </Compile>
@@ -339,9 +333,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmRegistroDocumentoVacacion.resx">
       <DependentUpon>frmRegistroDocumentoVacacion.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmRegistroNotaContable.resx">
-      <DependentUpon>frmRegistroNotaContable.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteAreaPerido.resx">
       <DependentUpon>frmReporteAreaPerido.vb</DependentUpon>
