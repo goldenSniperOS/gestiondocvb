@@ -319,12 +319,6 @@ Public Class frmPersona
             email = 0
         End If
 
-        If txtEmail.Text.Trim.IndexOf("@") > -1 Then
-            If (txtEmail.Text.Trim.IndexOf(".", txtEmail.Text.Trim.IndexOf("@")) > txtEmail.Text.Trim.IndexOf("@")) Then
-                ErrorProvider1.SetError(txtEmail, "Email no cumple estructura 'someone@example.com'")
-                ev = 0
-            End If
-        End If
         If txtCodigoPeople.Text.Trim.Length = 0 Then
             ErrorProvider1.SetError(txtCodigoPeople, "Ingrese Codigo de people")
             people = 0

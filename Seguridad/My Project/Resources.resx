@@ -124,6 +124,9 @@
   <data name="NEW24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NEW24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Generator 24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Generator 24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="logo 25" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo 25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -136,6 +139,15 @@
   <data name="Buscar24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Buscar24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ingresar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ingresar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Generator32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Generator32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconoCerrar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IconoCerrar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -145,8 +157,8 @@
   <data name="cerrar24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cerrar24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ingresar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ingresar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FormatoVacaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FormatoVacaciones.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="LOGOUCVPEQUE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\LOGOUCVPEQUE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -166,13 +178,7 @@
   <data name="CHECK2-24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CHECK2-24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Generator 24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Generator 24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Generator32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Generator32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="FormatoVacaciones" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\FormatoVacaciones.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Salir" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Salir.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

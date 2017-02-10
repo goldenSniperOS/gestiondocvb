@@ -22,6 +22,7 @@ Partial Class frmGastoMovilidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtNumero = New System.Windows.Forms.TextBox()
         Me.dtpFechaDocumento = New System.Windows.Forms.DateTimePicker()
@@ -52,8 +53,10 @@ Partial Class frmGastoMovilidad
         Me.txtMotivo = New System.Windows.Forms.TextBox()
         Me.btnNuevo = New System.Windows.Forms.Button()
         Me.btnAprobar = New System.Windows.Forms.Button()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbGasto.SuspendLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label3
@@ -194,29 +197,38 @@ Partial Class frmGastoMovilidad
         '
         'Button1
         '
+        Me.Button1.Image = Global.Seguridad.My.Resources.Resources.Buscar24
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Button1.Location = New System.Drawing.Point(16, 409)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.Size = New System.Drawing.Size(75, 35)
         Me.Button1.TabIndex = 6
         Me.Button1.Text = "Buscar"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(710, 412)
+        Me.Button2.Image = Global.Seguridad.My.Resources.Resources.Salir
+        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button2.Location = New System.Drawing.Point(712, 412)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.Size = New System.Drawing.Size(71, 32)
         Me.Button2.TabIndex = 7
         Me.Button2.Text = "Cerrar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.Button2.UseVisualStyleBackColor = True
         '
         'btnRegistrar
         '
-        Me.btnRegistrar.Location = New System.Drawing.Point(629, 412)
+        Me.btnRegistrar.Image = Global.Seguridad.My.Resources.Resources.Guardar24
+        Me.btnRegistrar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnRegistrar.Location = New System.Drawing.Point(626, 412)
         Me.btnRegistrar.Name = "btnRegistrar"
-        Me.btnRegistrar.Size = New System.Drawing.Size(75, 23)
+        Me.btnRegistrar.Size = New System.Drawing.Size(80, 32)
         Me.btnRegistrar.TabIndex = 2
         Me.btnRegistrar.Text = "Registrar"
+        Me.btnRegistrar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnRegistrar.UseVisualStyleBackColor = True
         '
         'gbGasto
@@ -314,11 +326,14 @@ Partial Class frmGastoMovilidad
         '
         'btnNuevo
         '
-        Me.btnNuevo.Location = New System.Drawing.Point(547, 412)
+        Me.btnNuevo.Image = Global.Seguridad.My.Resources.Resources.NEW24
+        Me.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnNuevo.Location = New System.Drawing.Point(553, 412)
         Me.btnNuevo.Name = "btnNuevo"
-        Me.btnNuevo.Size = New System.Drawing.Size(75, 23)
+        Me.btnNuevo.Size = New System.Drawing.Size(67, 32)
         Me.btnNuevo.TabIndex = 10
         Me.btnNuevo.Text = "Nuevo"
+        Me.btnNuevo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnNuevo.UseVisualStyleBackColor = True
         '
         'btnAprobar
@@ -331,10 +346,15 @@ Partial Class frmGastoMovilidad
         Me.btnAprobar.Text = "APROBAR"
         Me.btnAprobar.UseVisualStyleBackColor = True
         '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
         'frmGastoMovilidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(800, 447)
         Me.Controls.Add(Me.btnAprobar)
         Me.Controls.Add(Me.btnNuevo)
@@ -359,6 +379,7 @@ Partial Class frmGastoMovilidad
         CType(Me.dgvDetalle, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbGasto.ResumeLayout(False)
         Me.gbGasto.PerformLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -393,4 +414,5 @@ Partial Class frmGastoMovilidad
     Friend WithEvents Gas_Usuario As DataGridViewTextBoxColumn
     Friend WithEvents Gas_Denegar As DataGridViewTextBoxColumn
     Friend WithEvents btnAprobar As Button
+    Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
 End Class

@@ -194,18 +194,18 @@ Public Class frmUsuarios
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
         Dim usu As Integer = 1
         Dim con As Integer = 1
-        If txtUsuario.Text.Trim.Length = 0 Then
+        If txtUsuario.Text.Trim.Length = 0 And txtUsuario.Enabled Then
             ErrorProvider1.SetError(txtUsuario, "Ingresa Usuario")
             usu = 0
         End If
 
-        If txtPassword.Text.Trim.Length = 0 Then
+        If txtPassword.Text.Trim.Length = 0 And txtPassword.Enabled Then
             ErrorProvider1.SetError(txtPassword, "Ingresa Contraseña")
             con = 0
         End If
 
 
-        If usu = 1 And con = 1 Then
+        If usu = 1 And con = 1 = True Then
             Dim clsUsuariosBD As New clsUsuario
             Dim drRpta As DataRow
             If (userSelected("usu_Codigo") = usuarioLogueado("usu_Codigo")) Then
