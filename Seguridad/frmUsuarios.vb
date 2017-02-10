@@ -192,38 +192,55 @@ Public Class frmUsuarios
     End Sub
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        Dim clsUsuariosBD As New clsUsuario
-        Dim drRpta As DataRow
-        If (userSelected("usu_Codigo") = usuarioLogueado("usu_Codigo")) Then
-            'El Usuario Esta Logueado
-        Else
-            userSelected("usu_Nombre") = txtUsuario.Text
-            userSelected("usu_Contrasena") = txtPassword.Text
+        Dim usu As Integer = 1
+        Dim con As Integer = 1
+        If txtUsuario.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtUsuario, "Ingresa Usuario")
+            usu = 0
         End If
 
-        userSelected("usu_Persona") = If(chkPersona.Checked, "SI", "NO")
-        userSelected("usu_Beneficio") = If(chkGasto.Checked, "SI", "NO")
-        userSelected("usu_Papeleta") = If(chkPapeleta.Checked, "SI", "NO")
-        userSelected("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
-        userSelected("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
-        userSelected("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
-
-        getCheckedList()
-
-        If (inNew) Then
-            drRpta = clsUsuariosBD.Registrar(permisosFinales, userSelected)
-        Else
-            drRpta = clsUsuariosBD.Actualizar(permisosFinales, userSelected)
+        If txtPassword.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtPassword, "Ingresa Contraseña")
+            con = 0
         End If
 
-        MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
-                           "Prueba", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        gbUsuario.Enabled = False
-        gbListado.Enabled = True
-        Dim clsBDPersona As New clsPersona
-        dgvUsuarios.DataSource = clsBDPersona.Filtro(txtFiltro.Text)
-        inNew = False
+        If usu = 1 And con = 1 Then
+            Dim clsUsuariosBD As New clsUsuario
+            Dim drRpta As DataRow
+            If (userSelected("usu_Codigo") = usuarioLogueado("usu_Codigo")) Then
+                'El Usuario Esta Logueado
+            Else
+                userSelected("usu_Nombre") = txtUsuario.Text
+                userSelected("usu_Contrasena") = txtPassword.Text
+            End If
+
+            userSelected("usu_Persona") = If(chkPersona.Checked, "SI", "NO")
+            userSelected("usu_Beneficio") = If(chkGasto.Checked, "SI", "NO")
+            userSelected("usu_Papeleta") = If(chkPapeleta.Checked, "SI", "NO")
+            userSelected("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
+            userSelected("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
+            userSelected("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
+
+            getCheckedList()
+
+            If (inNew) Then
+                drRpta = clsUsuariosBD.Registrar(permisosFinales, userSelected)
+            Else
+                drRpta = clsUsuariosBD.Actualizar(permisosFinales, userSelected)
+            End If
+
+            MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
+                               "Prueba", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            gbUsuario.Enabled = False
+            gbListado.Enabled = True
+            Dim clsBDPersona As New clsPersona
+            dgvUsuarios.DataSource = clsBDPersona.Filtro(txtFiltro.Text)
+            inNew = False
+            ErrorProvider1.Clear()
+        End If
+        
 
     End Sub
 

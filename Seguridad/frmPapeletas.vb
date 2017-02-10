@@ -152,19 +152,39 @@ Public Class frmPapeletas
 
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Dim objCargo As New clsMantenimiento
-        Dim dtData As DataTable = Nothing
-        Dim drRpta As DataRow = Nothing
-        Dim objPapeleta As New clsPapeleta
-        Dim dtDataPapeleta As DataTable = Nothing
-        Dim drRptaPapeleta As DataRow = Nothing
-        dtData = LlenarDatos()
-        drRpta = objCargo.MantenimientoDocumento("R", dtData)
-        dtDataPapeleta = LlenarDatosPapeleta()
-        drRptaPapeleta = objPapeleta.MantenimientoXML("R", dtDataPapeleta).Rows(0)
-        MessageBox.Show(drRptaPapeleta.Item("MensajeTitulo").ToString & vbCrLf & drRptaPapeleta.Item("MensajeProcedure").ToString, _
-                            "Gestion Documentaria", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Me.DialogResult = Windows.Forms.DialogResult.OK
+        Dim l As Integer = 1
+        Dim j As Integer = 1
+        Dim lbl As Integer = 1
+        If txtLugar.Text.Trim.Length = 0 Then
+            l = 0
+            ErrorProvider1.SetError(txtLugar, "Ingrese Lugar")
+        End If
+        If txtJustificacion.Text.Trim.Length = 0 Then
+            j = 0
+            ErrorProvider1.SetError(txtJustificacion, "Ingrese Justificacion")
+        End If
+        If lbRemitente.Text.Trim = "Remitente sin seleccionar" Then
+            lbl = 0
+            ErrorProvider1.SetError(lbRemitente, "Debe Seleccionar a Una Persona")
+        End If
+
+        If j = 1 And l = 1 And lbl = 1 Then
+            Dim objCargo As New clsMantenimiento
+            Dim dtData As DataTable = Nothing
+            Dim drRpta As DataRow = Nothing
+            Dim objPapeleta As New clsPapeleta
+            Dim dtDataPapeleta As DataTable = Nothing
+            Dim drRptaPapeleta As DataRow = Nothing
+            dtData = LlenarDatos()
+            drRpta = objCargo.MantenimientoDocumento("R", dtData)
+            dtDataPapeleta = LlenarDatosPapeleta()
+            drRptaPapeleta = objPapeleta.MantenimientoXML("R", dtDataPapeleta).Rows(0)
+            MessageBox.Show(drRptaPapeleta.Item("MensajeTitulo").ToString & vbCrLf & drRptaPapeleta.Item("MensajeProcedure").ToString, _
+                                "Gestion Documentaria", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Me.DialogResult = Windows.Forms.DialogResult.OK
+            ErrorProvider1.Clear()
+        End If
+
     End Sub
 
     Private Sub btnBuscar_Click(sender As Object, e As EventArgs) Handles btnBuscar.Click

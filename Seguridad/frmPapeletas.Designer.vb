@@ -22,12 +22,12 @@ Partial Class frmPapeletas
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.txtFecha = New System.Windows.Forms.DateTimePicker()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.lbCodigoRemitente = New System.Windows.Forms.Label()
         Me.txtCodigo = New System.Windows.Forms.TextBox()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.txtJustificacion = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtLugar = New System.Windows.Forms.TextBox()
@@ -37,10 +37,13 @@ Partial Class frmPapeletas
         Me.cbMotivo = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lbRemitente = New System.Windows.Forms.Label()
-        Me.btnBuscar = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnBuscar = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtFecha
@@ -89,7 +92,7 @@ Partial Class frmPapeletas
         'lbCodigoRemitente
         '
         Me.lbCodigoRemitente.AutoSize = True
-        Me.lbCodigoRemitente.Location = New System.Drawing.Point(176, 109)
+        Me.lbCodigoRemitente.Location = New System.Drawing.Point(177, 109)
         Me.lbCodigoRemitente.Name = "lbCodigoRemitente"
         Me.lbCodigoRemitente.Size = New System.Drawing.Size(128, 13)
         Me.lbCodigoRemitente.TabIndex = 14
@@ -103,15 +106,6 @@ Partial Class frmPapeletas
         Me.txtCodigo.Size = New System.Drawing.Size(109, 20)
         Me.txtCodigo.TabIndex = 0
         Me.txtCodigo.Visible = False
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(15, 366)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(286, 29)
-        Me.Button2.TabIndex = 13
-        Me.Button2.Text = "GENERAR PAPELETA"
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'txtJustificacion
         '
@@ -149,6 +143,7 @@ Partial Class frmPapeletas
         '
         'cbRetorno
         '
+        Me.cbRetorno.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbRetorno.Items.AddRange(New Object() {"SI", "NO"})
         Me.cbRetorno.Location = New System.Drawing.Point(207, 162)
         Me.cbRetorno.Name = "cbRetorno"
@@ -166,6 +161,7 @@ Partial Class frmPapeletas
         '
         'cbMotivo
         '
+        Me.cbMotivo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbMotivo.Items.AddRange(New Object() {"Comisión de Servicios", "Consulta Médica", "Asuntos Personales", "Otros"})
         Me.cbMotivo.Location = New System.Drawing.Point(18, 162)
         Me.cbMotivo.Name = "cbMotivo"
@@ -191,34 +187,55 @@ Partial Class frmPapeletas
         Me.lbRemitente.TabIndex = 4
         Me.lbRemitente.Text = "Remitente sin seleccionar"
         '
-        'btnBuscar
-        '
-        Me.btnBuscar.Location = New System.Drawing.Point(226, 65)
-        Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(75, 23)
-        Me.btnBuscar.TabIndex = 3
-        Me.btnBuscar.Text = "Buscar"
-        Me.btnBuscar.UseVisualStyleBackColor = True
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(18, 70)
+        Me.Label2.Location = New System.Drawing.Point(18, 83)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(58, 13)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "Remitente:"
         '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
+        'Button2
+        '
+        Me.Button2.Image = Global.Seguridad.My.Resources.Resources.Generator_24
+        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Button2.Location = New System.Drawing.Point(116, 366)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(100, 40)
+        Me.Button2.TabIndex = 13
+        Me.Button2.Text = "GENERAR"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'btnBuscar
+        '
+        Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar24
+        Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnBuscar.Location = New System.Drawing.Point(229, 74)
+        Me.btnBuscar.Name = "btnBuscar"
+        Me.btnBuscar.Size = New System.Drawing.Size(72, 31)
+        Me.btnBuscar.TabIndex = 3
+        Me.btnBuscar.Text = "Buscar"
+        Me.btnBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnBuscar.UseVisualStyleBackColor = True
+        '
         'frmPapeletas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(339, 430)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "frmPapeletas"
         Me.Text = "frmPapeletas"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -235,9 +252,10 @@ Partial Class frmPapeletas
     Friend WithEvents cbMotivo As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents lbRemitente As System.Windows.Forms.Label
-    Friend WithEvents btnBuscar As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents txtCodigo As System.Windows.Forms.TextBox
     Friend WithEvents PrintDocument1 As System.Drawing.Printing.PrintDocument
     Friend WithEvents lbCodigoRemitente As System.Windows.Forms.Label
+    Friend WithEvents btnBuscar As System.Windows.Forms.Button
+    Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
 End Class
