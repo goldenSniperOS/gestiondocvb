@@ -22,18 +22,21 @@ Partial Class Login
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtCont = New System.Windows.Forms.TextBox()
         Me.txtUsu = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnEntrar = New System.Windows.Forms.Button()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.btnEntrar = New System.Windows.Forms.Button()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label3
@@ -98,18 +101,6 @@ Partial Class Login
         Me.Panel1.Size = New System.Drawing.Size(568, 379)
         Me.Panel1.TabIndex = 1
         '
-        'btnEntrar
-        '
-        Me.btnEntrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle))
-        Me.btnEntrar.Image = Global.Seguridad.My.Resources.Resources.ingresar
-        Me.btnEntrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnEntrar.Location = New System.Drawing.Point(243, 271)
-        Me.btnEntrar.Name = "btnEntrar"
-        Me.btnEntrar.Size = New System.Drawing.Size(151, 64)
-        Me.btnEntrar.TabIndex = 2
-        Me.btnEntrar.Text = "        ENTRAR"
-        Me.btnEntrar.UseVisualStyleBackColor = True
-        '
         'PictureBox2
         '
         Me.PictureBox2.Image = Global.Seguridad.My.Resources.Resources.logo_25
@@ -129,8 +120,25 @@ Partial Class Login
         Me.PictureBox1.TabIndex = 4
         Me.PictureBox1.TabStop = False
         '
+        'btnEntrar
+        '
+        Me.btnEntrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle))
+        Me.btnEntrar.Image = Global.Seguridad.My.Resources.Resources.ingresar
+        Me.btnEntrar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnEntrar.Location = New System.Drawing.Point(243, 271)
+        Me.btnEntrar.Name = "btnEntrar"
+        Me.btnEntrar.Size = New System.Drawing.Size(151, 64)
+        Me.btnEntrar.TabIndex = 2
+        Me.btnEntrar.Text = "        ENTRAR"
+        Me.btnEntrar.UseVisualStyleBackColor = True
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
         'Login
         '
+        Me.AcceptButton = Me.btnEntrar
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
@@ -147,6 +155,7 @@ Partial Class Login
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -159,4 +168,5 @@ Partial Class Login
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
 End Class
