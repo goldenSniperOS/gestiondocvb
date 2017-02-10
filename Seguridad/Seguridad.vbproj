@@ -158,6 +158,12 @@
     <Compile Include="frmPapeletas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmPapeletasAreaMesAnio.Designer.vb">
+      <DependentUpon>frmPapeletasAreaMesAnio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPapeletasAreaMesAnio.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmPersona.Designer.vb">
       <DependentUpon>frmPersona.vb</DependentUpon>
     </Compile>
@@ -210,6 +216,12 @@
       <DependentUpon>frmReporteNotaUsuarioAnio.vb</DependentUpon>
     </Compile>
     <Compile Include="frmReporteNotaUsuarioAnio.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReportePapeletaAreaMesAnio.Designer.vb">
+      <DependentUpon>frmReportePapeletaAreaMesAnio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportePapeletaAreaMesAnio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmReporteVacacion.Designer.vb">
@@ -269,6 +281,12 @@
       <DependentUpon>rptReporteNotaUsuarioAnio.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="rptReportePapeletaAreaMesAnio.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptReportePapeletaAreaMesAnio.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="rptVacaciones.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -301,6 +319,9 @@
     <EmbeddedResource Include="frmNotasContablesFilialMesAño.resx">
       <DependentUpon>frmNotasContablesFilialMesAño.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPapeletasAreaMesAnio.resx">
+      <DependentUpon>frmPapeletasAreaMesAnio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPersona.resx">
       <DependentUpon>frmPersona.vb</DependentUpon>
     </EmbeddedResource>
@@ -327,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteNotaUsuarioAnio.resx">
       <DependentUpon>frmReporteNotaUsuarioAnio.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReportePapeletaAreaMesAnio.resx">
+      <DependentUpon>frmReportePapeletaAreaMesAnio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteVacacion.resx">
       <DependentUpon>frmReporteVacacion.vb</DependentUpon>
@@ -358,6 +382,10 @@
     <EmbeddedResource Include="rptReporteNotaUsuarioAnio.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptReporteNotaUsuarioAnio.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptReportePapeletaAreaMesAnio.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptReportePapeletaAreaMesAnio.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="rptVacaciones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
