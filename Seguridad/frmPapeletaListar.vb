@@ -19,7 +19,9 @@ Public Class frmPapeletaListar
 
     Private Sub frmPapeletaListar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarDatos()
-        If (usuarioLogueado("per_Codigo") = usuarioLogueado("par_per_Codigo")) Then
+        Dim per As String = usuarioLogueado("per_Codigo")
+        Dim per2 As String = usuarioLogueado("par_per_Codigo")
+        If (usuarioLogueado("per_Codigo") = usuarioLogueado("are_Jefe")) Then
             btnAprobar.Visible = True
         End If
 
