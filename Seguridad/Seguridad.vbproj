@@ -92,6 +92,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAsignarVacaciones.Designer.vb">
+      <DependentUpon>frmAsignarVacaciones.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAsignarVacaciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmBuscarTrabajadorArea.Designer.vb">
       <DependentUpon>frmBuscarTrabajadorArea.vb</DependentUpon>
     </Compile>
@@ -295,6 +301,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmAsignarVacaciones.resx">
+      <DependentUpon>frmAsignarVacaciones.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmGastoMovilidad.resx">
       <DependentUpon>frmGastoMovilidad.vb</DependentUpon>
     </EmbeddedResource>

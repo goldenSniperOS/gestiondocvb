@@ -8,8 +8,6 @@
 
         If (dialog.ShowDialog() = DialogResult.OK) Then
             TextBox1.Text = System.IO.Path.GetFullPath(dialog.FileName)
-
-
             Dim MyConnection As System.Data.OleDb.OleDbConnection
             Dim DtSet As System.Data.DataSet
             Dim MyCommand As System.Data.OleDb.OleDbDataAdapter
