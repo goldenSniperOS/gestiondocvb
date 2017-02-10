@@ -342,7 +342,7 @@ Public Class frmPersona
             numvia = 0
         End If
 
-        If nom = 1 And ape = 1 And dni = 1 And email = 1 And ev = 1 And telefono = 1 And people = 1 And zona = 1 And via = 1 And numvia = 1 Then
+        If nom = 1 And ape = 1 And dni = 1 And email = 1 And ev = 1 And people = 1 And zona = 1 And via = 1 And numvia = 1 Then
             Dim tablaGuardar As DataTable = GetEstructuraPersona()
             Dim rowGuardar As DataRow = tablaGuardar.NewRow
 
