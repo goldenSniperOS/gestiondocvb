@@ -107,8 +107,7 @@ BEGIN
 END
 
 
-GO
-SET QUOTED_IDENTIFIER ON
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_GastoMovilidad')
@@ -192,6 +191,7 @@ BEGIN
 	 if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_MantenimientoVacacion')
@@ -200,26 +200,33 @@ go
 
 CREATE PROCEDURE [dbo].[pa_MantenimientoVacacion]
 (
-	@Tipo char(1),
+	@Tipo char(2),
 	@InfoXML varchar(max)
 )
 AS 
 BEGIN
 	declare @IDXML int
-	if( @InfoXML<> '')
-	execute sp_xml_prepareDocument @IDXML output, @InfoXML
 	IF (@Tipo = 'R')
 	BEGIN
-		insert into tbdocumento_vacaciones(Vaca_doc_Cod, Vaca_FechaSalida, Vaca_FechaTermino, Vaca_FechaRetorno, Vaca_Dias, Vaca_Pape_ApruebaJefe, Vaca_Pape_ApruebaRRHH, Vaca_Observacion)
+		if( @InfoXML<> '')
+		DECLARE @table TABLE(Vaca_doc_Cod varchar(10), Vaca_FechaSalida date, Vaca_FechaTermino date, Vaca_FechaRetorno date, Vaca_Dias int,
+			 Vaca_Pape_ApruebaJefe char(2), Vaca_Pape_ApruebaRRHH char(2), Vaca_Observacion varchar(200))
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+		insert into @table 
 		select Vaca_doc_Cod, Vaca_FechaSalida, Vaca_FechaTermino, Vaca_FechaRetorno, Vaca_Dias, Vaca_Pape_ApruebaJefe, Vaca_Pape_ApruebaRRHH, Vaca_Observacion
 		from openXML(@IDXML, '/Dato/Principal',1)
 		with(Vaca_doc_Cod varchar(10), Vaca_FechaSalida date, Vaca_FechaTermino date, Vaca_FechaRetorno date, Vaca_Dias int,
 			 Vaca_Pape_ApruebaJefe char(2), Vaca_Pape_ApruebaRRHH char(2), Vaca_Observacion varchar(200))
-
-			select 'Gestion Documentaria' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
+		insert into tbdocumento_vacaciones(Vaca_doc_Cod, Vaca_FechaSalida, Vaca_FechaTermino, Vaca_FechaRetorno, Vaca_Dias, Vaca_Pape_ApruebaJefe, Vaca_Pape_ApruebaRRHH, Vaca_Observacion)
+		(select * from @table)
+		select 'Gestion Documentaria' as MensajeTitulo, 'Exitosamente se Registro :D!!!...' as MensajeProcedure
+		if(@InfoXML <> '')
+		execute sp_xml_RemoveDocument @IDXML
 	 END
 	 IF (@Tipo = 'A')
 	 BEGIN
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		UPDATE tbdocumento_vacaciones SET Vaca_doc_Cod=TablaLoca.Vaca_doc_Cod, 
 					Vaca_FechaSalida=TablaLoca.Vaca_FechaSalida, Vaca_FechaTermino=TablaLoca.Vaca_FechaTermino, 
 					Vaca_FechaRetorno=TablaLoca.Vaca_FechaRetorno, Vaca_Dias=TablaLoca.Vaca_Dias, 
@@ -232,28 +239,42 @@ BEGIN
 		WHERE tbdocumento_vacaciones.Vaca_Codigo = TablaLoca.Vaca_Codigo
 
 		select 'Gestion Documentaria' as MensajeTitulo, 'Exitosamente se modificio :D!!!...' as MensajeProcedure
+			 if(@InfoXML <> '')
+			 execute sp_xml_RemoveDocument @IDXML
+			
 	 END
 	 
 	 IF (@Tipo = 'I')
 	 BEGIN
+			if( @InfoXML<> '')
+			execute sp_xml_prepareDocument @IDXML output, @InfoXML
 			SELECT TOP 1 (SELECT TOP 1 doc_Codigo FROM tbdocumento ORDER BY doc_Codigo DESC) AS doc_Codigo
 			FROM tbdocumento
 			ORDER BY doc_Codigo DESC
+			 if(@InfoXML <> '')
+			 execute sp_xml_RemoveDocument @IDXML
 	 END 
 
 
 	 IF (@Tipo = '1') --Listar Para Recursos Humanos -> Lista todos los documentos Vacacion sin excepcion
 	 BEGIN
+	 
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		Select top 20 DV.Vaca_Codigo ,TD.doc_Fecha , TP.per_Apellidos, TP.per_Nombres, DV.Vaca_FechaSalida, 
 		DV.Vaca_FechaRetorno, DV.Vaca_Dias, DV.Vaca_Pape_ApruebaJefe, DV.Vaca_Pape_ApruebaRRHH
 		from tbdocumento_vacaciones as DV
 		inner join tbdocumento as TD on DV.vaca_doc_Cod = TD.doc_Codigo
 		inner join tbusuario as TU on TD.doc_usu_Codigo = TU.usu_Codigo
 		inner join tbpersona as TP on TU.usu_per_Codigo = TP.per_Codigo
+		 if(@InfoXML <> '')
+		 execute sp_xml_RemoveDocument @IDXML
 
 	 END
 	  IF (@Tipo = '2') --Listar Por Area del Usuario
 		 BEGIN
+				if( @InfoXML<> '')
+				execute sp_xml_prepareDocument @IDXML output, @InfoXML
 				 Select top 20 DV.Vaca_Codigo ,TD.doc_Fecha , TP.per_Apellidos, TP.per_Nombres, DV.Vaca_FechaSalida, 
 					DV.Vaca_FechaRetorno, DV.Vaca_Dias, DV.Vaca_Pape_ApruebaJefe, DV.Vaca_Pape_ApruebaRRHH
 					from openXML(@IDXML, '/Dato/Principal',1)
@@ -264,10 +285,14 @@ BEGIN
 					INNER JOIN tbusuario as TU ON TU.usu_per_Codigo = TP.per_Codigo
 					INNER JOIN tbDocumento as TD ON TD.doc_usu_Codigo = TU.usu_Codigo
 					INNER JOIN tbdocumento_vacaciones as DV ON DV.vaca_doc_Cod = TD.doc_Codigo
+				 if(@InfoXML <> '')
+				 execute sp_xml_RemoveDocument @IDXML
 		 END
 
 	 IF (@Tipo = '3') -- Buscar por DNI Y filtrar solo el area del usuario
 	 BEGIN
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		declare @TablaAux table (per_DNI VARCHAR(8), are_Codigo varchar(10))
 
 		insert into @TablaAux
@@ -282,10 +307,14 @@ BEGIN
 		inner join tbpersona as TP on TU.usu_per_Codigo = TP.per_Codigo
 		inner join tbpersona_area as PA on TP.per_Codigo = PA.par_per_Codigo
 		where ((select per_DNI from @TablaAux ) = TP.per_DNI) and ((select are_Codigo from @TablaAux ) = PA.par_are_Codigo)
+		 if(@InfoXML <> '')
+		 execute sp_xml_RemoveDocument @IDXML
 	 END
 	 
 	 IF (@Tipo = '4') -- Modificar  parueba Jefe
 	 BEGIN
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		UPDATE tbdocumento_vacaciones SET Vaca_Pape_ApruebaJefe= 'SI'
 		from openXML(@IDXML, '/Dato/Principal',1)
 		with(Vaca_Codigo int)
@@ -293,10 +322,14 @@ BEGIN
 		WHERE tbdocumento_vacaciones.Vaca_Codigo = TablaLoca.Vaca_Codigo
 
 		select 'Jefe de Area' as MensajeTitulo, 'Vacaciones Otorgadas con Exito!' as MensajeProcedure
+		 if(@InfoXML <> '')
+		 execute sp_xml_RemoveDocument @IDXML
 	 END
 
 	 IF (@Tipo = '5')-- Modificar  parueba RRHH
 	 BEGIN
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		UPDATE tbdocumento_vacaciones SET Vaca_Pape_ApruebaRRHH= 'SI'
 		from openXML(@IDXML, '/Dato/Principal',1)
 		with(Vaca_Codigo int)
@@ -304,11 +337,15 @@ BEGIN
 		WHERE tbdocumento_vacaciones.Vaca_Codigo = TablaLoca.Vaca_Codigo
 
 		select 'Recursos Humanos' as MensajeTitulo, 'Vacaciones Otorgadas con Exito!' as MensajeProcedure
+		 if(@InfoXML <> '')
+		 execute sp_xml_RemoveDocument @IDXML
 	 END
 
 	 IF (@Tipo = '6') -- Buscar por DNI solo para RRHH
 	 BEGIN
 		
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
 		Select top 20 DV.Vaca_Codigo ,TD.doc_Fecha , TP.per_Apellidos, TP.per_Nombres, DV.Vaca_FechaSalida, 
 		DV.Vaca_FechaRetorno, DV.Vaca_Dias, DV.Vaca_Pape_ApruebaJefe, DV.Vaca_Pape_ApruebaRRHH
 		from openXML(@IDXML, '/Dato/Principal',1)
@@ -318,14 +355,35 @@ BEGIN
 		INNER JOIN tbusuario as TU ON TU.usu_per_Codigo = TP.per_Codigo
 		INNER JOIN tbDocumento as TD ON TD.doc_usu_Codigo = TU.usu_Codigo
 		INNER JOIN tbdocumento_vacaciones as DV ON DV.vaca_doc_Cod = TD.doc_Codigo
-
+		 if(@InfoXML <> '')
+		 execute sp_xml_RemoveDocument @IDXML
 	 END
 
-	 if(@InfoXML <> '')
-	 execute sp_xml_RemoveDocument @IDXML	 
+	IF(@Tipo = 'B')
+	BEGIN
+		SELECT per_DNI As DNI, CONCAT( per_Nombres ,' ', per_Apellidos) As Persona, per_DiasVacaciones As Vacaciones FROM tbpersona
+		WHERE per_Nombres LIKE '%'+@InfoXML+'%'
+		OR per_Apellidos LIKE '%'+@InfoXML+'%'
+		OR per_DNI LIKE '%'+@InfoXML+'%'
+		OR per_CodPeople LIKE '%'+@InfoXML+'%'
+		ORDER BY per_Codigo
+	END	 
+	 IF (@Tipo = 'AS')
+	 BEGIN
+		if( @InfoXML<> '')
+		execute sp_xml_prepareDocument @IDXML output, @InfoXML
+		UPDATE tbpersona SET per_DiasVacaciones = TablaLoca.Vacaciones
+		from openXML(@IDXML, '/Dato/Principal',1)
+		with(DNI char(8), Persona varchar(200), Vacaciones int)
+		AS TablaLoca
+		WHERE tbpersona.per_DNI = TablaLoca.DNI
+
+		select 'Gestion Documentaria' as MensajeTitulo, 'Se han asignado los días de vacaciones' as MensajeProcedure
+			 if(@InfoXML <> '')
+			 execute sp_xml_RemoveDocument @IDXML
+			
+	 END
 END
-GO
-SET QUOTED_IDENTIFIER ON
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_MantenimientoDocumento')
@@ -388,6 +446,7 @@ BEGIN
 	 if(@InfoXML <> '')
 	 execute sp_xml_RemoveDocument @IDXML	 
 END
+
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_MantenimientoNotaContable')
@@ -402,6 +461,7 @@ CREATE procedure [dbo].[pa_MantenimientoNotaContable]
 AS 
 BEGIN
 	declare @IDXML int
+	IF(@InfoXML <> '')
 	execute sp_xml_prepareDocument @IDXML output, @InfoXML
 
 	IF (@Tipo = 'R')
@@ -414,8 +474,6 @@ BEGIN
 		
 		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Modifico :D!!!...' as MensajeProcedure
 	END
-	IF(@InfoXML <> '')
-	execute sp_xml_RemoveDocument @IDXML
 	
 	IF(@Tipo= 'A')
 	BEGIN
@@ -426,12 +484,56 @@ BEGIN
 		WHERE tbdocumento_notadecontabilidad.Ndcon_Codigo = TablaLoca.Ndcon_Codigo
 		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Modifico :D!!!...' as MensajeProcedure
 	END
+
+	IF(@Tipo= '1')
+	BEGIN
+		DECLARE @allDataRegister TABLE (Ndcon_doc_Cod varchar(10), Ndcon_Usuario varchar(10), Ndcon_Fecha date, 
+										Ndcon_Motivo varchar(150), Ndcon_Subtotal decimal(9,2), Ndcon_Denegar char(2), 
+										Ndcon_Filialuno varchar(30), Ndcon_Cargouno varchar(30), Ndcon_Abonouno varchar(30), 
+										Ndcon_Filialdos varchar(30), Ndcon_Cargodos varchar(30), Ndcon_Abonodos varchar(30));
+
+		DECLARE @DocumentoRegister TABLE (doc_Codigo varchar(10),doc_dpl_Codigo varchar(10), doc_usu_Codigo varchar(10), doc_Fecha date, doc_Hora time(7), 
+										doc_Numero varchar(100), doc_dan_Codigo varchar(10), doc_Titulo Varchar(50), 
+										doc_Remitente varchar(10), doc_Destinatario varchar(10), doc_Asunto varchar(50),
+										doc_Contenido varchar(8000), doc_Referencia varchar(50), doc_Estado int, 
+										doc_Actividad varchar(500), doc_CodigoPresupues varchar(100), doc_Meta varchar(300), 
+										doc_DescargaDocumento char(2), doc_ConfirmaFirma char(2), doc_Firma char(2), 
+										doc_Gas_SerieCod varchar(20), doc_ApruebaMov char(2), doc_ApruebaPape char(2), 
+										doc_ApruebaViat char(2));
+
+		INSERT INTO @allDataRegister 
+		SELECT  Ndcon_doc_Cod, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, Ndcon_Denegar, Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos
+		FROM openXML(@IDXML, '/Dato/Principal',1)
+		WITH(Ndcon_doc_Cod varchar(10), Ndcon_Usuario varchar(10), Ndcon_Fecha date,Ndcon_Motivo varchar(150), 
+			Ndcon_Subtotal decimal(9,2), Ndcon_Denegar char(2), Ndcon_Filialuno varchar(30), Ndcon_Cargouno varchar(30),
+			 Ndcon_Abonouno varchar(30), Ndcon_Filialdos varchar(30), Ndcon_Cargodos varchar(30), Ndcon_Abonodos varchar(30))
+
+		INSERT INTO @DocumentoRegister 
+		SELECT doc_Codigo,doc_dpl_Codigo, doc_usu_Codigo, doc_Fecha, doc_Hora, doc_Numero, doc_dan_Codigo, doc_Titulo, doc_Remitente, doc_Destinatario, doc_Asunto, doc_Contenido, doc_Referencia, doc_Estado, doc_Actividad, doc_CodigoPresupues, doc_Meta, doc_DescargaDocumento, doc_ConfirmaFirma, doc_Firma, doc_Gas_SerieCod, doc_ApruebaMov, doc_ApruebaPape, doc_ApruebaViat
+		FROM openXML(@IDXML, '/Dato/Documento',1)
+		WITH(doc_Codigo varchar(10),doc_dpl_Codigo varchar(10), doc_usu_Codigo varchar(10), doc_Fecha date, doc_Hora time(7), doc_Numero varchar(100), 
+			doc_dan_Codigo varchar(10), doc_Titulo Varchar(50), doc_Remitente varchar(10), doc_Destinatario varchar(10), 
+			doc_Asunto varchar(50),	doc_Contenido varchar(8000), doc_Referencia varchar(50), doc_Estado int, doc_Actividad varchar(500), 
+			doc_CodigoPresupues varchar(100), doc_Meta varchar(300), doc_DescargaDocumento char(2), doc_ConfirmaFirma char(2), 
+			doc_Firma char(2), doc_Gas_SerieCod varchar(20), doc_ApruebaMov char(2), doc_ApruebaPape char(2), doc_ApruebaViat char(2))
+		
+		declare @UltimoCodigo varchar(10)
+		set @UltimoCodigo = dbo.ultimoCodigo('tbdocumento')
+
+		INSERT INTO tbdocumento
+		SELECT  @UltimoCodigo,'DPL0000001', doc_usu_Codigo, CONVERT(date,GETDATE()), CONVERT(time,CURRENT_TIMESTAMP), doc_Numero, 'DAN010', 'DTI0000007', doc_Remitente, 'PER0000126' , doc_Asunto, doc_Contenido, doc_Referencia, 1 , doc_Actividad, doc_CodigoPresupues, doc_Meta, 'NO', 'NO', 'NO', doc_Gas_SerieCod, 'NO', 'NO', 'NO'
+		FROM @DocumentoRegister
+
+		INSERT INTO tbdocumento_notadecontabilidad
+		SELECT @UltimoCodigo, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, 'NO', Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos 
+		FROM @allDataRegister
+
+		Select 'GESTIONDOC' as MensajeTitulo, 'Nota de Contabilidad Registrada con exito' as MensajeProcedure
+	END
+
+	IF(@InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
 END
-
-
-/****** Object:  StoredProcedure [dbo].[pa_TrabajadorPorArea]    Script Date: 11/01/2017 10:56:38 ******/
-SET ANSI_NULLS ON
-
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -456,6 +558,7 @@ END
 
 /****** Object:  StoredProcedure [dbo].[pa_usuario]    Script Date: 11/01/2017 10:57:29 ******/
 SET ANSI_NULLS ON
+
 
 GO
 SET QUOTED_IDENTIFIER ON
@@ -610,6 +713,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 go
 
 
@@ -637,10 +741,15 @@ BEGIN
 
 		DECLARE @nuevoCodigoDir VARCHAR (10)
 		SET @nuevoCodigoDir = dbo.nuevoCodigoDireccion()
+
+		DECLARE @nuevoCodigoPersonaArea VARCHAR (10)
+		SET @nuevoCodigoPersonaArea = dbo.nuevoCodigoPersonaArea()
 		
 		DECLARE @user TABLE (usu_Nombre VARCHAR(20), usu_Contrasena VARCHAR(20),
 		usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
 		usu_Persona CHAR(2),usu_Estado BIT);
+
+		DECLARE @area TABLE (are_Codigo VARCHAR(10));
 		
 		DECLARE @personaRegister TABLE (per_Codigo varchar(10), per_TipoEmpresa varchar(20), per_RazonSocial varchar(50), per_prs_Codigo varchar(6), per_RUC varchar(11),
 		 per_ppr_Codigo varchar(6), per_Nombres varchar(30), per_Apellidos varchar(30), per_Sexo char(1), per_DNI varchar(8), 
@@ -666,7 +775,7 @@ BEGIN
 		 per_pti_Codigo varchar(6), per_pdi_Codigo varchar(10), per_DiasVacaciones int, per_CodPeople varchar(10), per_EstadoCivil varchar(10), 
 		 per_Estudios varchar(100), per_Actualizacion varchar(2), per_Sede varchar(10), per_Grupo varchar(10))
 
-		 INSERT INTO @user 
+		INSERT INTO @user 
 		SELECT usu_Nombre, usu_Contrasena,usu_Beneficio,usu_Vacaciones,usu_Marcacion ,usu_Papeleta,usu_NotaContable,
 		usu_Persona,usu_Estado
 		FROM openXML(@IDXML, '/Dato/Principal',1)
@@ -674,9 +783,10 @@ BEGIN
 		usu_Beneficio CHAR(2),usu_Vacaciones CHAR(2),usu_Marcacion CHAR(2),usu_Papeleta CHAR(2),usu_NotaContable CHAR(2),
 		usu_Persona CHAR(2),usu_Estado BIT)
 
-		--SELECT * FROM @personaRegister
-		--SELECT * FROM @datosDireccionReg
-		--SELECT * FROM @user
+		INSERT INTO @area
+		SELECT are_Codigo
+		FROM openXML(@IDXML, '/Dato/Principal',1)
+		WITH(are_Codigo VARCHAR(10))
 
 		INSERT INTO tbpersona_direccion
 		SELECT
@@ -721,9 +831,6 @@ BEGIN
 				'GEL_ADM' AS per_Grupo 
 		FROM @personaRegister
 
-		
-			
-
 		INSERT INTO tbusuario
 		SELECT
 			@nuevoCodigoUsuario As usu_Codigo,
@@ -744,6 +851,14 @@ BEGIN
 			usu_NotaContable,
 			1 As usu_Sesion
 		From @user
+
+		INSERT INTO tbpersona_area
+		SELECT
+			@nuevoCodigoPersonaArea AS par_Codigo,
+			@nuevoCodigo As par_per_Codigo,
+			are_Codigo As par_are_Codigo,
+			1 As par_Estado
+		FROM @area
 
 		SELECT
 			@nuevoCodigoUsuario As usu_Codigo,
@@ -945,6 +1060,7 @@ BEGIN
 		ORDER BY per_Codigo
 	 END
 END
+
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Rol')
@@ -996,6 +1112,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Listados')
@@ -1058,13 +1175,14 @@ BEGIN
 		SELECT * FROM tbrol
 	END
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteVacacion')
 	drop procedure p_ReporteVacacion
 go
 
-create proc [dbo].[p_ReporteVacacion]
+Create proc [dbo].[p_ReporteVacacion]
 @Codigo as integer
 as
 select TDA.dan_Nombre, TP.per_Apellidos,TP.per_Nombres, TD.doc_Numero,TP.per_DNI, TBV.Vaca_FechaSalida, TBV.Vaca_FechaTermino,
@@ -1075,4 +1193,265 @@ inner join tbdocumento_ano as TDA on TDA.dan_Codigo = TD.doc_dan_Codigo
 inner join tbusuario as TU on TD.doc_usu_Codigo = TU.usu_Codigo
 inner join tbpersona as TP on TU.usu_per_Codigo = TP.per_Codigo
 where TBV.Vaca_Codigo = @Codigo
+
 GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Area')
+	drop procedure pa_Area
+go
+
+CREATE PROCEDURE [dbo].[pa_Area]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbarea
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+
+Go
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Cargo')
+	drop procedure pa_Cargo
+go
+
+CREATE PROCEDURE [dbo].[pa_Cargo]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_cargo
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Departamento')
+	drop procedure pa_Departamento
+go
+
+CREATE PROCEDURE [dbo].[pa_Departamento]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_departamento
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Distrito')
+	drop procedure pa_Distrito
+go
+
+CREATE PROCEDURE [dbo].[pa_Distrito]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX),
+	@Foranea VARCHAR(10)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_distrito
+		WHERE dis_pro_Codigo = @Foranea
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+Go
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Grado')
+	drop procedure pa_Grado
+go
+
+CREATE PROCEDURE [dbo].[pa_Grado]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_prefijo
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Provincia')
+	drop procedure pa_Provincia
+go
+
+CREATE PROCEDURE [dbo].[pa_Provincia]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX),
+	@Foranea VARCHAR(10)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_provincia
+		WHERE pro_dep_Codigo = @Foranea
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Via')
+	drop procedure pa_Via
+go
+
+CREATE PROCEDURE [dbo].[pa_Via]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_via
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Zona')
+	drop procedure pa_Zona
+go
+
+CREATE PROCEDURE [dbo].[pa_Zona]
+	@Tipo CHAR(2),
+	@InfoXML VARCHAR(MAX)
+AS
+BEGIN
+	declare @IDXML int
+	
+	if( @InfoXML <> '')
+	execute sp_xml_prepareDocument @IDXML output, @InfoXML
+
+	IF( @Tipo = 'L')
+	BEGIN
+		SELECT * FROM tbpersona_zona
+	END
+
+	if( @InfoXML <> '')
+	execute sp_xml_RemoveDocument @IDXML
+END
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteGastoMovilidadAreaPeriodo')
+	drop procedure p_ReporteGastoMovilidadAreaPeriodo
+go
+
+create proc [dbo].[p_ReporteGastoMovilidadAreaPeriodo]
+(
+	@Area varchar(10),
+	@FechaIni date,
+	@FechaFin date
+)
+as
+	SELECT * FROM fnGastosMovilidadXAreaXPeriodo(@Area,@FechaIni,@FechaFin)
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteGastosMovilidadXPeriodo')
+	drop procedure p_ReporteGastosMovilidadXPeriodo
+go
+
+CREATE proc [dbo].[p_ReporteGastosMovilidadXPeriodo]
+(
+	@FechaIni date,
+	@FechaFin date
+)
+as
+	SELECT * FROM fnGastosMovilidadXPeriodo(@FechaIni,@FechaFin)
+Go
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteNota_por_usuario_por_anio')
+	drop procedure p_ReporteNota_por_usuario_por_anio
+go
+
+create proc [dbo].[p_ReporteNota_por_usuario_por_anio]
+(
+	@Año int
+)
+as
+	select * from fnNota_por_usuario_por_anio(@Año)
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteNotasContablesXFilialXMesXAnio')
+	drop procedure p_ReporteNotasContablesXFilialXMesXAnio
+go
+
+create proc [dbo].[p_ReporteNotasContablesXFilialXMesXAnio]
+(
+	@Año int
+)
+as
+	select * from fnNotasContablesXFilialXMesXAnio(@Año)
+GO
+
+IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReportePapeletasXAreaXMesXAnio')
+	drop procedure p_ReportePapeletasXAreaXMesXAnio
+go
+
+create proc [dbo].[p_ReportePapeletasXAreaXMesXAnio]
+(
+	@Año int
+)
+as
+	select * from fnPapeletasXAreaXMesXAnio(2016)
