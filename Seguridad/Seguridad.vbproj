@@ -104,6 +104,12 @@
     <Compile Include="frmGastoMovilidad.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmGastoMovilidadEnPeriodos.Designer.vb">
+      <DependentUpon>frmGastoMovilidadEnPeriodos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmGastoMovilidadEnPeriodos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmListadoDocumentoVacacion.Designer.vb">
       <DependentUpon>frmListadoDocumentoVacacion.vb</DependentUpon>
     </Compile>
@@ -164,6 +170,24 @@
     <Compile Include="frmRegistroNotaContable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmReporteAreaPerido.Designer.vb">
+      <DependentUpon>frmReporteAreaPerido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteAreaPerido.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReporteGastoMovilidadEnPeriodos.Designer.vb">
+      <DependentUpon>frmReporteGastoMovilidadEnPeriodos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteGastoMovilidadEnPeriodos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReporteGastosMovilidadAreaPeriodo.Designer.vb">
+      <DependentUpon>frmReporteGastosMovilidadAreaPeriodo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteGastosMovilidadAreaPeriodo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmReporteVacacion.Designer.vb">
       <DependentUpon>frmReporteVacacion.vb</DependentUpon>
     </Compile>
@@ -197,6 +221,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="rptGastoMovilidadArea.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptGastoMovilidadArea.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="rptGastoMovilidadAreaPeriodo.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rptGastoMovilidadAreaPeriodo.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="rptVacaciones.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -207,6 +243,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmGastoMovilidad.resx">
       <DependentUpon>frmGastoMovilidad.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmGastoMovilidadEnPeriodos.resx">
+      <DependentUpon>frmGastoMovilidadEnPeriodos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoDocumentoVacacion.resx">
       <DependentUpon>frmListadoDocumentoVacacion.vb</DependentUpon>
@@ -232,6 +271,15 @@
     <EmbeddedResource Include="frmRegistroNotaContable.resx">
       <DependentUpon>frmRegistroNotaContable.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmReporteAreaPerido.resx">
+      <DependentUpon>frmReporteAreaPerido.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReporteGastoMovilidadEnPeriodos.resx">
+      <DependentUpon>frmReporteGastoMovilidadEnPeriodos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReporteGastosMovilidadAreaPeriodo.resx">
+      <DependentUpon>frmReporteGastosMovilidadAreaPeriodo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmReporteVacacion.resx">
       <DependentUpon>frmReporteVacacion.vb</DependentUpon>
     </EmbeddedResource>
@@ -246,6 +294,14 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptGastoMovilidadArea.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptGastoMovilidadArea.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptGastoMovilidadAreaPeriodo.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rptGastoMovilidadAreaPeriodo.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="rptVacaciones.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

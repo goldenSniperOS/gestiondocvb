@@ -25,6 +25,10 @@ Partial Class frmReporteGastosMovilidadAreaPeriodo
         Me.cmbArea = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.dtpFechaFin = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dtpFechaInicio = New System.Windows.Forms.DateTimePicker()
         Me.btnReportar = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -63,13 +67,37 @@ Partial Class frmReporteGastosMovilidadAreaPeriodo
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "SELECCION DE REPORTE"
         '
+        'dtpFechaFin
         '
+        Me.dtpFechaFin.Location = New System.Drawing.Point(147, 75)
+        Me.dtpFechaFin.Name = "dtpFechaFin"
+        Me.dtpFechaFin.Size = New System.Drawing.Size(282, 20)
+        Me.dtpFechaFin.TabIndex = 5
         '
+        'Label3
         '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(76, 81)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(65, 13)
+        Me.Label3.TabIndex = 4
+        Me.Label3.Text = "FECHA FIN:"
         '
+        'Label2
         '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(61, 55)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(80, 13)
+        Me.Label2.TabIndex = 3
+        Me.Label2.Text = "FECHA INICIO:"
         '
+        'dtpFechaInicio
         '
+        Me.dtpFechaInicio.Location = New System.Drawing.Point(147, 49)
+        Me.dtpFechaInicio.Name = "dtpFechaInicio"
+        Me.dtpFechaInicio.Size = New System.Drawing.Size(282, 20)
+        Me.dtpFechaInicio.TabIndex = 2
         '
         'btnReportar
         '
