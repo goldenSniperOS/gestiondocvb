@@ -65,16 +65,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsArea.vb" />
+    <Compile Include="clsCargo.vb" />
+    <Compile Include="clsDepartamento.vb" />
+    <Compile Include="clsDistrito.vb" />
     <Compile Include="clsDocumento.vb" />
     <Compile Include="clsDocumentoVacacion.vb" />
     <Compile Include="clsGasto.vb" />
-    <Compile Include="clsListados.vb" />
+    <Compile Include="clsGrado.vb" />
     <Compile Include="clsMantenimiento.vb" />
     <Compile Include="clsNotaContable.vb" />
     <Compile Include="clsPapeleta.vb" />
     <Compile Include="clsPersona.vb" />
+    <Compile Include="clsProvincia.vb" />
     <Compile Include="clsRol.vb" />
     <Compile Include="clsUsuario.vb" />
+    <Compile Include="clsVia.vb" />
+    <Compile Include="clsZona.vb" />
     <Compile Include="modXML.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

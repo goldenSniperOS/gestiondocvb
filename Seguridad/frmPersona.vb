@@ -54,34 +54,39 @@ Public Class frmPersona
     End Function
 
     Private Sub frmPersona_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim listado As New clsListados
         Dim clsBDArea As New clsArea
+        Dim clsBDGrado As New clsGrado
+        Dim clsBDCargo As New clsCargo
+        Dim clsBDDepartamento As New clsDepartamento
+        Dim clsBDZona As New clsZona
+        Dim clsBDVia As New clsVia
+        Dim clsBDRol As New clsRol
 
         cmbGrado.DisplayMember = "ppr_Nombre"
         cmbGrado.ValueMember = "ppr_Codigo"
-        cmbGrado.DataSource = listado.De("Prefijos")
+        cmbGrado.DataSource = clsBDGrado.Listado
 
 
         cmbCargo.DisplayMember = "pca_Nombre"
         cmbCargo.ValueMember = "pca_Codigo"
-        cmbCargo.DataSource = listado.De("Cargos")
+        cmbCargo.DataSource = clsBDCargo.Listado
 
         cmbDepartamento.DisplayMember = "dep_Nombre"
         cmbDepartamento.ValueMember = "dep_Codigo"
-        cmbDepartamento.DataSource = listado.De("Departamentos")
+        cmbDepartamento.DataSource = clsBDDepartamento.Listado
 
 
         cmbZona.DisplayMember = "pzo_Nombre"
         cmbZona.ValueMember = "pzo_Codigo"
-        cmbZona.DataSource = listado.De("Zonas")
+        cmbZona.DataSource = clsBDZona.Listado
 
         cmbVia.DisplayMember = "pvi_Nombre"
         cmbVia.ValueMember = "pvi_Codigo"
-        cmbVia.DataSource = listado.De("Vias")
+        cmbVia.DataSource = clsBDVia.Listado
 
         cmbRol.DisplayMember = "rol_Descripcion"
         cmbRol.ValueMember = "rol_Id"
-        cmbRol.DataSource = listado.De("Roles")
+        cmbRol.DataSource = clsBDRol.Listado
 
         cmbArea.DisplayMember = "are_Nombre"
         cmbArea.ValueMember = "are_Codigo"
@@ -92,17 +97,17 @@ Public Class frmPersona
     End Sub
 
     Private Sub cmbDepartamento_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDepartamento.SelectedIndexChanged
-        Dim listado As New clsListados
+        Dim provincia As New clsProvincia
         cmbProvincia.DisplayMember = "pro_Nombre"
         cmbProvincia.ValueMember = "pro_Codigo"
-        cmbProvincia.DataSource = listado.De("Provincias", cmbDepartamento.SelectedValue)
+        cmbProvincia.DataSource = provincia.Listado(cmbDepartamento.SelectedValue)
     End Sub
 
     Private Sub cmbProvincia_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbProvincia.SelectedIndexChanged
-        Dim listado As New clsListados
+        Dim distrito As New clsDistrito
         cmbDistrito.DisplayMember = "dis_Nombre"
         cmbDistrito.ValueMember = "dis_Codigo"
-        cmbDistrito.DataSource = listado.De("Distritos", cmbProvincia.SelectedValue)
+        cmbDistrito.DataSource = distrito.Listado(cmbProvincia.SelectedValue)
     End Sub
 
     Private Sub TreePermisos(Permisos As DataTable, Padre As Integer, ByRef Tree As TreeView, ByRef Item As TreeNode)
