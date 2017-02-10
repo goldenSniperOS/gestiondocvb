@@ -22,6 +22,7 @@ Partial Class frmPersona
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.gbPersona = New System.Windows.Forms.GroupBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -81,10 +82,12 @@ Partial Class frmPersona
         Me.btnGuardar = New System.Windows.Forms.Button()
         Me.gbArea = New System.Windows.Forms.GroupBox()
         Me.cmbArea = New System.Windows.Forms.ComboBox()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.gbPersona.SuspendLayout()
         Me.gbUbicacion.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
         Me.gbArea.SuspendLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gbPersona
@@ -116,7 +119,7 @@ Partial Class frmPersona
         Me.gbPersona.Enabled = False
         Me.gbPersona.Location = New System.Drawing.Point(12, 12)
         Me.gbPersona.Name = "gbPersona"
-        Me.gbPersona.Size = New System.Drawing.Size(329, 427)
+        Me.gbPersona.Size = New System.Drawing.Size(339, 427)
         Me.gbPersona.TabIndex = 1
         Me.gbPersona.TabStop = False
         Me.gbPersona.Text = "Datos de Persona"
@@ -185,6 +188,7 @@ Partial Class frmPersona
         'txtCodigoPeople
         '
         Me.txtCodigoPeople.Location = New System.Drawing.Point(162, 391)
+        Me.txtCodigoPeople.MaxLength = 10
         Me.txtCodigoPeople.Name = "txtCodigoPeople"
         Me.txtCodigoPeople.Size = New System.Drawing.Size(158, 20)
         Me.txtCodigoPeople.TabIndex = 11
@@ -210,6 +214,7 @@ Partial Class frmPersona
         'txtDNI
         '
         Me.txtDNI.Location = New System.Drawing.Point(6, 122)
+        Me.txtDNI.MaxLength = 8
         Me.txtDNI.Name = "txtDNI"
         Me.txtDNI.Size = New System.Drawing.Size(143, 20)
         Me.txtDNI.TabIndex = 2
@@ -226,6 +231,7 @@ Partial Class frmPersona
         'txtTelefono
         '
         Me.txtTelefono.Location = New System.Drawing.Point(220, 347)
+        Me.txtTelefono.MaxLength = 9
         Me.txtTelefono.Name = "txtTelefono"
         Me.txtTelefono.Size = New System.Drawing.Size(100, 20)
         Me.txtTelefono.TabIndex = 9
@@ -342,9 +348,9 @@ Partial Class frmPersona
         Me.gbUbicacion.Controls.Add(Me.txtNombreVia)
         Me.gbUbicacion.Controls.Add(Me.txtNombreZona)
         Me.gbUbicacion.Enabled = False
-        Me.gbUbicacion.Location = New System.Drawing.Point(347, 96)
+        Me.gbUbicacion.Location = New System.Drawing.Point(357, 96)
         Me.gbUbicacion.Name = "gbUbicacion"
-        Me.gbUbicacion.Size = New System.Drawing.Size(332, 343)
+        Me.gbUbicacion.Size = New System.Drawing.Size(343, 343)
         Me.gbUbicacion.TabIndex = 2
         Me.gbUbicacion.TabStop = False
         Me.gbUbicacion.Text = "Ubicacion de la Persona"
@@ -501,7 +507,7 @@ Partial Class frmPersona
         Me.gbPermisos.Controls.Add(Me.chkPapeleta)
         Me.gbPermisos.Controls.Add(Me.chkPersona)
         Me.gbPermisos.Enabled = False
-        Me.gbPermisos.Location = New System.Drawing.Point(685, 12)
+        Me.gbPermisos.Location = New System.Drawing.Point(718, 12)
         Me.gbPermisos.Name = "gbPermisos"
         Me.gbPermisos.Size = New System.Drawing.Size(275, 313)
         Me.gbPermisos.TabIndex = 3
@@ -607,7 +613,7 @@ Partial Class frmPersona
         '
         Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar
         Me.btnBuscar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnBuscar.Location = New System.Drawing.Point(694, 328)
+        Me.btnBuscar.Location = New System.Drawing.Point(727, 328)
         Me.btnBuscar.Name = "btnBuscar"
         Me.btnBuscar.Size = New System.Drawing.Size(105, 51)
         Me.btnBuscar.TabIndex = 5
@@ -620,7 +626,7 @@ Partial Class frmPersona
         Me.btnCancelar.Enabled = False
         Me.btnCancelar.Image = Global.Seguridad.My.Resources.Resources.Cancelar
         Me.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnCancelar.Location = New System.Drawing.Point(694, 387)
+        Me.btnCancelar.Location = New System.Drawing.Point(727, 387)
         Me.btnCancelar.Name = "btnCancelar"
         Me.btnCancelar.Size = New System.Drawing.Size(105, 51)
         Me.btnCancelar.TabIndex = 5
@@ -632,7 +638,7 @@ Partial Class frmPersona
         '
         Me.btnNuevo.Image = Global.Seguridad.My.Resources.Resources.Nuevo
         Me.btnNuevo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnNuevo.Location = New System.Drawing.Point(852, 328)
+        Me.btnNuevo.Location = New System.Drawing.Point(885, 328)
         Me.btnNuevo.Name = "btnNuevo"
         Me.btnNuevo.Size = New System.Drawing.Size(108, 51)
         Me.btnNuevo.TabIndex = 5
@@ -645,7 +651,7 @@ Partial Class frmPersona
         Me.btnGuardar.Enabled = False
         Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar
         Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btnGuardar.Location = New System.Drawing.Point(852, 388)
+        Me.btnGuardar.Location = New System.Drawing.Point(885, 388)
         Me.btnGuardar.Name = "btnGuardar"
         Me.btnGuardar.Size = New System.Drawing.Size(108, 51)
         Me.btnGuardar.TabIndex = 4
@@ -657,9 +663,9 @@ Partial Class frmPersona
         '
         Me.gbArea.Controls.Add(Me.cmbArea)
         Me.gbArea.Enabled = False
-        Me.gbArea.Location = New System.Drawing.Point(347, 12)
+        Me.gbArea.Location = New System.Drawing.Point(357, 12)
         Me.gbArea.Name = "gbArea"
-        Me.gbArea.Size = New System.Drawing.Size(332, 80)
+        Me.gbArea.Size = New System.Drawing.Size(343, 80)
         Me.gbArea.TabIndex = 6
         Me.gbArea.TabStop = False
         Me.gbArea.Text = "Area"
@@ -673,12 +679,16 @@ Partial Class frmPersona
         Me.cmbArea.Size = New System.Drawing.Size(308, 21)
         Me.cmbArea.TabIndex = 0
         '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
+        '
         'frmPersona
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(980, 458)
+        Me.ClientSize = New System.Drawing.Size(1016, 458)
         Me.Controls.Add(Me.gbArea)
         Me.Controls.Add(Me.btnBuscar)
         Me.Controls.Add(Me.btnCancelar)
@@ -700,6 +710,7 @@ Partial Class frmPersona
         Me.gbPermisos.ResumeLayout(False)
         Me.gbPermisos.PerformLayout()
         Me.gbArea.ResumeLayout(False)
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -763,4 +774,5 @@ Partial Class frmPersona
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents gbArea As GroupBox
     Friend WithEvents cmbArea As ComboBox
+    Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
 End Class

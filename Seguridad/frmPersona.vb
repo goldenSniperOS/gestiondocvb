@@ -233,6 +233,7 @@ Public Class frmPersona
     End Sub
 
     Private Sub btnNuevo_Click(sender As Object, e As EventArgs) Handles btnNuevo.Click
+        ErrorProvider1.Clear()
         btnBuscar.Enabled = False
         btnCancelar.Enabled = True
         btnNuevo.Enabled = False
@@ -248,6 +249,7 @@ Public Class frmPersona
     End Sub
 
     Private Sub btnCancelar_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
+        ErrorProvider1.Clear()
         LimpiarCampos()
         gbPermisos.Enabled = False
         gbPersona.Enabled = False
@@ -282,69 +284,131 @@ Public Class frmPersona
     End Sub
 
     Private Sub btnGuardar_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        Dim tablaGuardar As DataTable = GetEstructuraPersona()
-        Dim rowGuardar As DataRow = tablaGuardar.NewRow
+        Dim nom As Integer = 1
+        Dim ape As Integer = 1
+        Dim dni As Integer = 1
+        Dim email As Integer = 1
+        Dim ev As Integer = 1
+        Dim people As Integer = 1
+        Dim zona As Integer = 1
+        Dim via As Integer = 1
+        Dim numvia As Integer = 1
 
-        Dim clsUsuariosBD As New clsUsuario
-
-
-        Dim clsBD As New clsPersona
-        Dim drRpta As DataRow
-        Dim drRptaUsuario As DataRow
-
-        rowGuardar("per_Nombres") = txtNombres.Text
-        rowGuardar("per_Apellidos") = txtApellidos.Text
-        rowGuardar("per_ppr_Codigo") = cmbGrado.SelectedValue
-        rowGuardar("per_Sexo") = cmbGrado.SelectedItem.ToString.Chars(0)
-        rowGuardar("per_DNI") = txtDNI.Text
-        rowGuardar("per_DNICaducidad") = dtpCaducidadDNI.Value.Date
-        rowGuardar("per_Nacimiento") = dtpFechaNacimiento.Value.Date
-        rowGuardar("per_pca_Codigo") = cmbCargo.SelectedValue
-        rowGuardar("per_Email") = txtEmail.Text
-        rowGuardar("per_Telefono") = CType(txtTelefono.Text, Integer)
-
-        rowGuardar("per_CodPeople") = txtCodigoPeople.Text
-        rowGuardar("per_EstadoCivil") = cmbEstadoCivil.SelectedItem
-
-        rowGuardar("pdi_dis_Codigo") = cmbDistrito.SelectedValue
-        rowGuardar("pdi_pzo_Codigo") = cmbZona.SelectedValue
-        rowGuardar("pdi_NombreZona") = txtNombreZona.Text
-        rowGuardar("pdi_pvi_Codigo") = cmbVia.SelectedValue
-        rowGuardar("pdi_NombreVia") = txtNombreVia.Text
-        rowGuardar("pdi_Numero") = txtNumero.Text
-
-        rowGuardar("usu_Persona") = If(chkPersona.Checked, "SI", "NO")
-        rowGuardar("usu_Beneficio") = If(chkGasto.Checked, "SI", "NO")
-        rowGuardar("usu_Papeleta") = If(chkPapeleta.Checked, "SI", "NO")
-        rowGuardar("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
-        rowGuardar("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
-        rowGuardar("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
-
-        rowGuardar("are_Codigo") = cmbArea.SelectedValue
-
-        rowGuardar("usu_Nombre") = txtNombres.Text.Split(New Char() {" "c})(0).Substring(0, 1) & txtApellidos.Text.Split(New Char() {" "c})(0).ToString & txtApellidos.Text.Split(New Char() {" "c})(1).Substring(0, 1)
-        rowGuardar("usu_Contrasena") = txtDNI.Text
-
-
-
-        If (modificando) Then
-            rowGuardar("per_Codigo") = personaSeleccionada("per_Codigo")
-            rowGuardar("pdi_Codigo") = personaSeleccionada("pdi_Codigo")
-            rowGuardar("per_pdi_Codigo") = personaSeleccionada("pdi_Codigo")
-            tablaGuardar.Rows.Add(rowGuardar)
-            drRpta = clsBD.Mantenimiento("A", tablaGuardar)
-            MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
-                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            tablaGuardar.Rows.Add(rowGuardar)
-            drRpta = clsBD.Mantenimiento("R", tablaGuardar)
-            drRptaUsuario = clsUsuariosBD.Registrar(permisosFinales, drRpta)
-            MessageBox.Show(drRptaUsuario.Item("MensajeTitulo").ToString & vbCrLf & drRptaUsuario.Item("MensajeProcedure").ToString,
-                        "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If txtDNI.Text.Trim.Length < 8 Then
+            ErrorProvider1.SetError(txtDNI, "debe tener 8 digitos")
+            dni = 0
+        End If
+        If txtCodigoPeople.Text.Trim.Length < 10 Then
+            ErrorProvider1.SetError(txtCodigoPeople, "Debe Tener 10 digitos")
+            people = 0
+        End If
+        If txtNombres.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtNombres, "Ingrese Nombres")
+            nom = 0
+        End If
+        If txtApellidos.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtApellidos, "Ingrese Apellidos")
+            ape = 0
+        End If
+        If txtDNI.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtDNI, "Ingrese DNI")
+            dni = 0
+        End If
+        If txtEmail.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtEmail, "Ingrese  Email")
+            email = 0
         End If
 
+        If txtEmail.Text.Trim.IndexOf("@") > -1 Then
+            If (txtEmail.Text.Trim.IndexOf(".", txtEmail.Text.Trim.IndexOf("@")) > txtEmail.Text.Trim.IndexOf("@")) Then
+                ErrorProvider1.SetError(txtEmail, "Email no cumple estructura 'someone@example.com'")
+                ev = 0
+            End If
+        End If
+        If txtCodigoPeople.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtCodigoPeople, "Ingrese Codigo de people")
+            people = 0
+        End If
+        If txtNombreZona.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtNombreZona, "Ingrese una Zona")
+            zona = 0
+        End If
+        If txtNombreVia.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtNombreVia, "Ingrese Via")
+            via = 0
+        End If
+        If txtNumero.Text.Trim.Length = 0 Then
+            ErrorProvider1.SetError(txtNumero, "Ingrese Numero")
+            numvia = 0
+        End If
 
-        btnCancelar.PerformClick()
+        If nom = 1 And ape = 1 And dni = 1 And email = 1 And ev = 1 And telefono = 1 And people = 1 And zona = 1 And via = 1 And numvia = 1 Then
+            Dim tablaGuardar As DataTable = GetEstructuraPersona()
+            Dim rowGuardar As DataRow = tablaGuardar.NewRow
+
+            Dim clsUsuariosBD As New clsUsuario
+
+
+            Dim clsBD As New clsPersona
+            Dim drRpta As DataRow
+            Dim drRptaUsuario As DataRow
+
+            rowGuardar("per_Nombres") = txtNombres.Text
+            rowGuardar("per_Apellidos") = txtApellidos.Text
+            rowGuardar("per_ppr_Codigo") = cmbGrado.SelectedValue
+            rowGuardar("per_Sexo") = cmbGrado.SelectedItem.ToString.Chars(0)
+            rowGuardar("per_DNI") = txtDNI.Text
+            rowGuardar("per_DNICaducidad") = dtpCaducidadDNI.Value.Date
+            rowGuardar("per_Nacimiento") = dtpFechaNacimiento.Value.Date
+            rowGuardar("per_pca_Codigo") = cmbCargo.SelectedValue
+            rowGuardar("per_Email") = txtEmail.Text
+            rowGuardar("per_Telefono") = CType(txtTelefono.Text, Integer)
+
+            rowGuardar("per_CodPeople") = txtCodigoPeople.Text
+            rowGuardar("per_EstadoCivil") = cmbEstadoCivil.SelectedItem
+
+            rowGuardar("pdi_dis_Codigo") = cmbDistrito.SelectedValue
+            rowGuardar("pdi_pzo_Codigo") = cmbZona.SelectedValue
+            rowGuardar("pdi_NombreZona") = txtNombreZona.Text
+            rowGuardar("pdi_pvi_Codigo") = cmbVia.SelectedValue
+            rowGuardar("pdi_NombreVia") = txtNombreVia.Text
+            rowGuardar("pdi_Numero") = txtNumero.Text
+
+            rowGuardar("usu_Persona") = If(chkPersona.Checked, "SI", "NO")
+            rowGuardar("usu_Beneficio") = If(chkGasto.Checked, "SI", "NO")
+            rowGuardar("usu_Papeleta") = If(chkPapeleta.Checked, "SI", "NO")
+            rowGuardar("usu_Vacaciones") = If(chkVacaciones.Checked, "SI", "NO")
+            rowGuardar("usu_NotaContable") = If(chkNotaContable.Checked, "SI", "NO")
+            rowGuardar("usu_Marcacion") = If(chkMarcacion.Checked, "SI", "NO")
+
+            rowGuardar("are_Codigo") = cmbArea.SelectedValue
+
+            rowGuardar("usu_Nombre") = txtNombres.Text.Split(New Char() {" "c})(0).Substring(0, 1) & txtApellidos.Text.Split(New Char() {" "c})(0).ToString & txtApellidos.Text.Split(New Char() {" "c})(1).Substring(0, 1)
+            rowGuardar("usu_Contrasena") = txtDNI.Text
+
+
+
+            If (modificando) Then
+                rowGuardar("per_Codigo") = personaSeleccionada("per_Codigo")
+                rowGuardar("pdi_Codigo") = personaSeleccionada("pdi_Codigo")
+                rowGuardar("per_pdi_Codigo") = personaSeleccionada("pdi_Codigo")
+                tablaGuardar.Rows.Add(rowGuardar)
+                drRpta = clsBD.Mantenimiento("A", tablaGuardar)
+                MessageBox.Show(drRpta.Item("MensajeTitulo").ToString & vbCrLf & drRpta.Item("MensajeProcedure").ToString,
+                            "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                tablaGuardar.Rows.Add(rowGuardar)
+                drRpta = clsBD.Mantenimiento("R", tablaGuardar)
+                drRptaUsuario = clsUsuariosBD.Registrar(permisosFinales, drRpta)
+                MessageBox.Show(drRptaUsuario.Item("MensajeTitulo").ToString & vbCrLf & drRptaUsuario.Item("MensajeProcedure").ToString,
+                            "Sistema GestionDoc", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+
+            ErrorProvider1.Clear()
+            btnCancelar.PerformClick()
+        End If
+
+       
 
     End Sub
 
