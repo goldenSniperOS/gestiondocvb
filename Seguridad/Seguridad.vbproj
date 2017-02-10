@@ -328,6 +328,12 @@
     <EmbeddedResource Include="frmNotasContablesFilialMesAño.resx">
       <DependentUpon>frmNotasContablesFilialMesAño.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPapeletaListar.resx">
+      <DependentUpon>frmPapeletaListar.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPapeletas.resx">
+      <DependentUpon>frmPapeletas.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPapeletasAreaMesAnio.resx">
       <DependentUpon>frmPapeletasAreaMesAnio.vb</DependentUpon>
     </EmbeddedResource>
@@ -462,6 +468,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Modificar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buscar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cerrar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modificar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Guardar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Fondo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LOGOUCVPEQUE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NEW24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CHECK2-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Generator 24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Generator32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

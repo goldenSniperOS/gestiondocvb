@@ -22,6 +22,7 @@ Partial Class frmUsuarios
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.gbListado = New System.Windows.Forms.GroupBox()
         Me.dgvUsuarios = New System.Windows.Forms.DataGridView()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -70,7 +71,6 @@ Partial Class frmUsuarios
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtUsuario = New System.Windows.Forms.TextBox()
-        Me.btnGuardar = New System.Windows.Forms.Button()
         Me.trvPermisos = New System.Windows.Forms.TreeView()
         Me.chkPersona = New System.Windows.Forms.CheckBox()
         Me.chkPapeleta = New System.Windows.Forms.CheckBox()
@@ -84,10 +84,13 @@ Partial Class frmUsuarios
         Me.btnEliminar = New System.Windows.Forms.Button()
         Me.btnModificar = New System.Windows.Forms.Button()
         Me.btnBuscar = New System.Windows.Forms.Button()
+        Me.btnGuardar = New System.Windows.Forms.Button()
+        Me.ErrorProvider1 = New System.Windows.Forms.ErrorProvider(Me.components)
         Me.gbListado.SuspendLayout()
         CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbUsuario.SuspendLayout()
         Me.gbPermisos.SuspendLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gbListado
@@ -100,7 +103,7 @@ Partial Class frmUsuarios
         Me.gbListado.Controls.Add(Me.btnBuscar)
         Me.gbListado.Location = New System.Drawing.Point(352, 12)
         Me.gbListado.Name = "gbListado"
-        Me.gbListado.Size = New System.Drawing.Size(618, 287)
+        Me.gbListado.Size = New System.Drawing.Size(630, 263)
         Me.gbListado.TabIndex = 13
         Me.gbListado.TabStop = False
         Me.gbListado.Text = "Listado"
@@ -111,7 +114,7 @@ Partial Class frmUsuarios
         Me.dgvUsuarios.AllowUserToDeleteRows = False
         Me.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvUsuarios.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Codigo, Me.Telefono, Me.EstadoCivil, Me.Estudios, Me.UsuarioCodigo, Me.UsuarioNombre, Me.UsuarioContrasena, Me.UsuarioTramite, Me.UsuarioMarcacion, Me.UsuarioPapeleta, Me.UsuarioNotaContable, Me.UsuarioGasto, Me.UsuarioPersona, Me.UsuarioVacaciones, Me.DistritoCodigo, Me.ViaCodigo, Me.ZonaCodigo, Me.NombreZona, Me.NombreVia, Me.NumeroVia, Me.FechaNacimiento, Me.DireccionCodigo, Me.Email, Me.Nombres, Me.Apellidos, Me.DNI, Me.CodPeople, Me.Area, Me.Cargo, Me.CaducidadDNI, Me.CodigoArea, Me.CargoCodigo, Me.Prefijo, Me.Sexo, Me.ProvinciaCodigo, Me.DepartamentoCodigo, Me.Estado})
-        Me.dgvUsuarios.Location = New System.Drawing.Point(6, 62)
+        Me.dgvUsuarios.Location = New System.Drawing.Point(6, 43)
         Me.dgvUsuarios.MultiSelect = False
         Me.dgvUsuarios.Name = "dgvUsuarios"
         Me.dgvUsuarios.ReadOnly = True
@@ -445,9 +448,9 @@ Partial Class frmUsuarios
         Me.gbUsuario.Controls.Add(Me.Label3)
         Me.gbUsuario.Controls.Add(Me.txtUsuario)
         Me.gbUsuario.Enabled = False
-        Me.gbUsuario.Location = New System.Drawing.Point(352, 305)
+        Me.gbUsuario.Location = New System.Drawing.Point(352, 281)
         Me.gbUsuario.Name = "gbUsuario"
-        Me.gbUsuario.Size = New System.Drawing.Size(618, 104)
+        Me.gbUsuario.Size = New System.Drawing.Size(630, 104)
         Me.gbUsuario.TabIndex = 12
         Me.gbUsuario.TabStop = False
         Me.gbUsuario.Text = "Usuario"
@@ -502,18 +505,6 @@ Partial Class frmUsuarios
         Me.txtUsuario.Name = "txtUsuario"
         Me.txtUsuario.Size = New System.Drawing.Size(514, 20)
         Me.txtUsuario.TabIndex = 0
-        '
-        'btnGuardar
-        '
-        Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar
-        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.BottomRight
-        Me.btnGuardar.Location = New System.Drawing.Point(863, 415)
-        Me.btnGuardar.Name = "btnGuardar"
-        Me.btnGuardar.Size = New System.Drawing.Size(101, 54)
-        Me.btnGuardar.TabIndex = 10
-        Me.btnGuardar.Text = "Guardar"
-        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnGuardar.UseVisualStyleBackColor = True
         '
         'trvPermisos
         '
@@ -605,7 +596,7 @@ Partial Class frmUsuarios
         Me.gbPermisos.Controls.Add(Me.trvPermisos)
         Me.gbPermisos.Location = New System.Drawing.Point(8, 12)
         Me.gbPermisos.Name = "gbPermisos"
-        Me.gbPermisos.Size = New System.Drawing.Size(338, 397)
+        Me.gbPermisos.Size = New System.Drawing.Size(338, 404)
         Me.gbPermisos.TabIndex = 20
         Me.gbPermisos.TabStop = False
         Me.gbPermisos.Text = "Permisos de"
@@ -621,11 +612,11 @@ Partial Class frmUsuarios
         '
         'btnEliminar
         '
-        Me.btnEliminar.Image = Global.Seguridad.My.Resources.Resources.IconoCerrar
+        Me.btnEliminar.Image = Global.Seguridad.My.Resources.Resources.cerrar24
         Me.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnEliminar.Location = New System.Drawing.Point(421, 242)
+        Me.btnEliminar.Location = New System.Drawing.Point(454, 225)
         Me.btnEliminar.Name = "btnEliminar"
-        Me.btnEliminar.Size = New System.Drawing.Size(82, 45)
+        Me.btnEliminar.Size = New System.Drawing.Size(69, 29)
         Me.btnEliminar.TabIndex = 9
         Me.btnEliminar.Text = "Eliminar"
         Me.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -633,11 +624,11 @@ Partial Class frmUsuarios
         '
         'btnModificar
         '
-        Me.btnModificar.Image = Global.Seguridad.My.Resources.Resources.Modificar
+        Me.btnModificar.Image = Global.Seguridad.My.Resources.Resources.Modificar24
         Me.btnModificar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.btnModificar.Location = New System.Drawing.Point(509, 240)
+        Me.btnModificar.Location = New System.Drawing.Point(529, 225)
         Me.btnModificar.Name = "btnModificar"
-        Me.btnModificar.Size = New System.Drawing.Size(103, 47)
+        Me.btnModificar.Size = New System.Drawing.Size(83, 29)
         Me.btnModificar.TabIndex = 7
         Me.btnModificar.Text = "Modificar"
         Me.btnModificar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -645,19 +636,35 @@ Partial Class frmUsuarios
         '
         'btnBuscar
         '
-        Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar
-        Me.btnBuscar.Location = New System.Drawing.Point(537, 7)
+        Me.btnBuscar.Image = Global.Seguridad.My.Resources.Resources.Buscar24
+        Me.btnBuscar.Location = New System.Drawing.Point(537, 13)
         Me.btnBuscar.Name = "btnBuscar"
-        Me.btnBuscar.Size = New System.Drawing.Size(64, 48)
+        Me.btnBuscar.Size = New System.Drawing.Size(34, 26)
         Me.btnBuscar.TabIndex = 5
         Me.btnBuscar.UseVisualStyleBackColor = True
+        '
+        'btnGuardar
+        '
+        Me.btnGuardar.Image = Global.Seguridad.My.Resources.Resources.Guardar24
+        Me.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnGuardar.Location = New System.Drawing.Point(907, 384)
+        Me.btnGuardar.Name = "btnGuardar"
+        Me.btnGuardar.Size = New System.Drawing.Size(75, 32)
+        Me.btnGuardar.TabIndex = 10
+        Me.btnGuardar.Text = "Guardar"
+        Me.btnGuardar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnGuardar.UseVisualStyleBackColor = True
+        '
+        'ErrorProvider1
+        '
+        Me.ErrorProvider1.ContainerControl = Me
         '
         'frmUsuarios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(982, 470)
+        Me.ClientSize = New System.Drawing.Size(986, 428)
         Me.Controls.Add(Me.gbPermisos)
         Me.Controls.Add(Me.gbListado)
         Me.Controls.Add(Me.gbUsuario)
@@ -676,6 +683,7 @@ Partial Class frmUsuarios
         Me.gbUsuario.PerformLayout()
         Me.gbPermisos.ResumeLayout(False)
         Me.gbPermisos.PerformLayout()
+        CType(Me.ErrorProvider1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -742,4 +750,5 @@ Partial Class frmUsuarios
     Friend WithEvents ProvinciaCodigo As DataGridViewTextBoxColumn
     Friend WithEvents DepartamentoCodigo As DataGridViewTextBoxColumn
     Friend WithEvents Estado As DataGridViewTextBoxColumn
+    Friend WithEvents ErrorProvider1 As System.Windows.Forms.ErrorProvider
 End Class

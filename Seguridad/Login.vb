@@ -37,20 +37,16 @@ Public Class Login
         End Try
     End Function
     Private Sub btnEntrar_Click(sender As Object, e As EventArgs) Handles btnEntrar.Click
-        Dim usu As Integer
-        Dim con As Integer
+        Dim usu As Integer = 1
+        Dim con As Integer = 1
         If txtUsu.Text.Trim.Length = 0 Then
             ErrorProvider1.SetError(txtUsu, "Ingresa Usuario")
             usu = 0
-        Else
-            usu = 1
         End If
 
         If txtCont.Text.Trim.Length = 0 Then
             ErrorProvider1.SetError(txtCont, "Ingresa Contraseña")
             con = 0
-        Else
-            con = 1
         End If
 
         If usu = 1 And con = 1 Then

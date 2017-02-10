@@ -23,10 +23,10 @@ Partial Class frmPapeletaListar
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.dgLista = New System.Windows.Forms.DataGridView()
-        Me.Agregar = New System.Windows.Forms.Button()
-        Me.btnAprobar = New System.Windows.Forms.Button()
-        Me.btnEliminar = New System.Windows.Forms.Button()
         Me.filtroFecha = New System.Windows.Forms.DateTimePicker()
+        Me.btnEliminar = New System.Windows.Forms.Button()
+        Me.btnAprobar = New System.Windows.Forms.Button()
+        Me.Agregar = New System.Windows.Forms.Button()
         CType(Me.dgLista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -46,36 +46,6 @@ Partial Class frmPapeletaListar
         Me.dgLista.Size = New System.Drawing.Size(639, 253)
         Me.dgLista.TabIndex = 0
         '
-        'Agregar
-        '
-        Me.Agregar.Location = New System.Drawing.Point(561, 297)
-        Me.Agregar.Name = "Agregar"
-        Me.Agregar.Size = New System.Drawing.Size(90, 23)
-        Me.Agregar.TabIndex = 1
-        Me.Agregar.Text = "Agregar"
-        Me.Agregar.UseVisualStyleBackColor = True
-        '
-        'btnAprobar
-        '
-        Me.btnAprobar.Enabled = False
-        Me.btnAprobar.Location = New System.Drawing.Point(12, 297)
-        Me.btnAprobar.Name = "btnAprobar"
-        Me.btnAprobar.Size = New System.Drawing.Size(75, 23)
-        Me.btnAprobar.TabIndex = 2
-        Me.btnAprobar.Text = "Aprobar"
-        Me.btnAprobar.UseVisualStyleBackColor = True
-        '
-        'btnEliminar
-        '
-        Me.btnEliminar.Enabled = False
-        Me.btnEliminar.Location = New System.Drawing.Point(102, 297)
-        Me.btnEliminar.Name = "btnEliminar"
-        Me.btnEliminar.Size = New System.Drawing.Size(75, 23)
-        Me.btnEliminar.TabIndex = 3
-        Me.btnEliminar.Text = "Eliminar"
-        Me.btnEliminar.UseVisualStyleBackColor = True
-        Me.btnEliminar.Visible = False
-        '
         'filtroFecha
         '
         Me.filtroFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
@@ -85,10 +55,50 @@ Partial Class frmPapeletaListar
         Me.filtroFecha.Size = New System.Drawing.Size(113, 20)
         Me.filtroFecha.TabIndex = 4
         '
+        'btnEliminar
+        '
+        Me.btnEliminar.Enabled = False
+        Me.btnEliminar.Image = Global.Seguridad.My.Resources.Resources.cerrar24
+        Me.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnEliminar.Location = New System.Drawing.Point(102, 291)
+        Me.btnEliminar.Name = "btnEliminar"
+        Me.btnEliminar.Size = New System.Drawing.Size(73, 34)
+        Me.btnEliminar.TabIndex = 3
+        Me.btnEliminar.Text = "Eliminar"
+        Me.btnEliminar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnEliminar.UseVisualStyleBackColor = True
+        Me.btnEliminar.Visible = False
+        '
+        'btnAprobar
+        '
+        Me.btnAprobar.Enabled = False
+        Me.btnAprobar.Image = Global.Seguridad.My.Resources.Resources.CHECK2_24
+        Me.btnAprobar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnAprobar.Location = New System.Drawing.Point(12, 291)
+        Me.btnAprobar.Name = "btnAprobar"
+        Me.btnAprobar.Size = New System.Drawing.Size(75, 34)
+        Me.btnAprobar.TabIndex = 2
+        Me.btnAprobar.Text = "Aprobar"
+        Me.btnAprobar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnAprobar.UseVisualStyleBackColor = True
+        '
+        'Agregar
+        '
+        Me.Agregar.Image = Global.Seguridad.My.Resources.Resources.NEW24
+        Me.Agregar.ImageAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.Agregar.Location = New System.Drawing.Point(574, 292)
+        Me.Agregar.Name = "Agregar"
+        Me.Agregar.Size = New System.Drawing.Size(77, 33)
+        Me.Agregar.TabIndex = 1
+        Me.Agregar.Text = "Agregar"
+        Me.Agregar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.Agregar.UseVisualStyleBackColor = True
+        '
         'frmPapeletaListar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(663, 326)
         Me.Controls.Add(Me.filtroFecha)
         Me.Controls.Add(Me.btnEliminar)
