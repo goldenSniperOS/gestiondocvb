@@ -63,7 +63,7 @@ Public Class frmPapeletaListar
             Dim drRpta As DataTable = Nothing
             Dim objCargo As New clsPapeleta
             drRpta = objCargo.MantenimientoSimple("A", dataRetornar.Cells(0).Value)
-            dataRetornar.Cells(5).Value = "SI"
+            dataRetornar.Cells(4).Value = "SI"
         End If
 
     End Sub
