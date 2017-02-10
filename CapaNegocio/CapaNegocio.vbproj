@@ -72,7 +72,6 @@
     <Compile Include="clsDocumentoVacacion.vb" />
     <Compile Include="clsGasto.vb" />
     <Compile Include="clsGrado.vb" />
-    <Compile Include="clsMantenimiento.vb" />
     <Compile Include="clsNotaContable.vb" />
     <Compile Include="clsPapeleta.vb" />
     <Compile Include="clsPersona.vb" />

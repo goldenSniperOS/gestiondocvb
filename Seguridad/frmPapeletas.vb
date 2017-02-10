@@ -169,14 +169,14 @@ Public Class frmPapeletas
         End If
 
         If j = 1 And l = 1 And lbl = 1 Then
-            Dim objCargo As New clsMantenimiento
+            Dim objCargo As New clsDocumento
             Dim dtData As DataTable = Nothing
             Dim drRpta As DataRow = Nothing
             Dim objPapeleta As New clsPapeleta
             Dim dtDataPapeleta As DataTable = Nothing
             Dim drRptaPapeleta As DataRow = Nothing
             dtData = LlenarDatos()
-            drRpta = objCargo.MantenimientoDocumento("R", dtData)
+            drRpta = objCargo.Mantenimiento("R", dtData)
             dtDataPapeleta = LlenarDatosPapeleta()
             drRptaPapeleta = objPapeleta.MantenimientoXML("R", dtDataPapeleta).Rows(0)
             MessageBox.Show(drRptaPapeleta.Item("MensajeTitulo").ToString & vbCrLf & drRptaPapeleta.Item("MensajeProcedure").ToString, _
