@@ -20,7 +20,7 @@ Public Class frmPapeletaListar
     Private Sub frmPapeletaListar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarDatos()
         If (usuarioLogueado("per_Codigo") = usuarioLogueado("par_per_Codigo")) Then
-            btnAprobar.Visible = False
+            btnAprobar.Visible = True
         End If
 
         'dataRetornar = dgvLista.Rows(0)
