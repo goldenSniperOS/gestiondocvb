@@ -81,6 +81,7 @@ Partial Class frmPapeletaListar
         Me.btnAprobar.Text = "Aprobar"
         Me.btnAprobar.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnAprobar.UseVisualStyleBackColor = True
+        Me.btnAprobar.Visible = False
         '
         'Agregar
         '
