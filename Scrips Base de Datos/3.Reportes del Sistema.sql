@@ -58,60 +58,6 @@ RETURN
 
 GO
 
-IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasContablesXFilialXMesXAnio')
-	BEGIN
-		drop function fnNotasContablesXFilialXMesXAnio
-	END
-go
-
-CREATE FUNCTION [dbo].[fnNotasContablesXFilialXMesXAnio](@anio int)
-RETURNS TABLE 
-AS
-RETURN 
-(
-select  FILIAL = isnull(tbdocumento_notadecontabilidad.Ndcon_Filialdos, 'TOTAL'),
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 1 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Enero,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 2 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Febrero,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 3 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Marzo,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 4 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Abril,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 5 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Mayo,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 6 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Junnio,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 7 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Julio,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 8 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Agosto,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 9 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Septiembre,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 10 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Octubre,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 11 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Noviembre,
-		isnull(SUM(case when month(tbdocumento_notadecontabilidad.Ndcon_Fecha) = 12 then tbdocumento_notadecontabilidad.Ndcon_Subtotal end), 0) Diciembre,
-		total = SUM( dbo.tbdocumento_notadecontabilidad.Ndcon_Subtotal )
-FROM            dbo.tbdocumento_notadecontabilidad
-where datepart(YYYY,dbo.tbdocumento_notadecontabilidad.Ndcon_Fecha) = @anio and tbdocumento_notadecontabilidad.Ndcon_Denegar = 'NO'
-GROUP BY ROLLUP(dbo.tbdocumento_notadecontabilidad.Ndcon_Filialdos)
-)
-
-GO
-
-IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnNotasXFilialesXPeriodo')
-	BEGIN
-		drop function fnNotasXFilialesXPeriodo
-	END
-go
-
-CREATE FUNCTION [dbo].[fnNotasXFilialesXPeriodo] (@diaInicio DATE,@diaFin DATE)
-RETURNS TABLE 
-AS
-RETURN 
-(
-	SELECT        dbo.tbpersona.per_Nombres, dbo.tbpersona.per_Apellidos, dbo.tbpersona.per_DNI, dbo.tbusuario.usu_Nombre, dbo.tbdocumento.doc_Codigo, dbo.tbdocumento.doc_Fecha, 
-                         dbo.tbdocumento_notadecontabilidad.Ndcon_Motivo, dbo.tbdocumento_notadecontabilidad.Ndcon_Subtotal, dbo.tbdocumento_notadecontabilidad.Ndcon_Filialuno, 
-                         dbo.tbdocumento_notadecontabilidad.Ndcon_Filialdos
-	FROM            dbo.tbdocumento_notadecontabilidad INNER JOIN
-                         dbo.tbdocumento ON dbo.tbdocumento_notadecontabilidad.Ndcon_doc_Cod = dbo.tbdocumento.doc_Codigo INNER JOIN
-                         dbo.tbusuario ON dbo.tbdocumento.doc_usu_Codigo = dbo.tbusuario.usu_Codigo INNER JOIN
-                         dbo.tbpersona ON dbo.tbusuario.usu_per_Codigo = dbo.tbpersona.per_Codigo
-	WHERE CONVERT(DATE,dbo.tbdocumento.doc_Fecha) >@diaInicio AND CONVERT(DATE,dbo.tbdocumento.doc_Fecha) < @diaFin AND dbo.tbdocumento_notadecontabilidad.Ndcon_Filialdos IS NOT NULL
-)
-
-GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'fnPapeletasXAreaXMesXAnio')
 	BEGIN
@@ -251,6 +197,7 @@ BEGIN
 
 	RETURN '006-'+REPLACE(STR(CONVERT(INT,@lastNumber)+1, 5), SPACE(1), '0')
 END
+
 GO
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigo')
@@ -338,3 +285,66 @@ BEGIN
 	RETURN @lastCode
 END
 GO
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigoDireccion')
+	BEGIN
+		drop function nuevoCodigoDireccion
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigoDireccion]()
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	SELECT TOP 1 @lastCode = pdi_Codigo from tbpersona_direccion ORDER BY pdi_Codigo DESC
+	RETURN 'PDI'+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END
+Go
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigoPersona')
+	BEGIN
+		drop function nuevoCodigoPersona
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigoPersona]()
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	SELECT TOP 1 @lastCode = per_Codigo from tbpersona ORDER BY per_Codigo DESC
+	RETURN 'PER'+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END
+Go
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigoPersonaArea')
+	BEGIN
+		drop function nuevoCodigoPersonaArea
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigoPersonaArea]()
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	SELECT TOP 1 @lastCode = par_Codigo from tbpersona_area ORDER BY par_Codigo DESC
+	RETURN 'PAR'+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END
+Go
+
+IF EXISTS (SELECT * FROM sysobjects WHERE name = 'nuevoCodigoUsuario')
+	BEGIN
+		drop function nuevoCodigoUsuario
+	END
+go
+
+CREATE FUNCTION [dbo].[nuevoCodigoUsuario]()
+RETURNS VARCHAR(10)
+AS
+BEGIN
+	DECLARE @lastCode VARCHAR(10)
+	SELECT TOP 1 @lastCode = usu_Codigo from tbusuario ORDER BY usu_Codigo DESC
+	RETURN 'USU'+REPLACE(STR(CONVERT(INT,SUBSTRING(@lastCode,4,7))+1, 7), SPACE(1), '0')
+END

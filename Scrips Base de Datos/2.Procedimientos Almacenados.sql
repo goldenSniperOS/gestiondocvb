@@ -449,95 +449,6 @@ END
 
 go
 
-IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_MantenimientoNotaContable')
-	drop procedure pa_MantenimientoNotaContable
-go
-
-CREATE procedure [dbo].[pa_MantenimientoNotaContable]
-(
-	@Tipo char(1),
-	@InfoXML varchar(max)
-)
-AS 
-BEGIN
-	declare @IDXML int
-	IF(@InfoXML <> '')
-	execute sp_xml_prepareDocument @IDXML output, @InfoXML
-
-	IF (@Tipo = 'R')
-	BEGIN
-		
-		INSERT INTO tbdocumento_notadecontabilidad (Ndcon_doc_Cod, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, Ndcon_Denegar, Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos)
-		SELECT Ndcon_doc_Cod, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, Ndcon_Denegar, Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos
-		from openXML(@IDXML, '/Dato/Principal',1)
-		WITH(Ndcon_doc_Cod VARCHAR(10), Ndcon_Usuario VARCHAR(10), Ndcon_Fecha DATE, Ndcon_Motivo VARCHAR(30), Ndcon_Subtotal DECIMAL(9,2), Ndcon_Denegar char(2), Ndcon_Filialuno VARCHAR(30), Ndcon_Cargouno VARCHAR(30), Ndcon_Abonouno VARCHAR(30), Ndcon_Filialdos VARCHAR(30), Ndcon_Cargodos VARCHAR(30), Ndcon_Abonodos VARCHAR(30))
-		
-		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Modifico :D!!!...' as MensajeProcedure
-	END
-	
-	IF(@Tipo= 'A')
-	BEGIN
-		UPDATE tbdocumento_notadecontabilidad set Ndcon_doc_Cod= TablaLoca.Ndcon_doc_Cod, Ndcon_Usuario=TablaLoca.Ndcon_Usuario, Ndcon_Fecha= TablaLoca.Ndcon_Fecha, Ndcon_Motivo = TablaLoca.Ndcon_Motivo, Ndcon_Subtotal = TablaLoca.Ndcon_Subtotal, Ndcon_Denegar = TablaLoca.Ndcon_Denegar, Ndcon_Filialuno = TablaLoca.Ndcon_Filialuno, Ndcon_Cargouno = TablaLoca.Ndcon_Cargouno, Ndcon_Abonouno = TablaLoca.Ndcon_Abonouno, Ndcon_Filialdos = TablaLoca.Ndcon_Filialdos, Ndcon_Cargodos = TablaLoca.Ndcon_Cargodos, Ndcon_Abonodos = TablaLoca.Ndcon_Abonodos
-		FROM openXML(@IDXML, '/Dato/Principal',1) 
-		WITH(Ndcon_Codigo INT, Ndcon_doc_Cod VARCHAR(10), Ndcon_Usuario VARCHAR(10), Ndcon_Fecha DATE, Ndcon_Motivo VARCHAR(30), Ndcon_Subtotal DECIMAL(9,2), Ndcon_Denegar char(2), Ndcon_Filialuno VARCHAR(30), Ndcon_Cargouno VARCHAR(30), Ndcon_Abonouno VARCHAR(30), Ndcon_Filialdos VARCHAR(30), Ndcon_Cargodos VARCHAR(30), Ndcon_Abonodos VARCHAR(30))
-		AS TablaLoca
-		WHERE tbdocumento_notadecontabilidad.Ndcon_Codigo = TablaLoca.Ndcon_Codigo
-		select 'CONECTIVIDAD' as MensajeTitulo, 'Exitosamente se Modifico :D!!!...' as MensajeProcedure
-	END
-
-	IF(@Tipo= '1')
-	BEGIN
-		DECLARE @allDataRegister TABLE (Ndcon_doc_Cod varchar(10), Ndcon_Usuario varchar(10), Ndcon_Fecha date, 
-										Ndcon_Motivo varchar(150), Ndcon_Subtotal decimal(9,2), Ndcon_Denegar char(2), 
-										Ndcon_Filialuno varchar(30), Ndcon_Cargouno varchar(30), Ndcon_Abonouno varchar(30), 
-										Ndcon_Filialdos varchar(30), Ndcon_Cargodos varchar(30), Ndcon_Abonodos varchar(30));
-
-		DECLARE @DocumentoRegister TABLE (doc_Codigo varchar(10),doc_dpl_Codigo varchar(10), doc_usu_Codigo varchar(10), doc_Fecha date, doc_Hora time(7), 
-										doc_Numero varchar(100), doc_dan_Codigo varchar(10), doc_Titulo Varchar(50), 
-										doc_Remitente varchar(10), doc_Destinatario varchar(10), doc_Asunto varchar(50),
-										doc_Contenido varchar(8000), doc_Referencia varchar(50), doc_Estado int, 
-										doc_Actividad varchar(500), doc_CodigoPresupues varchar(100), doc_Meta varchar(300), 
-										doc_DescargaDocumento char(2), doc_ConfirmaFirma char(2), doc_Firma char(2), 
-										doc_Gas_SerieCod varchar(20), doc_ApruebaMov char(2), doc_ApruebaPape char(2), 
-										doc_ApruebaViat char(2));
-
-		INSERT INTO @allDataRegister 
-		SELECT  Ndcon_doc_Cod, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, Ndcon_Denegar, Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos
-		FROM openXML(@IDXML, '/Dato/Principal',1)
-		WITH(Ndcon_doc_Cod varchar(10), Ndcon_Usuario varchar(10), Ndcon_Fecha date,Ndcon_Motivo varchar(150), 
-			Ndcon_Subtotal decimal(9,2), Ndcon_Denegar char(2), Ndcon_Filialuno varchar(30), Ndcon_Cargouno varchar(30),
-			 Ndcon_Abonouno varchar(30), Ndcon_Filialdos varchar(30), Ndcon_Cargodos varchar(30), Ndcon_Abonodos varchar(30))
-
-		INSERT INTO @DocumentoRegister 
-		SELECT doc_Codigo,doc_dpl_Codigo, doc_usu_Codigo, doc_Fecha, doc_Hora, doc_Numero, doc_dan_Codigo, doc_Titulo, doc_Remitente, doc_Destinatario, doc_Asunto, doc_Contenido, doc_Referencia, doc_Estado, doc_Actividad, doc_CodigoPresupues, doc_Meta, doc_DescargaDocumento, doc_ConfirmaFirma, doc_Firma, doc_Gas_SerieCod, doc_ApruebaMov, doc_ApruebaPape, doc_ApruebaViat
-		FROM openXML(@IDXML, '/Dato/Documento',1)
-		WITH(doc_Codigo varchar(10),doc_dpl_Codigo varchar(10), doc_usu_Codigo varchar(10), doc_Fecha date, doc_Hora time(7), doc_Numero varchar(100), 
-			doc_dan_Codigo varchar(10), doc_Titulo Varchar(50), doc_Remitente varchar(10), doc_Destinatario varchar(10), 
-			doc_Asunto varchar(50),	doc_Contenido varchar(8000), doc_Referencia varchar(50), doc_Estado int, doc_Actividad varchar(500), 
-			doc_CodigoPresupues varchar(100), doc_Meta varchar(300), doc_DescargaDocumento char(2), doc_ConfirmaFirma char(2), 
-			doc_Firma char(2), doc_Gas_SerieCod varchar(20), doc_ApruebaMov char(2), doc_ApruebaPape char(2), doc_ApruebaViat char(2))
-		
-		declare @UltimoCodigo varchar(10)
-		set @UltimoCodigo = dbo.ultimoCodigo('tbdocumento')
-
-		INSERT INTO tbdocumento
-		SELECT  @UltimoCodigo,'DPL0000001', doc_usu_Codigo, CONVERT(date,GETDATE()), CONVERT(time,CURRENT_TIMESTAMP), doc_Numero, 'DAN010', 'DTI0000007', doc_Remitente, 'PER0000126' , doc_Asunto, doc_Contenido, doc_Referencia, 1 , doc_Actividad, doc_CodigoPresupues, doc_Meta, 'NO', 'NO', 'NO', doc_Gas_SerieCod, 'NO', 'NO', 'NO'
-		FROM @DocumentoRegister
-
-		INSERT INTO tbdocumento_notadecontabilidad
-		SELECT @UltimoCodigo, Ndcon_Usuario, Ndcon_Fecha, Ndcon_Motivo, Ndcon_Subtotal, 'NO', Ndcon_Filialuno, Ndcon_Cargouno, Ndcon_Abonouno, Ndcon_Filialdos, Ndcon_Cargodos, Ndcon_Abonodos 
-		FROM @allDataRegister
-
-		Select 'GESTIONDOC' as MensajeTitulo, 'Nota de Contabilidad Registrada con exito' as MensajeProcedure
-	END
-
-	IF(@InfoXML <> '')
-	execute sp_xml_RemoveDocument @IDXML
-END
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_TrabajadorPorArea')
 	drop procedure pa_TrabajadorPorArea
 go
@@ -1112,7 +1023,6 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
-
 go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Listados')
@@ -1182,7 +1092,7 @@ IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteVacacion')
 	drop procedure p_ReporteVacacion
 go
 
-Create proc [dbo].[p_ReporteVacacion]
+create proc [dbo].[p_ReporteVacacion]
 @Codigo as integer
 as
 select TDA.dan_Nombre, TP.per_Apellidos,TP.per_Nombres, TD.doc_Numero,TP.per_DNI, TBV.Vaca_FechaSalida, TBV.Vaca_FechaTermino,
@@ -1268,6 +1178,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Distrito')
@@ -1294,6 +1205,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 Go
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Grado')
@@ -1318,6 +1230,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Provincia')
@@ -1344,6 +1257,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Via')
@@ -1368,6 +1282,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='pa_Zona')
@@ -1392,6 +1307,7 @@ BEGIN
 	if( @InfoXML <> '')
 	execute sp_xml_RemoveDocument @IDXML
 END
+
 GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteGastoMovilidadAreaPeriodo')
@@ -1420,30 +1336,6 @@ CREATE proc [dbo].[p_ReporteGastosMovilidadXPeriodo]
 as
 	SELECT * FROM fnGastosMovilidadXPeriodo(@FechaIni,@FechaFin)
 Go
-
-IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteNota_por_usuario_por_anio')
-	drop procedure p_ReporteNota_por_usuario_por_anio
-go
-
-create proc [dbo].[p_ReporteNota_por_usuario_por_anio]
-(
-	@Año int
-)
-as
-	select * from fnNota_por_usuario_por_anio(@Año)
-GO
-
-IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReporteNotasContablesXFilialXMesXAnio')
-	drop procedure p_ReporteNotasContablesXFilialXMesXAnio
-go
-
-create proc [dbo].[p_ReporteNotasContablesXFilialXMesXAnio]
-(
-	@Año int
-)
-as
-	select * from fnNotasContablesXFilialXMesXAnio(@Año)
-GO
 
 IF EXISTS(select * from SYS.PROCEDURES where NAME='p_ReportePapeletasXAreaXMesXAnio')
 	drop procedure p_ReportePapeletasXAreaXMesXAnio
