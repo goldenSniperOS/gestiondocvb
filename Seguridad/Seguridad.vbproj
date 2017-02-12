@@ -140,18 +140,6 @@
     <Compile Include="frmMarcacion.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNotaPorUsuarioPorAnio.Designer.vb">
-      <DependentUpon>frmNotaPorUsuarioPorAnio.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmNotaPorUsuarioPorAnio.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmNotasContablesFilialMesAño.Designer.vb">
-      <DependentUpon>frmNotasContablesFilialMesAño.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmNotasContablesFilialMesAño.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmPapeletaListar.Designer.vb">
       <DependentUpon>frmPapeletaListar.vb</DependentUpon>
     </Compile>
@@ -206,18 +194,6 @@
     <Compile Include="frmReporteGastosMovilidadAreaPeriodo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmReporteNotaFilialMesAnio.Designer.vb">
-      <DependentUpon>frmReporteNotaFilialMesAnio.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmReporteNotaFilialMesAnio.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmReporteNotaUsuarioAnio.Designer.vb">
-      <DependentUpon>frmReporteNotaUsuarioAnio.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmReporteNotaUsuarioAnio.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="frmReportePapeletaAreaMesAnio.Designer.vb">
       <DependentUpon>frmReportePapeletaAreaMesAnio.vb</DependentUpon>
     </Compile>
@@ -269,18 +245,6 @@
       <DependentUpon>rptGastoMovilidadAreaPeriodo.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="rptNotaFilialMesAnio.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptNotaFilialMesAnio.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="rptReporteNotaUsuarioAnio.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>rptReporteNotaUsuarioAnio.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="rptReportePapeletaAreaMesAnio.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -316,12 +280,6 @@
     <EmbeddedResource Include="frmMarcacion.resx">
       <DependentUpon>frmMarcacion.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmNotaPorUsuarioPorAnio.resx">
-      <DependentUpon>frmNotaPorUsuarioPorAnio.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmNotasContablesFilialMesAño.resx">
-      <DependentUpon>frmNotasContablesFilialMesAño.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmPapeletasAreaMesAnio.resx">
       <DependentUpon>frmPapeletasAreaMesAnio.vb</DependentUpon>
     </EmbeddedResource>
@@ -342,12 +300,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmReporteGastosMovilidadAreaPeriodo.resx">
       <DependentUpon>frmReporteGastosMovilidadAreaPeriodo.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteNotaFilialMesAnio.resx">
-      <DependentUpon>frmReporteNotaFilialMesAnio.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmReporteNotaUsuarioAnio.resx">
-      <DependentUpon>frmReporteNotaUsuarioAnio.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmReportePapeletaAreaMesAnio.resx">
       <DependentUpon>frmReportePapeletaAreaMesAnio.vb</DependentUpon>
@@ -374,14 +326,6 @@
     <EmbeddedResource Include="rptGastoMovilidadAreaPeriodo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptGastoMovilidadAreaPeriodo.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="rptNotaFilialMesAnio.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptNotaFilialMesAnio.vb</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="rptReporteNotaUsuarioAnio.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptReporteNotaUsuarioAnio.vb</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="rptReportePapeletaAreaMesAnio.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
