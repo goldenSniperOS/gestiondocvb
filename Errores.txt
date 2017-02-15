@@ -1,17 +1,4 @@
-Control de Usuario
-	-Usuarios deberian buscarse por nombres y apellidos
-	-Deberia decirte si esta en uso el usuario o no
-	-Limpieza de controles al darle nuevo 
-	-Agregar boton Cancelar
-Papeleta no funca pa nada da error al abrir el formulario
-
-
-
-v2
-
-
-	-Boton de  Cerrar Cesion regresa al formulario login
-	-Modulo PAPELETA 
-		-Error al momento de darle en aprobar papeleta dale en que si quuieres aprobar despues del mensajeito
-		Sale este error: "El índice estaba fuera del intervalo.
-		 Debe ser un valor no negativo e inferior al tamaño de la colección."	
+CONTROL DE USUARIOS 
+	AL MODIFICAR UN PERMISO DEL UN USUARIO SELECCIONADO 
+	DEL DGV SELECCIONO UNA OPCION DEL COMBO BOX SALE ERROR
+	(EL ERROR DE LA FOTITO QUE TE ENVIE :V )
